@@ -47,21 +47,49 @@
     if (falarAoTocar) b.addEventListener('click', () => falar([S.fon(g)]));
     return b;
   }
+
+  // ------------------------------------------------------------ nomes das figuras (v1.2)
+  /** O nome sob a figura revelaria a resposta? (atividades de leitura/escrita e "qual som começa" com letra) */
+  const TIPOS_REVELAM = new Set(['leiaEncontre', 'fabrica', 'trocaLetra', 'frase', 'letraPerdida', 'escrita', 'ditado', 'trem', 'fatiador', 'somS']);
+  function modoRotulo(item) {
+    const cfg = Store.cfg.nomesFiguras || 'auto';
+    if (cfg === 'sempre') return 'sempre';
+    if (cfg === 'nunca') return 'nunca';
+    if (TIPOS_REVELAM.has(item.tipo) || item.leitura || (item.tipo === 'somInicial' && item.alvoG)) return 'depois';
+    return 'sempre';
+  }
+  MJ.modoRotulo = modoRotulo;
+  function rotulo(palavra, modo) {
+    if (!palavra || modo === 'nunca' || !Motor.W[palavra]) return null;
+    return el('span', { class: 'rotulo' + (modo === 'depois' ? ' rotulo-depois' : '') + (palavra.length > 9 ? ' r-xl' : palavra.length > 7 ? ' r-l' : palavra.length > 5 ? ' r-m' : '') }, fmt(palavra));
+  }
+  function revelarRotulos(raiz) { raiz.querySelectorAll('.rotulo-depois').forEach((r) => r.classList.add('visivel')); }
+  MJ.revelarRotulos = revelarRotulos;
+  /** Botão grande de ouvir (substitui ícones soltos como 👂 🧩 que pareciam figuras quebradas) */
+  function botaoOuvir(ctx, legenda, pecas) {
+    const b = el('button', { class: 'botao-ouvir', type: 'button', 'aria-label': 'ouvir de novo' }, el('span', { class: 'bo-ico' }, '🔊'));
+    if (pecas) { const row = el('span', { class: 'bo-pecas', 'aria-hidden': 'true' }); for (let i = 0; i < pecas; i++) row.append(el('i', { style: { animationDelay: (i * 0.55) + 's' } })); b.append(row); }
+    b.append(el('span', { class: 'bo-leg' }, legenda || 'Toque para ouvir'));
+    b.addEventListener('click', () => ctx.falarPedido());
+    return b;
+  }
   function visorEl(item, ctx) {
     const v = item.visor || {}; const box = el('div', { class: 'visor' });
-    if (v.img && !v.palavra) {
-      const f = el('button', { class: 'figura btn', type: 'button', 'aria-label': 'figura', style: { background: 'transparent', boxShadow: 'none' } }, fig(v.img));
+    const modo = modoRotulo(item);
+    if (v.img && !v.palavra && !v.lacuna) {
+      const f = el('button', { class: 'figura cartao-ref', type: 'button', 'aria-label': 'figura de referência: toque para ouvir' }, fig(v.img), rotulo(v.fala || item.palavra, modo));
       f.addEventListener('click', () => (v.fala ? falar([S.p(v.fala)]) : ctx.falarPedido()));
       box.append(f);
     }
     if (v.letra) box.append(letraGrande(v.letra, !!v.falaFonema));
-    if (v.icone) { const b = el('button', { class: 'figura btn', type: 'button', 'aria-label': 'ouvir de novo', style: { background: 'transparent', boxShadow: 'none' } }, v.icone); b.addEventListener('click', () => ctx.falarPedido()); box.append(b); }
+    if (v.pecasSom) box.append(botaoOuvir(ctx, 'Junte os pedacinhos', v.pecasSom));
+    else if (v.icone) box.append(botaoOuvir(ctx, { '👂': 'Escute o som', '👯': 'Escute a palavra', '✨': 'Escute a palavra mágica' }[v.icone] || 'Toque para ouvir'));
     if (v.palavra) {
       if (v.troca) {
         const linha = el('div', { class: 'acoes' });
         if (v.img) linha.append(fig(v.img, 'figura'));
         box.append(linha);
-      } else if (v.img) box.append(fig(v.img, 'figura'));
+      } else if (v.img) box.append(el('div', { class: 'figura cartao-ref' }, fig(v.img)));
       box.append(palavraChips(v.silabas, { destaque: v.destaque, troca: v.troca }));
       if (v.troca) {
         const antiga = v.palavra[v.troca.pos];
@@ -69,7 +97,7 @@
       }
     }
     if (v.lacuna) {
-      if (v.img) box.append(fig(v.img, 'figura'));
+      if (v.img) { const f = el('button', { class: 'figura cartao-ref', type: 'button', 'aria-label': 'ouvir a palavra' }, fig(v.img), rotulo(v.lacuna.palavra, 'depois')); f.addEventListener('click', () => ctx.falarPedido()); box.append(f); }
       const p = v.lacuna.palavra; const w = el('div', { class: 'palavra' });
       w.append(el('span', { class: 'chip' }, fmt(p.slice(0, v.lacuna.pos)) || '\u00a0'));
       const lac = el('span', { class: 'chip lacuna-chip' }, el('span', { class: 'lacuna' }, '_'.repeat(v.lacuna.tam)));
@@ -103,10 +131,10 @@
     });
     return box;
   }
-  function opcaoEl(o) {
+  function opcaoEl(o, modo) {
     const b = el('button', { class: 'opcao', type: 'button', 'data-id': o.id, 'aria-label': o.txt ? 'opção ' + o.txt : 'opção' });
     if (o.cena) b.append(fig(o.img, 'cena'));
-    else if (o.img) b.append(fig(o.img));
+    else if (o.img) { b.append(fig(o.img)); if (!o.txt) { const r = rotulo(o.id, modo || 'sempre'); if (r) b.append(r); } }
     if (o.txt) b.append(el('span', { class: 'txt' }, o.silabas ? fmt(o.txt) : (o.txt.length <= 3 || /^[A-ZÀ-Ú🐍🐝 ]+$/.test(o.txt) ? fmt(o.txt) : o.txt)));
     if (o.sub) b.append(el('span', { class: 'sub' }, o.sub));
     return b;
@@ -147,8 +175,10 @@
     const palco = ctx.palco;
     const visor = visorEl(item, ctx);
     const grade = el('div', { class: 'opcoes', role: 'group', 'aria-label': 'opções' });
-    const botoes = item.opcoes.map((o) => { const b = opcaoEl(o); grade.append(b); return { o, b }; });
-    if (botoes.length === 2) grade.style.gridTemplateColumns = 'repeat(2, minmax(0, 1fr))';
+    const modoR = modoRotulo(item);
+    const botoes = item.opcoes.map((o) => { const b = opcaoEl(o, modoR); grade.append(b); return { o, b }; });
+    grade.classList.add('n' + botoes.length);
+    if (botoes.some((x) => x.o.cena)) grade.classList.add('com-cena');
     palco.append(visor, grade);
     const certoBtn = botoes.find((x) => x.o.id === item.certo).b;
     estado.esperado = item.certo; // gancho para testes automatizados
@@ -173,12 +203,12 @@
       proximo = null;
       tent++;
       const b = botoes.find((x) => x.o === o).b;
-      if (o.id === item.certo) { b.classList.remove('destaque'); b.classList.add('certa'); Efeito.tocar('acerto'); if (ctx.lacunaEl) { ctx.lacunaEl.firstChild.textContent = fmt(o.txt || ''); ctx.lacunaEl.firstChild.classList.add('preenchida'); } break; }
+      if (o.id === item.certo) { b.classList.remove('destaque'); b.classList.add('certa'); Efeito.tocar('acerto'); revelarRotulos(palco); if (ctx.lacunaEl) { ctx.lacunaEl.firstChild.textContent = fmt(o.txt || ''); ctx.lacunaEl.firstChild.classList.add('preenchida'); } break; }
       if (!primeiroErro) primeiroErro = o;
       Efeito.tocar('erro'); animarMascote('pensa');
       // com 2 opções (pares mínimos) a errada continua tocável, senão o andaime pularia direto para a resposta
       if (botoes.length > 2) b.classList.add('errada'); else { b.classList.add('apagada'); setTimeout(() => b.classList.remove('apagada'), 1200); }
-      if (item.avaliacao) { certoBtn.classList.add('certa'); await falar([S.fala('avaliacaoObrigado')]); return [{ ok: false, tent, ms: performance.now() - t0, escolhido: o, final: true }]; }
+      if (item.avaliacao) { certoBtn.classList.add('certa'); revelarRotulos(palco); await falar([S.fala('avaliacaoObrigado')]); return [{ ok: false, tent, ms: performance.now() - t0, escolhido: o, final: true }]; }
       const restantes = botoes.filter((x) => !x.b.classList.contains('errada') && x.o.id !== item.certo);
       if (tent === 1) { await falar([S.fala('escuteDevagar')]); await ctx.falarPedido(true); }
       else if (tent === 2) { await dicaEspecifica(item, o); if (restantes.length > 1) restantes[0].b.classList.add('errada'); }
@@ -398,7 +428,7 @@
         b.onclick = async () => {
           if (b.classList.contains('virada') || b.classList.contains('feita') || abertas.length >= 2) return;
           b.classList.add('virada'); b.innerHTML = '';
-          if (b._c.img) { b.append(fig(b._c.img)); falar([S.p(b._c.fala)]); } else { b.append(el('span', null, fmt(b._c.txt))); Efeito.tocar('pagina'); }
+          if (b._c.img) { b.append(fig(b._c.img)); if (item.instr === 'memoriaRima' && Store.cfg.nomesFiguras !== 'nunca') b.append(el('span', { class: 'rotulo' + (b._c.fala.length > 7 ? ' r-xl' : ' r-l') }, fmt(b._c.fala))); falar([S.p(b._c.fala)]); } else { b.append(el('span', null, fmt(b._c.txt))); Efeito.tocar('pagina'); }
           abertas.push(b);
           if (abertas.length === 2) {
             const [a, c] = abertas;
@@ -532,7 +562,7 @@
   // ======================================================================
   MJ.bingo = async (item, ctx) => {
     const cartela = el('div', { class: 'cartela', role: 'group', 'aria-label': 'cartela de bingo' });
-    if (item.celulas.length <= 6) cartela.style.gridTemplateColumns = 'repeat(3, 1fr)';
+    
     const cels = item.celulas.map((c) => { const b = el('button', { class: 'cel', type: 'button', 'aria-label': 'casa ' + c }, fmt(c)); b._c = c; cartela.append(b); return b; });
     const ouvir = el('button', { class: 'btn mini', type: 'button', 'aria-label': 'ouvir de novo' }, '🔊');
     ctx.palco.append(el('div', { class: 'rotulo-etapa' }, '🎱 Bingo'), cartela, el('div', { class: 'acoes' }, ouvir));
@@ -608,7 +638,7 @@
     const g = item.g; const f = item.fonema || {};
     const dica = el('div', { class: 'bolha' }, item.dica || '');
     const ex = el('div', { class: 'acoes' });
-    (item.exemplos || []).forEach((p) => { const w = Motor.W[p]; const b = el('button', { class: 'opcao', type: 'button', style: { minWidth: '110px' }, 'aria-label': 'exemplo' }, fig(w.e)); b.onclick = () => falar([S.p(p)]); ex.append(b); });
+    (item.exemplos || []).forEach((p) => { const w = Motor.W[p]; const b = el('button', { class: 'opcao', type: 'button', style: { minWidth: '110px' }, 'aria-label': 'exemplo ' + p }, fig(w.e), rotulo(p, Store.cfg.nomesFiguras === 'nunca' ? 'nunca' : 'sempre')); b.onclick = () => falar([S.p(p)]); ex.append(b); });
     const cont = el('button', { class: 'btn pri grande', type: 'button' }, '▶ Continuar');
     const denovo = el('button', { class: 'btn', type: 'button', 'aria-label': 'ouvir de novo' }, '🔊');
     ctx.palco.append(el('div', { class: 'rotulo-etapa' }, '👀 ', D.falas.euMostro), letraGrande(g), dica, ex, el('div', { class: 'acoes' }, denovo, cont));
@@ -676,10 +706,7 @@
       await new Promise((r) => { a.onended = r; a.onerror = r; ctx.sinal.addEventListener('abort', () => { a.pause(); r(); }, { once: true }); });
       cancelAnimationFrame(raf); limpar(); return;
     }
-    if ('speechSynthesis' in window && !Store.cfg.karaokePalavraAPalavra) {
-      await karaokeFluido(tokens, botoes, ctx, opc.lento);
-      return;
-    }
+    if ('speechSynthesis' in window && !Store.cfg.karaokePalavraAPalavra) { await karaokeFluido(tokens, botoes, ctx, opc.lento); return; }
     for (let i = 0; i < botoes.length; i++) {
       if (ctx.sinal.aborted) return;
       limpar(); botoes[i].classList.add('on');
@@ -688,27 +715,25 @@
     }
     limpar();
   }
-  /** Frase inteira numa fala só (entonação natural). Destaque pelo evento boundary;
-      se o navegador não envia boundary (Android/Safari), estima o tempo de cada palavra. */
+  /** Frase inteira numa fala só (entonação natural); destaque por boundary ou estimativa de tempo. */
   function karaokeFluido(tokens, botoes, ctx, lento) {
     return new Promise((resolve) => {
       Som.parar();
       const texto = tokens.map((t) => t.palavra.toLocaleLowerCase('pt-BR')).join(' ') + '.';
       const inicios = []; let p = 0; tokens.forEach((t) => { inicios.push(p); p += t.palavra.length + 1; });
       const u = new SpeechSynthesisUtterance(texto); u.lang = (Som.voz && Som.voz.lang) || 'pt-BR'; if (Som.voz) u.voice = Som.voz;
-      u.rate = Math.max(0.55, (Store.cfg.taxa || 1) * (lento ? 0.8 : 1)); u.volume = Store.cfg.volVoz;
+      u.rate = Math.max(0.55, (Store.cfg.taxa || 0.95) * (lento ? 0.8 : 1)); u.volume = Store.cfg.volVoz;
       let recebeu = false; let fim = false; let timer = null; let t0 = 0;
       const marcar = (i) => botoes.forEach((b, k) => { b.classList.toggle('on', k === i); if (k < i) b.classList.add('lida'); });
       const terminar = () => { if (fim) return; fim = true; clearInterval(timer); botoes.forEach((b) => { b.classList.remove('on'); b.classList.add('lida'); }); resolve(); };
       u.onstart = () => {
         t0 = performance.now(); marcar(0);
-        // estimativa: ~13 caracteres por segundo na velocidade 1 (com pausa leve entre palavras)
-        const cps = 13 * u.rate; const ini = inicios.map((c) => c / cps * 1000);
+        const cps = 12 * u.rate; const ini = inicios.map((c) => c / cps * 1000);
         timer = setInterval(() => { if (recebeu) return; const t = performance.now() - t0; let i = 0; ini.forEach((x, k) => { if (t >= x) i = k; }); marcar(i); }, 60);
       };
       u.onboundary = (e) => { if (e.name && e.name !== 'word') return; recebeu = true; const i = inicios.findIndex((x, k) => e.charIndex >= x && (k === inicios.length - 1 || e.charIndex < inicios[k + 1])); if (i >= 0) marcar(i); };
       u.onend = terminar; u.onerror = terminar;
-      setTimeout(terminar, 4000 + texto.length * 160 / u.rate);
+      setTimeout(terminar, 4000 + texto.length * 170 / u.rate);
       ctx.sinal.addEventListener('abort', () => { speechSynthesis.cancel(); terminar(); }, { once: true });
       setTimeout(() => speechSynthesis.speak(u), 30);
     });
@@ -734,8 +759,8 @@
     await falar([S.f(h.titulo), S.pausa(300), S.f(h.intro)]);
     const escolherComAndaime = async (ops, certo, pedido, extra = {}) => {
       interacao.innerHTML = '';
-      const bts = ops.map((o) => { const b = el('button', { class: 'opcao', type: 'button' }); if (o.img) b.append(fig(o.img, o.cena ? 'cena' : 'fig')); if (o.txt) b.append(el('span', { class: 'txt' }, fmt(o.txt))); interacao.append(b); return { o, b }; });
-      interacao.style.gridTemplateColumns = `repeat(${Math.min(ops.length, 3)}, minmax(0, 1fr))`;
+      const bts = ops.map((o) => { const b = el('button', { class: 'opcao', type: 'button', 'data-id': o.id }); if (o.img) b.append(fig(o.img, o.cena ? 'cena' : 'fig')); if (o.img && Motor.W[o.id]) b.append(rotulo(o.id, Store.cfg.nomesFiguras === 'nunca' ? 'nunca' : 'sempre')); else if (o.img && o.leg) b.append(el('span', { class: 'rotulo' }, o.leg)); if (o.txt) b.append(el('span', { class: 'txt' }, fmt(o.txt))); interacao.append(b); return { o, b }; });
+      interacao.className = 'opcoes n' + bts.length;
       estado.esperado = certo;
       const esperar = () => aguardar(ctx, (res) => bts.forEach(({ o, b }) => { b.onclick = () => res(o); }));
       let espera = esperar();

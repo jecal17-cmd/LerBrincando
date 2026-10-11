@@ -218,9 +218,40 @@
     };
   }
 
+
+  /** Grafia "pronunciável" de uma SÍLABA isolada para vozes sintéticas.
+      Motivo: "ve", "nha", "pr" etc. em minúsculas são lidos como sigla/letras ("vê, é").
+      Regra: marca o núcleo com acento (pronúncia de cartilha: bá-bé-bí-bó-bú),
+      fechado antes de M/N nasal (pân, pên, pôn) e nos ditongos EI/EU/OU.
+      Sílabas que já são palavras monossílabas conhecidas ficam como estão. */
+  const MONO_OK = new Set(['SOL', 'MAR', 'MEL', 'SAL', 'GOL', 'PÃO', 'MÃO', 'PÉ', 'CHÁ', 'REI', 'BOI', 'PAU', 'BAÚ', 'TREM', 'FLOR', 'LUZ', 'PAZ', 'NÓS', 'VOZ', 'DOR', 'COR', 'MAL', 'MIL', 'SIM', 'NÃO', 'UM', 'COM', 'TEM', 'SÃO']);
+  const AGUDO = { A: 'Á', E: 'É', I: 'Í', O: 'Ó', U: 'Ú' };
+  const CIRC = { A: 'Â', E: 'Ê', O: 'Ô', I: 'Í', U: 'Ú' };
+  function pronunciavel(silaba, opc) {
+    const S = maiusc(silaba);
+    const fechado = opc && opc.fechado;
+    if (MONO_OK.has(S) || /[ÁÉÍÓÚÂÊÔÃÕÀ]/.test(S)) return S.toLocaleLowerCase('pt-BR');
+    // localiza o núcleo (ignora o U de QU/GU antes de vogal)
+    let i = 0;
+    while (i < S.length && !ehVogal(S[i])) i++;
+    if (i >= S.length) return S.toLocaleLowerCase('pt-BR');
+    if ((S.slice(i - 1, i + 1) === 'QU' || S.slice(i - 1, i + 1) === 'GU') && ehVogal(S[i + 1])) i++;
+    const v = S[i], v2 = S[i + 1] || '';
+    let j = i; // posição que recebe o acento
+    const dit = v + v2;
+    let tabela = fechado ? CIRC : AGUDO;
+    if (['EI', 'EU', 'OU'].includes(dit)) tabela = CIRC;
+    else if (['AI', 'AU', 'OI', 'UI'].includes(dit)) tabela = AGUDO;
+    else if ((v === 'I' || v === 'U') && ehVogal(v2)) j = i + 1;           // glide + vogal: CIA → ciá, GUA → guá
+    else if (/[MN]/.test(S[i + 1] || '') && !ehVogal(S[i + 2] || '')) tabela = CIRC; // nasal: PAN → pân
+    const alvo = S[j];
+    const acentuada = (tabela[alvo] || alvo);
+    return (S.slice(0, j) + acentuada + S.slice(j + 1)).toLocaleLowerCase('pt-BR');
+  }
+
   const Nucleo = {
     VOGAIS, ehVogal, base, maiusc, semAcento, analisar, categoriaPadrao, tonica, chaveRima,
-    somInicial, grafemas, slug, codigoOpenMoji, separarEmojis, tokenizarFrase, fraseLimpa, rngSemente, X_VARIOS
+    somInicial, grafemas, slug, pronunciavel, codigoOpenMoji, separarEmojis, tokenizarFrase, fraseLimpa, rngSemente, X_VARIOS
   };
   raiz.Nucleo = Nucleo;
   if (typeof module !== 'undefined' && module.exports) module.exports = Nucleo;

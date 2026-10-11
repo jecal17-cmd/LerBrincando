@@ -1,8 +1,11 @@
-# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.1
+# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.2
 
-> **Novidades da v1.1**
-> - **Visual:** cenário ilustrado e animado em cada um dos 8 mundos (praia, campo, floresta, montanha, rio com trem, caverna de cristais, castelo, biblioteca). O mapa virou uma trilha sinuosa com a Lili marcando a próxima fase. Também há botões "de brinquedo" com degrau 3D, cartões de resposta coloridos, a fonte Baloo 2 na interface (Andika continua nas letras) e uma barra de progresso animada.
-> - **Áudio:** vozes neurais naturais (Microsoft Francisca/Thalita via `edge-tts`, ou Kokoro offline), fala em velocidade natural, frases inteiras e karaokê fluido. Veja a seção 4.
+> **Novidades da v1.2**
+> - **Áudio:** sílabas nunca soletradas, fala mais calma e sem cortes (seção 4).
+> - **Telas de jogo:** o cenário ilustrado do mundo aparece ao fundo, e a figura de referência fica em destaque num cartão. As opções ficam **sempre centralizadas**, com o **nome embaixo de cada figura**. Nas atividades de leitura e escrita, o nome só aparece depois da resposta, para não entregar a leitura. Isso pode ser mudado em Área dos Pais → Figuras.
+> - **"Junte os pedacinhos"** e **"Escute o som"** agora são botões de ouvir; antes eram uma peça 🧩 solta, que parecia uma figura quebrada. As imagens têm reserva (Twemoji) se o OpenMoji falhar.
+>
+> **Da v1.1:** cenários animados por mundo, mapa em trilha sinuosa, botões 3D e vozes neurais.
 
 Jogo web completo para crianças de **5 a 7 anos** que já conhecem o nome e a forma das letras, mas ainda não ligam **som → letra** dentro das palavras. Usa o **método fônico sistemático e explícito** com **consciência fonológica** (sem método global e sem adivinhar pela imagem).
 
@@ -20,8 +23,9 @@ Jogo web completo para crianças de **5 a 7 anos** que já conhecem o nome e a f
 | `data.js` / `data.json` | **Dados separados da lógica**: palavras, fases, histórias, elogios, falas, regras, loja e medalhas. Gerados por `ferramentas/construir_dados.js`. |
 | `motor.js` | Motor pedagógico sem DOM: geradores de itens por fase, decodificabilidade, Leitner, domínio, adaptatividade, elogios, recompensas e avaliação inicial. |
 | `validadores.js` | Autoteste V1–V12 (no jogo e no Node). |
-| `visual.js` | Cenários SVG de cada mundo e trilha sinuosa do mapa (v1.1). |
-| `gerar_audios.bat` / `.sh` | Gera o Banco de Áudio com um clique (Windows / macOS-Linux). |
+| `visual.js` | Cenários SVG de cada mundo e trilha do mapa. |
+| `gerar_audios.bat` / `.sh` | Gera ou atualiza o Banco de Áudio com um clique. |
+| `ferramentas/pronuncias.json` | Correções manuais de pronúncia. |
 | `game.js` | Armazenamento, áudio (Banco → voz do navegador), síntese de fonemas, efeitos, música, microfone, mascote, confete. |
 | `minijogos.js` | Renderizadores dos minijogos, andaime de 3 níveis, karaokê. |
 | `cenas.js` | Cenas: início, perfis, avaliação, mapa, executor de fases, resultado, loja, álbum, medalhas, certificado e Área dos Pais. |
@@ -227,37 +231,40 @@ Depois do primeiro acesso, o jogo funciona em modo avião (exceto o microfone).
 
 ---
 
-## 4. Banco de Áudio — vozes neurais naturais (v1.1)
+## 4. Banco de Áudio — vozes neurais naturais (v1.2)
 
-O jogo **funciona sem o banco**, mas a qualidade da voz depende do navegador. Para o som **natural e igual em todos os aparelhos**, gere o banco uma vez:
+O jogo funciona sem o banco (usa a melhor voz do navegador), mas **com o banco o som fica natural e igual em todos os aparelhos**.
 
-**Windows (mais fácil):** dê duplo clique em `gerar_audios.bat`.
-1. Ele cria um ambiente Python e instala `edge-tts`, `numpy`, `soundfile`, `librosa` e `pyloudnorm`.
-2. Gera **12 sons de amostra** em `audio_amostra/` (palavras, sílabas, fonemas, uma frase e uma história). Escute-os.
-3. Se gostar, confirme para gerar o banco completo (1.623 itens + versões lentas, de 10 a 20 minutos).
+**Windows:** dê duplo clique em `gerar_audios.bat`. Ele faz três coisas:
+1. Instala `edge-tts`, `numpy`, `soundfile`, `librosa` e `pyloudnorm`.
+2. Gera **16 sons de amostra** em `audio_amostra/`, incluindo as sílabas "ve", "nha", "que" e "pan", que antes eram soletradas. Escute-os.
+3. Gera o banco completo ou **atualiza automaticamente** um banco da v1.0/1.1.
 
 **macOS/Linux:** `./gerar_audios.sh`
 
-| Motor | Comando | Qualidade | Observação |
-|---|---|---|---|
-| **edge** (padrão) | `python gerar_audios.py` | ★★★★★ voz neural Microsoft | Precisa de internet só durante a geração. Dá os tempos de cada palavra, então o karaokê fica exato com a frase falada de forma contínua. |
-| edge, outra voz | `--voz pt-BR-ThalitaMultilingualNeural` ou `--voz pt-BR-AntonioNeural` | ★★★★★ | Rode antes `--amostra` para comparar. Use `--refazer` para trocar a voz de um banco já existente. |
-| **kokoro** | `--motor kokoro` | ★★★★ | 100% offline, licença Apache-2.0 (`pip install kokoro`), voz `pf_dora`. |
-| piper | `--motor piper` | ★★ | A voz da v1.0, a mais robótica. |
+### O que a v1.2 corrige
+| Problema | Causa | Correção |
+|---|---|---|
+| Sílaba soletrada ("ve" → "v, e") | A voz trata "ve", "nha" etc. como sigla | **Grafia pronunciável**: "vé", "nhá", "qué", "pân" (pronúncia de cartilha: bá-bé-bí-bó-bú). O gerador **ouve o resultado**: se detectar dois sons separados, tenta outras grafias ("vê", "ve."...). O que continuar suspeito vai para `audio/revisar.txt`. |
+| Fala rápida | Velocidade −8% | **−15%** na normal e **−35%** na lenta 🐢. Para deixar ainda mais calma: `python gerar_audios.py --velocidade -20% --refazer`. |
+| Som truncado | Corte de silêncio muito justo comia o "f", o "s" e o "v" do começo e do fim; o navegador perdia o início do arquivo; os sons vinham colados | Corte relativo ao volume do próprio som, **margem de silêncio** (70 ms antes, 160 ms depois), reprodução por **Web Audio** (início exato) e **respiro** de 90 ms entre um som e outro, ajustável na Área dos Pais. |
 
-**Fonemas contínuos (M, S, F...):** o script pede à voz o som alongado ("mmmmmm", "ssssss") e verifica se não saiu uma vogal (sinal de que a voz soletrou). Se o som alongado falhar, recorta a consoante da sílaba de apoio ("ma"). Se o recorte também falhar, usa `--wikimedia`. As oclusivas (P, B, T, D, C, G) sempre tocam dentro da sílaba.
+### Corrigir uma pronúncia manualmente
+Abra `ferramentas/pronuncias.json`, escreva a chave do som (ela aparece em `audio/revisar.txt` e em Área dos Pais → Banco de Áudio) e como a voz deve ler. Por exemplo: `"silaba_ve": "vê"`. Depois rode:
+`python gerar_audios.py --tipos silaba,fonema`
 
-Ao final, copie ou mantenha a pasta `audio/` ao lado do `index.html` (ela inclui `manifest.js`, então funciona até com duplo clique). Escute 100% dos fonemas e das sílabas em **Área dos Pais → Banco de Áudio** antes do piloto.
+### Motores e vozes
+| Motor | Comando | Observação |
+|---|---|---|
+| **edge** (padrão) | `python gerar_audios.py` | Voz neural Francisca. Precisa de internet só durante a geração. |
+| edge, outra voz | `--voz pt-BR-ThalitaMultilingualNeural` ou `--voz pt-BR-AntonioNeural` + `--refazer` | Teste antes com `--amostra`. |
+| **kokoro** | `--motor kokoro` | 100% offline, Apache-2.0. |
+| piper | `--motor piper` | Mais robótico. |
 
-**Licenças:** o `edge-tts` usa o serviço online de leitura em voz alta do Microsoft Edge. Para uso pessoal ou educativo, tudo bem. Para **publicar ou vender**, gere com **Azure Speech** (as mesmas vozes; a camada gratuita cobre 500 mil caracteres por mês) ou com **Kokoro** (Apache-2.0).
+**Licença:** o edge-tts usa o serviço de leitura em voz alta do Edge. Para uso pessoal ou educativo, tudo bem. Para publicar ou vender, gere com Azure Speech ou Kokoro.
 
-### Sem o banco: o que mudou na voz do navegador (v1.1)
-- **Escolha automática da voz mais natural:** Edge "Francisca/Thalita Online (Natural)" → Google pt-BR → Luciana aprimorada (iOS). Vozes antigas como "Maria Desktop" ficam por último. O ⭐ marca a voz recomendada na Área dos Pais.
-- **Velocidade natural (1,0):** antes era 0,85, o que deixava a fala arrastada. O modo 🐢 usa 0,8.
-- **Frases faladas de uma vez só**, com entonação natural, em vez de picotar palavra por palavra.
-- **Karaokê com a frase inteira:** destaque pelo evento `boundary` ou por estimativa de tempo. O modo antigo, palavra por palavra, continua disponível na Área dos Pais.
-- **Fonemas:** som alongado ("mmmm") com vozes naturais e sílaba de apoio com vozes antigas. O zumbido sintético da v1.0 agora é opcional.
-- Quando a voz do aparelho é robótica, a Área dos Pais mostra um aviso recomendando o Edge/Chrome ou o Banco de Áudio.
+### Sem o banco (voz do navegador)
+O jogo escolhe a voz mais natural instalada (Edge "Francisca/Thalita Online (Natural)" → Google pt-BR → Luciana aprimorada) e fala em velocidade calma (0,95). Também aplica às sílabas a **mesma grafia pronunciável**, para não soletrar, e fala as frases inteiras.
 
 ---
 

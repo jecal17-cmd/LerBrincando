@@ -172,7 +172,7 @@
       const T = o.foco && W[o.foco] ? W[o.foco] : escolher(D.palavras.filter((w) => w.s.length >= 2 && w.s.length <= 4));
       const ped = []; T.s.forEach((s, i) => { if (i) ped.push(S.pausa(500)); ped.push(S.s(s)); });
       const opc = opcoesImagem(T, D.palavras, nOpc(ctx.perfil, 'juntar', 3), (w) => w.p !== T.p);
-      return base(f, 'juntar', { ui: 'escolha', instr: 'juntar', chave: 'p:' + T.p, pedido: ped, visor: { icone: '🧩' }, opcoes: opc, certo: T.p, oral: true, elogio: { tipo: 'juntar', palavra: T.p } });
+      return base(f, 'juntar', { ui: 'escolha', instr: 'juntar', chave: 'p:' + T.p, pedido: ped, visor: { pecasSom: T.s.length }, opcoes: opc, certo: T.p, oral: true, elogio: { tipo: 'juntar', palavra: T.p } });
     };
     G.tirar = (f, ctx, o = {}) => {
       const m = o.foco ? (D.tirar.find((x) => x.de === o.foco) || escolher(D.tirar)) : escolher(D.tirar);

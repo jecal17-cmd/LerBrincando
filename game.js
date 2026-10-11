@@ -17,7 +17,7 @@
   // 1. ESTADO E ARMAZENAMENTO (localStorage)
   // ======================================================================
   const CONFIG_PADRAO = {
-    voz: '', taxa: 1, fonemaModo: 'auto', caixa: 'alta', musica: false, volMusica: 0.5, efeitos: true, volEfeitos: 0.7, volVoz: 1,
+    voz: '', taxa: 0.95, fonemaModo: 'auto', respiroMs: 90, nomesFiguras: 'auto', caixa: 'alta', musica: false, volMusica: 0.5, efeitos: true, volEfeitos: 0.7, volVoz: 1,
     micConsent: false, mic: false, limiteSessaoMin: 20, limiteDiaMin: 40, altoContraste: false, menosEstimulos: false,
     karaokePalavraAPalavra: false, manterTela: false
   };
@@ -27,7 +27,7 @@
       try { this.dados = JSON.parse(localStorage.getItem(CHAVE_LS)); } catch (e) { this.dados = null; }
       if (!this.dados || !Array.isArray(this.dados.perfis)) this.dados = { versao: 1, perfis: [], atual: null, config: {} };
       this.dados.config = Object.assign({}, CONFIG_PADRAO, this.dados.config || {});
-      if (this.dados.config.taxa === 0.85 && !this.dados.config.migrou11) { this.dados.config.taxa = 1; this.dados.config.migrou11 = true; } // v1.1: fala menos arrastada
+      if (!this.dados.config.migrou12) { if (this.dados.config.taxa === 0.85 || this.dados.config.taxa === 1) this.dados.config.taxa = 0.95; this.dados.config.migrou12 = true; }
       // completa campos novos em perfis antigos
       this.dados.perfis.forEach((p) => { const base = Motor.novoPerfil(p.nome, p.avatar); Object.keys(base).forEach((k) => { if (p[k] === undefined) p[k] = base[k]; }); Object.keys(base.stats).forEach((k) => { if (p.stats[k] === undefined) p.stats[k] = 0; }); });
       if (DEBUG) { const off = Number(sessionStorage.getItem('lbDebugDias') || 0); Motor.offsetDias = off; }
@@ -60,13 +60,18 @@
   const fmt = (t) => (Store.cfg.caixa === 'baixa' ? N.maiusc(t).toLocaleLowerCase('pt-BR') : N.maiusc(t));
   const mostrarAmbas = () => (estado.mundoAtual >= 6);
   // Imagem: OpenMoji (SVG via CDN) com emoji nativo como alternativa
+  // Imagem: OpenMoji (SVG) → Twemoji (SVG, reserva) → emoji nativo do sistema
+  const CDN_IMG = [
+    (c) => `https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/${c}.svg`,
+    (c) => `https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/${c.toLowerCase()}.svg`
+  ];
   function fig(emoji, cls) {
     const span = el('span', { class: cls || 'fig', 'aria-hidden': 'true' });
-    const partes = N.separarEmojis(emoji);
-    partes.forEach((pt) => {
+    N.separarEmojis(emoji).forEach((pt) => {
       const code = N.codigoOpenMoji(pt);
-      const img = el('img', { src: `https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/${code}.svg`, alt: '', draggable: 'false', loading: 'lazy' });
-      img.addEventListener('error', () => { img.replaceWith(document.createTextNode(pt)); });
+      let k = 0;
+      const img = el('img', { src: CDN_IMG[0](code), alt: '', draggable: 'false', loading: 'lazy', decoding: 'async' });
+      img.addEventListener('error', () => { k++; if (k < CDN_IMG.length) img.src = CDN_IMG[k](code); else img.replaceWith(el('span', { class: 'emoji-nativo' }, pt)); });
       span.append(img);
     });
     return span;
@@ -90,30 +95,28 @@
   const reduzMovimento = () => window.matchMedia('(prefers-reduced-motion: reduce)').matches || Store.cfg.menosEstimulos;
 
   // ======================================================================
-  // 3. SERVIÇO DE ÁUDIO  (v1.1 — voz mais natural)
-  //    1) Banco de Áudio pré-gerado (vozes neurais Microsoft via edge-tts, Kokoro ou Piper)
-  //    2) Voz do navegador, com a MELHOR voz neural disponível, velocidade natural
-  //       e falas AGRUPADAS numa única frase (sem picotar palavra por palavra).
-  //    Fonemas contínuos sem banco: som alongado ("mmmm"), sílaba de apoio ou síntese (configurável).
+  // 3. SERVIÇO DE ÁUDIO  (v1.2)
+  //    1) Banco de Áudio pré-gerado (vozes neurais: edge-tts, Kokoro ou Piper), tocado por Web Audio
+  //       (sem cortar o início do som) com pequeno intervalo entre um som e outro.
+  //    2) Voz do navegador: melhor voz neural disponível, velocidade calma, frases inteiras
+  //       e SÍLABAS escritas de forma pronunciável ("ve" → "vé") para nunca soletrar.
   // ======================================================================
-  // Ranking de vozes: quanto maior, mais natural
   function notaVoz(v) {
     let n = 0;
     if (/pt[-_]BR/i.test(v.lang)) n += 100; else if (/^pt/i.test(v.lang)) n += 10;
-    if (/natural|neural|online/i.test(v.name)) n += 60;            // Edge: Francisca/Thalita/Antonio Online (Natural)
+    if (/natural|neural|online/i.test(v.name)) n += 60;
     if (/thalita|francisca/i.test(v.name)) n += 15;
-    if (/google/i.test(v.name)) n += 40;                            // Chrome/Android: Google português do Brasil
-    if (/luciana.*(premium|enhanced|aprimorad)/i.test(v.name)) n += 45; // iOS/macOS voz aprimorada
+    if (/google/i.test(v.name)) n += 40;
+    if (/luciana.*(premium|enhanced|aprimorad)/i.test(v.name)) n += 45;
     else if (/luciana|fernanda|felipe/i.test(v.name)) n += 20;
-    if (/desktop|maria|daniel|eSpeak|compact/i.test(v.name)) n -= 30; // vozes antigas, robóticas
+    if (/desktop|maria|daniel|eSpeak|compact/i.test(v.name)) n -= 30;
     if (!v.localService) n += 5;
     return n;
   }
-  // Texto que soa como o fonema alongado em vozes neurais
   const ALONGADO = { M: 'mmmmm', N: 'nnnnn', L: 'lllll', F: 'fffff', V: 'vvvvv', S: 'sssss', Z: 'zzzzz', X: 'chhhhh', J: 'jjjjj', NH: 'nhhhh', LH: 'lhhhh' };
 
   const Som = {
-    ctx: null, manifest: window.AUDIO_MANIFEST || null, vozes: [], voz: null, token: 0, falando: false, cache: new Map(), avisoVoz: '', vozNatural: false,
+    ctx: null, manifest: window.AUDIO_MANIFEST || null, vozes: [], voz: null, token: 0, falando: false, cache: new Map(), buffers: new Map(), avisoVoz: '', vozNatural: false, fonteAtual: null,
     async desbloquear() {
       try {
         if (!this.ctx) this.ctx = new (window.AudioContext || window.webkitAudioContext)();
@@ -151,24 +154,31 @@
     },
     origem(seg) {
       const it = this.itemBanco(seg);
-      if (it) return (it.origem || 'banco') + (this.manifest.voz ? ' · ' + this.manifest.voz : '');
-      if (seg.k === 'fonema' && D.fonemas[seg.t] && D.fonemas[seg.t].tipo === 'continua') return 'voz do navegador (' + (Store.cfg.fonemaModo || 'auto') + ')';
-      return 'voz do navegador';
+      if (it) return (it.origem || 'banco') + (it.texto ? ' «' + it.texto + '»' : '') + (it.suspeito ? ' ⚠️ revisar' : '');
+      if (seg.k === 'fonema' && D.fonemas[seg.t] && D.fonemas[seg.t].tipo === 'continua') return 'voz do navegador (' + this.modoFonema() + ')';
+      const t = this.textoTTS(seg);
+      return 'voz do navegador' + (t && t !== seg.t ? ' «' + t + '»' : '');
     },
-    parar() { this.token++; if ('speechSynthesis' in window) speechSynthesis.cancel(); if (this.audioAtual) { this.audioAtual.pause(); this.audioAtual = null; } Musica.abaixar(false); this.falando = false; },
-    /** Converte um segmento em texto para a voz do navegador (null = não é texto simples) */
+    parar() {
+      this.token++;
+      if ('speechSynthesis' in window) speechSynthesis.cancel();
+      if (this.audioAtual) { this.audioAtual.pause(); this.audioAtual = null; }
+      if (this.fonteAtual) { try { this.fonteAtual.stop(); } catch (e) { /* */ } this.fonteAtual = null; }
+      Musica.abaixar(false); this.falando = false;
+    },
     textoTTS(seg) {
       if (seg.k === 'nome') return D.nomesLetras[seg.t] || seg.t;
-      if (seg.k === 'silaba' || seg.k === 'palavra') return N.maiusc(seg.t).toLocaleLowerCase('pt-BR');
+      if (seg.k === 'palavra') return N.maiusc(seg.t).toLocaleLowerCase('pt-BR');
+      if (seg.k === 'silaba') return N.pronunciavel(seg.t); // nunca soletrar: "ve" → "vé"
       if (seg.k === 'fonema') {
         const f = D.fonemas[seg.t];
-        if (!f) return seg.t.toLowerCase();
+        if (!f) return N.pronunciavel(seg.t);
         if (f.tipo === 'vogal') return f.tts;
-        if (f.tipo === 'oclusiva') return f.apoio.toLowerCase(); // oclusiva: SEMPRE dentro da sílaba
+        if (f.tipo === 'oclusiva') return N.pronunciavel(f.apoio); // oclusiva: SEMPRE dentro da sílaba
         const modo = this.modoFonema();
         if (modo === 'sintese') return null;
-        if (modo === 'alongado') return ALONGADO[seg.t] || f.apoio.toLowerCase();
-        return f.apoio.toLowerCase();
+        if (modo === 'alongado') return ALONGADO[seg.t] || N.pronunciavel(f.apoio);
+        return N.pronunciavel(f.apoio);
       }
       return seg.t;
     },
@@ -177,32 +187,57 @@
       if (m !== 'auto') return m;
       return this.vozNatural ? 'alongado' : 'silaba';
     },
-    /** Fala uma sequência de segmentos (interrompe o que estiver tocando).
-        Segmentos de texto vizinhos viram UMA fala só: entonação natural, sem pausas robóticas. */
+    /** Fala uma sequência de segmentos. Textos vizinhos viram UMA fala (entonação natural);
+        sons do banco tocam um após o outro com um respiro entre eles. */
     async falar(segs, opc = {}) {
       this.parar();
       const meu = ++this.token;
       this.falando = true; Musica.abaixar(true);
+      const respiro = Store.cfg.respiroMs === undefined ? 90 : Store.cfg.respiroMs;
+      let tocouAntes = false;
       try {
         let grupo = [];
-        const despejar = async () => { if (grupo.length) { const t = grupo.join(' ').replace(/\s+([,.!?])/g, '$1'); grupo = []; await this.tts(t, opc.lento, meu); } };
+        const despejar = async () => { if (grupo.length) { const t = grupo.join(' ').replace(/\s+([,.!?])/g, '$1'); grupo = []; await this.tts(t, opc.lento, meu); tocouAntes = true; } };
         for (const seg of [].concat(segs)) {
           if (meu !== this.token) return false;
           if (!seg) continue;
-          if (seg.k === 'pausa') { if (grupo.length && seg.ms <= 450) { if (!/[,.!?:;]$/.test(grupo[grupo.length - 1])) grupo[grupo.length - 1] += ','; continue; } await despejar(); await dormir(seg.ms); continue; }
+          if (seg.k === 'pausa') { if (grupo.length && seg.ms <= 450) { if (!/[,.!?:;]$/.test(grupo[grupo.length - 1])) grupo[grupo.length - 1] += ','; continue; } await despejar(); await dormir(seg.ms); tocouAntes = false; continue; }
           const it = this.itemBanco(seg, opc.lento);
-          if (it) { await despejar(); if (meu !== this.token) return false; await this.tocarArquivo('audio/' + it.arquivo, meu, opc.lento && !this.manifest.itens[this.chave(seg, true)] ? 0.85 : 1); continue; }
+          if (it) {
+            await despejar(); if (meu !== this.token) return false;
+            if (tocouAntes) await dormir(respiro);
+            await this.tocarArquivo('audio/' + it.arquivo, meu, opc.lento && !this.manifest.itens[this.chave(seg, true)] ? 0.85 : 1);
+            tocouAntes = true; continue;
+          }
           const t = this.textoTTS(seg);
-          if (t === null) { await despejar(); await Sintese.fonema(seg.t); await dormir(80); grupo.push(D.fonemas[seg.t].apoio.toLowerCase()); continue; }
-          // sílabas e fonemas isolados ficam como fala própria (para não virar "palavra")
-          if (seg.k === 'silaba' || seg.k === 'fonema' || seg.k === 'nome') { await despejar(); if (meu !== this.token) return false; await this.tts(t, opc.lento, meu, true); continue; }
+          if (t === null) { await despejar(); await Sintese.fonema(seg.t); await dormir(80); grupo.push(N.pronunciavel(D.fonemas[seg.t].apoio)); continue; }
+          if (seg.k === 'silaba' || seg.k === 'fonema' || seg.k === 'nome') { await despejar(); if (meu !== this.token) return false; if (tocouAntes) await dormir(respiro); await this.tts(t, opc.lento, meu, true); tocouAntes = true; continue; }
           grupo.push(t);
         }
         await despejar();
       } finally { if (meu === this.token) { this.falando = false; Musica.abaixar(false); } }
       return true;
     },
-    tocarArquivo(src, meu, taxa = 1) {
+    /** Toca um arquivo do banco. Em http(s) usa Web Audio (início exato, sem corte);
+        em file:// usa o elemento <audio>. */
+    async tocarArquivo(src, meu, taxa = 1) {
+      if (this.ctx && location.protocol.startsWith('http')) {
+        try {
+          let buf = this.buffers.get(src);
+          if (!buf) { const r = await fetch(src); buf = await this.ctx.decodeAudioData(await r.arrayBuffer()); this.buffers.set(src, buf); if (this.buffers.size > 400) this.buffers.delete(this.buffers.keys().next().value); }
+          if (meu !== this.token) return;
+          if (this.ctx.state === 'suspended') await this.ctx.resume();
+          return await new Promise((resolve) => {
+            const fonte = this.ctx.createBufferSource(); const g = this.ctx.createGain();
+            fonte.buffer = buf; fonte.playbackRate.value = taxa; g.gain.value = Store.cfg.volVoz;
+            fonte.connect(g).connect(this.ctx.destination);
+            this.fonteAtual = fonte;
+            const t = setTimeout(resolve, buf.duration / taxa * 1000 + 400);
+            fonte.onended = () => { clearTimeout(t); resolve(); };
+            fonte.start(this.ctx.currentTime + 0.02);
+          });
+        } catch (e) { /* cai para <audio> */ }
+      }
       return new Promise((resolve) => {
         let a = this.cache.get(src);
         if (!a) { a = new Audio(src); a.preload = 'auto'; this.cache.set(src, a); }
@@ -213,22 +248,21 @@
         a.play().catch(() => fim());
       });
     },
-    /** Voz do navegador: velocidade natural; divide só textos longos (o Chrome corta falas > ~15 s) */
     async tts(texto, lento, meu, curto) {
       if (!('speechSynthesis' in window) || !texto) return dormir(250);
-      await dormir(30); // o Chrome ignora fala logo depois de cancel()
+      await dormir(30);
       const pedacos = texto.length > 180 ? (String(texto).match(/[^.!?;]+[.!?;]*/g) || [texto]) : [texto];
       for (const p of pedacos) {
         if (meu !== undefined && meu !== this.token) return;
         await new Promise((resolve) => {
           const u = new SpeechSynthesisUtterance(p.trim());
           u.lang = (this.voz && this.voz.lang) || 'pt-BR'; if (this.voz) u.voice = this.voz;
-          const base = Store.cfg.taxa || 1;
-          u.rate = Math.max(0.55, base * (lento ? 0.8 : 1) * (curto && !lento ? 0.95 : 1));
+          const base = Store.cfg.taxa || 0.95;
+          u.rate = Math.max(0.55, base * (lento ? 0.8 : 1) * (curto && !lento ? 0.92 : 1));
           u.pitch = 1; u.volume = Store.cfg.volVoz;
           let feito = false; const fim = () => { if (!feito) { feito = true; clearTimeout(t); resolve(); } };
           u.onend = fim; u.onerror = fim;
-          const t = setTimeout(fim, 2500 + p.length * 110 / u.rate);
+          const t = setTimeout(fim, 2500 + p.length * 120 / u.rate);
           speechSynthesis.speak(u);
         });
       }

@@ -1,7 +1,7 @@
 /* Ler Brincando — data.js (GERADO por ferramentas/construir_dados.js — edite a fonte e rode o script)
    Banco de palavras, fases, histórias, elogios, falas e regras. Formato JSON para o gerar_audios.py ler. */
 window.DADOS = {
- "versao": "1.1.0",
+ "versao": "1.2.0",
  "mundos": [
   {
    "id": 1,
@@ -3142,15 +3142,17 @@ window.DADOS = {
  "creditos": [
   "Imagens: OpenMoji — o projeto de emojis de código aberto (https://openmoji.org), licença CC BY-SA 4.0. Emojis nativos do sistema são usados como alternativa.",
   "Fonte: Andika (SIL International), SIL Open Font License 1.1, via Google Fonts. Alternativa: fonte do sistema.",
-  "Vozes do Banco de Áudio (v1.1): vozes neurais Microsoft (pt-BR Francisca/Thalita/Antonio) geradas com a biblioteca livre edge-tts (licença GPL-3.0/LGPL), ou Kokoro-82M (Apache-2.0, voz pf_dora) para geração offline. Para uso comercial, gere com Azure Speech ou Kokoro.",
-  "Fontes: Baloo 2 (Ek Type) e Andika (SIL), ambas SIL Open Font License 1.1, via Google Fonts.",
+  "Vozes do Banco de Áudio: vozes neurais Microsoft (pt-BR Francisca/Thalita/Antonio) geradas com a biblioteca livre edge-tts, ou Kokoro-82M (Apache-2.0) offline. Para uso comercial, gere com Azure Speech ou Kokoro.",
+  "Imagens reserva: Twemoji (jdecked/twemoji), licença CC BY 4.0.",
+  "Fontes: Baloo 2 e Andika, SIL Open Font License 1.1, via Google Fonts.",
   "Voz alternativa: Piper TTS (Rhasspy/Open Home Foundation, licença MIT) com o modelo pt_BR-faber-medium. Confira a licença do modelo baixado no arquivo .onnx.json/MODEL_CARD e registre aqui.",
   "Fonemas alternativos (opcional): gravações do Alfabeto Fonético Internacional no Wikimedia Commons — a atribuição de cada arquivo usado aparece no painel do Banco de Áudio (licenças variam por arquivo).",
   "Efeitos sonoros, música e confete: gerados pelo próprio jogo (Web Audio API e canvas), sem arquivos externos.",
   "Personagens, histórias e textos: originais, criados para este jogo."
  ],
  "changelog": [
-  "1.1.0 — Visual novo (cenários ilustrados por mundo, trilha sinuosa no mapa, botões 3D, fonte Baloo 2); áudio mais natural: escolha automática da voz neural do navegador, velocidade natural, frases faladas de uma vez (sem picotar), karaokê com a frase inteira, fonema alongado; gerador do Banco de Áudio com vozes neurais Microsoft (edge-tts) e Kokoro offline, com amostra para comparar vozes.",
+  "1.2.0 — Sílabas nunca soletradas (grafia pronunciável + verificação automática no gerador), fala mais calma e sem cortes (margens de silêncio, Web Audio, respiro entre sons); telas de jogo sobre o cenário do mundo, opções centralizadas, nome embaixo das figuras (com proteção nas atividades de leitura), botão de ouvir no lugar de ícones soltos, imagens reserva Twemoji.",
+  "1.1.0 — Cenários ilustrados, trilha sinuosa no mapa, botões 3D; vozes neurais (edge-tts/Kokoro), velocidade natural, frases inteiras e karaokê fluido.",
   "1.0.0 — Primeira versão: 8 mundos, 93 fases, 363 palavras, 11 histórias, 17 minijogos, Área dos Pais, autoteste V1–V12."
  ],
  "palavras": [
@@ -3564,5 +3566,5 @@ window.DADOS = {
   "H": 77,
   "X_VARIOS": 77
  },
- "geradoEm": "2026-10-11T10:41:26.537Z"
+ "geradoEm": "2026-10-11T12:11:08.548Z"
 };

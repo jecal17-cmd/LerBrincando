@@ -1,6 +1,6 @@
 {
  "geral": "APROVADO (com pendências de áudio)",
- "data": "2026-10-11T10:51:27.525Z",
+ "data": "2026-10-11T12:11:09.850Z",
  "relatorio": [
   {
    "id": "V1",
@@ -164,7 +164,7 @@
    "nome": "Simulação de jogador",
    "status": "APROVADO",
    "detalhes": [],
-   "resumo": "Bot 100%: concluiu 93/93 fases em 93 jogadas. Bot 90%: chegou à fase final (concluiu) em 135 jogadas (rejogando quando < 85%). Bot 50%: 34 andaimes, 4 reduções de dificuldade (nível máx. 2), máx. 4 tentativas por item, parou por domínio < 85% na fase 1.1 com a fase sempre rejogável e revisão oferecida (sem beco sem saída)."
+   "resumo": "Bot 100%: concluiu 93/93 fases em 93 jogadas. Bot 90%: chegou à fase final (concluiu) em 130 jogadas (rejogando quando < 85%). Bot 50%: 34 andaimes, 4 reduções de dificuldade (nível máx. 2), máx. 4 tentativas por item, parou por domínio < 85% na fase 1.1 com a fase sempre rejogável e revisão oferecida (sem beco sem saída)."
   },
   {
    "id": "V11",

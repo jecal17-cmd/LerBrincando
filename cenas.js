@@ -139,21 +139,19 @@
       b.onclick = () => { if (!lib) { falar([S.fala('trancada')]); return; } mapa(mm.id); };
       abas.append(b);
     });
-    // ---- trilha sinuosa sobre o cenário ilustrado do mundo
     const fasesM = D.fases.map((f, i) => ({ f, i })).filter((x) => x.f.mundo === mundo);
     const largura = Math.min(document.getElementById('app').clientWidth || innerWidth, 900) - 16;
     const T = window.Visual.trilha(fasesM.length, largura);
     const trilha = el('div', { class: 'trilha-sinuosa', style: { height: T.altura + 'px' } });
     const feitoAte = fasesM.reduce((acc, x, k) => (p.fases[x.f.id] && p.fases[x.f.id].dominada ? k : acc), -1);
-    let dFeito = '';
-    if (feitoAte >= 0) { const T2 = window.Visual.trilha(fasesM.length, largura); dFeito = T2.d.split(' C').slice(0, feitoAte + 1).join(' C'); }
+    const dFeito = feitoAte >= 0 ? T.d.split(' C').slice(0, feitoAte + 1).join(' C') : '';
     trilha.innerHTML = `<svg class="caminho" width="${largura}" height="${T.altura}" aria-hidden="true"><path d="${T.d}" class="caminho-borda"/><path d="${T.d}" class="caminho-base"/><path d="${T.d}" class="caminho-tracos"/>${dFeito ? `<path d="${dFeito}" class="caminho-feito"/>` : ''}</svg>`;
     let alvoScroll = null;
     fasesM.forEach(({ f, i }, k) => {
       const lib = Motor.faseLiberada(p, i); const reg = p.fases[f.id]; const pt = T.pts[k];
       const estrelas = el('span', { class: 'est', 'aria-hidden': 'true' }, ...[1, 2, 3].map((n) => el('i', { class: reg && reg.estrelas >= n ? 'on' : '' }, '★')));
       const tipo = f.tipo === 'guardiao' ? 'guardiao' : f.tipo === 'historia' ? 'historia' : '';
-      const b = el('button', { class: `no-fase ${lib ? '' : 'trancada'} ${i === prox ? 'proxima' : ''} ${reg && reg.dominada ? 'feita' : ''} ${tipo}`, type: 'button', style: { left: pt.x + 'px', top: pt.y + 'px' }, 'aria-label': `fase ${f.id}: ${f.nome}${lib ? '' : ' (trancada)'}` },
+      const b = el('button', { class: `no-fase ${lib ? '' : 'trancada'} ${i === prox ? 'proxima' : ''} ${reg && reg.dominada ? 'feita' : ''} ${tipo}`, type: 'button', style: { left: pt.x + 'px', top: pt.y + 'px' }, 'aria-label': `fase ${f.id}: ${f.nome}${lib ? '' : ' (trancada)'}`, title: f.nome },
         el('span', { class: 'ico' }, lib ? ICONES[f.tipo] || '⭐' : '🔒'), el('span', { class: 'num' }, f.id.split('.')[1]), reg ? estrelas : null,
         i === prox ? el('span', { class: 'lili-aqui', 'aria-hidden': 'true' }, mascote({ mini: true })) : null);
       b.onclick = () => { if (!lib) { falar([S.fala('trancada')]); return; } Efeito.tocar('clique'); introFase(i); };
@@ -167,7 +165,6 @@
       el('div', { class: 'placa-prog', 'aria-label': `${progM} de ${fasesM.length} fases` }, el('i', { style: { width: (progM / fasesM.length * 100) + '%' } }), el('span', null, `${progM}/${fasesM.length}`)))), el('div', { class: 'rolagem-mapa' }, trilha));
     tela(hud(), mp);
     window.Visual.aplicarCenario(mundo, 'mapa');
-    document.documentElement.style.setProperty('--c1', m.cor1); document.documentElement.style.setProperty('--c2', m.cor2);
     requestAnimationFrame(() => { if (alvoScroll) alvoScroll.scrollIntoView({ block: 'center', behavior: 'instant' }); else { const r = mp.querySelector('.rolagem-mapa'); r.scrollTop = r.scrollHeight; } });
     falar([S.f(m.nome), S.pausa(200), S.fala('mapa')]);
   }
@@ -270,7 +267,7 @@
   }
 
   async function resultadoFase(idx, fim, novas, subiu) {
-    const f = D.fases[idx]; const p = Store.perfil;
+    const f = D.fases[idx]; const p = Store.perfil; window.Visual.aplicarCenario(f.mundo, 'resultado');
     const est = el('div', { class: 'estrelas', 'aria-label': `${fim.estrelas} estrelas` });
     for (let k = 1; k <= 3; k++) est.append(el('span', { class: k <= fim.estrelas ? '' : 'apagada' }, '⭐'));
     const acoes = el('div', { class: 'acoes' });
@@ -444,11 +441,14 @@
     const testar = el('button', { class: 'btn mini', type: 'button' }, '▶ Testar'); testar.onclick = () => Som.falar([S.f('Oi! Eu sou a Lili. Vamos ler brincando?')]);
     c.append(el('h3', null, '🗣️ Voz'), Som.avisoVoz ? el('p', { class: 'aviso' }, '⚠️ ', Som.avisoVoz) : null,
       el('p', null, Som.manifest ? '✅ Banco de Áudio instalado: os sons principais vêm do banco. A voz abaixo só é usada para textos fora do banco.' : '⚠️ Banco de Áudio não encontrado: o jogo usa a voz do navegador e a síntese dos fonemas contínuos.'),
-      el('label', { class: 'linha' }, 'Voz do navegador: ', sel, testar), faixa('taxa', 'Velocidade da fala (1 = natural)', 0.7, 1.2, 0.05), faixa('volVoz', 'Volume da voz', 0.2, 1, 0.1),
+      el('label', { class: 'linha' }, 'Voz do navegador: ', sel, testar), faixa('taxa', 'Velocidade da voz do navegador (0,95 = calma)', 0.7, 1.15, 0.05), faixa('volVoz', 'Volume da voz', 0.2, 1, 0.1),
       chk('karaokePalavraAPalavra', 'Karaokê palavra por palavra (mais pausado; desmarcado = frase inteira com entonação natural)'),
-      (() => { const s = el('select', { 'aria-label': 'som dos fonemas' }, ...[['auto', 'Automático'], ['alongado', 'Som alongado (mmmm) — melhor com vozes naturais'], ['silaba', 'Sílaba de apoio (ma)'], ['sintese', 'Som sintético (Web Audio)']].map(([v, t]) => el('option', { value: v, selected: (cfg.fonemaModo || 'auto') === v }, t)));
-        s.onchange = () => { cfg.fonemaModo = s.value; salvar(); }; const tb = el('button', { class: 'btn mini', type: 'button' }, '▶ M'); tb.onclick = () => Som.falar([S.fon('M'), S.pausa(400), S.fon('S')]);
+      faixa('respiroMs', 'Intervalo entre um som e outro (ms)', 0, 400, 30),
+      (() => { const s = el('select', { 'aria-label': 'som dos fonemas' }, ...[['auto', 'Automático'], ['alongado', 'Som alongado (mmmm) — melhor com vozes naturais'], ['silaba', 'Sílaba de apoio (má)'], ['sintese', 'Som sintético (Web Audio)']].map(([v, t]) => el('option', { value: v, selected: (cfg.fonemaModo || 'auto') === v }, t)));
+        s.onchange = () => { cfg.fonemaModo = s.value; salvar(); }; const tb = el('button', { class: 'btn mini', type: 'button' }, '▶ M, S, VE'); tb.onclick = () => Som.falar([S.fon('M'), S.pausa(400), S.fon('S'), S.pausa(400), S.s('VE')]);
         return el('label', { class: 'linha' }, 'Fonemas sem Banco de Áudio: ', s, tb); })());
+    c.append(el('h3', null, '🖼️ Figuras'), (() => { const s = el('select', { 'aria-label': 'nomes das figuras' }, ...[['auto', 'Automático: nome sempre visível, exceto quando revelaria a resposta (aparece depois de responder)'], ['sempre', 'Sempre mostrar o nome (ajuda o adulto; pode facilitar a leitura)'], ['nunca', 'Nunca mostrar (só a figura)']].map(([v, t]) => el('option', { value: v, selected: (cfg.nomesFiguras || 'auto') === v }, t)));
+        s.onchange = () => { cfg.nomesFiguras = s.value; salvar(); }; return el('label', { class: 'linha' }, 'Nome embaixo das figuras: ', s); })());
     c.append(el('h3', null, '🔤 Letras'), el('label', { class: 'linha' }, 'Tipo de letra: ', (() => { const s = el('select', { 'aria-label': 'tipo de letra' }, el('option', { value: 'alta', selected: cfg.caixa === 'alta' }, 'LETRA BASTÃO (CAIXA ALTA)'), el('option', { value: 'baixa', selected: cfg.caixa === 'baixa' }, 'minúsculas')); s.onchange = () => { cfg.caixa = s.value; salvar(); }; return s; })()), el('p', null, 'A partir do Mundo 6, as duas formas aparecem lado a lado.'));
     c.append(el('h3', null, '🎵 Sons'), chk('musica', 'Música de fundo (calma; abaixa quando a voz fala)', (v) => (v ? (Som.desbloquear(), Musica.iniciar()) : Musica.parar())), faixa('volMusica', 'Volume da música', 0, 1, 0.1), chk('efeitos', 'Efeitos sonoros'), faixa('volEfeitos', 'Volume dos efeitos', 0, 1, 0.1));
     // microfone

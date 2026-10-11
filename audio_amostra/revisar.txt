@@ -1,0 +1,5 @@
+Sons que a verificação automática considerou suspeitos (possível soletração ou corte).
+Escute em Área dos Pais → Banco de Áudio. Para corrigir, escreva a grafia desejada em
+ferramentas/pronuncias.json (ex.: "silaba_ve": "vê") e rode: python gerar_audios.py --tipos silaba,fonema
+
+(nenhum)

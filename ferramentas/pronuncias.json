@@ -1,0 +1,6 @@
+{
+  "_LEIA": "Corrija aqui a pronúncia de qualquer som do Banco de Áudio. Chave = nome do arquivo sem extensão (veja audio/revisar.txt ou a Área dos Pais → Banco de Áudio). Valor = como a voz deve ler. Depois rode: python gerar_audios.py --tipos silaba,fonema (ou o tipo correspondente). Remova o _ da frente para ativar os exemplos.",
+  "_silaba_ve": "vê",
+  "_silaba_que": "quê",
+  "_palavra_ioio2": "iôiô"
+}
