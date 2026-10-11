@@ -1,0 +1,44 @@
+[
+ {
+  "id": "T14",
+  "nome": "Domínio < 85%",
+  "status": "APROVADO",
+  "det": "precisão 63% → fase 1.2 trancada = true; revisão rápida disponível a partir da fase 1.2 (6 itens gerados)"
+ },
+ {
+  "id": "T15",
+  "nome": "Revisão espaçada (Leitner 1-2-4-7)",
+  "status": "APROVADO",
+  "det": "+1d: vencido=true reapareceu=true caixa=1 | +3d: vencido=true reapareceu=true caixa=2 | +7d: vencido=true reapareceu=true caixa=3 | +14d: vencido=true reapareceu=true caixa=4"
+ },
+ {
+  "id": "T16",
+  "nome": "Repetição de elogios",
+  "status": "APROVADO",
+  "det": "0 repetições em 50 acertos"
+ },
+ {
+  "id": "T12",
+  "nome": "Vários perfis",
+  "status": "APROVADO",
+  "det": "A: 10 XP / B: 0 XP"
+ },
+ {
+  "id": "T09",
+  "nome": "Fechar no meio da fase",
+  "status": "APROVADO",
+  "det": "Store.salvar() após cada item registrado + no pagehide/visibilitychange"
+ },
+ {
+  "id": "T18",
+  "nome": "Acesso à Área dos Pais",
+  "status": "APROVADO",
+  "det": "Multiplicação de 6–9 × 6–9 exigida para abrir o painel"
+ },
+ {
+  "id": "B4",
+  "nome": "Adaptatividade (3 erros → menos opções)",
+  "status": "APROVADO",
+  "det": "antes 4 opções → depois 3"
+ }
+]

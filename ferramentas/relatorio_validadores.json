@@ -1,0 +1,187 @@
+{
+ "geral": "APROVADO (com pendências de áudio)",
+ "data": "2026-10-11T10:51:27.525Z",
+ "relatorio": [
+  {
+   "id": "V1",
+   "nome": "Integridade silábica",
+   "status": "APROVADO",
+   "detalhes": [],
+   "resumo": "363 palavras conferidas"
+  },
+  {
+   "id": "V2",
+   "nome": "Decodificabilidade das fases",
+   "status": "APROVADO",
+   "detalhes": [],
+   "resumo": "3010 usos de palavras escritas verificados em 4 gerações"
+  },
+  {
+   "id": "V3",
+   "nome": "Decodificabilidade das histórias e frases",
+   "status": "APROVADO",
+   "detalhes": [],
+   "tabela": [
+    {
+     "id": "h1",
+     "titulo": "O Gato de Sapato",
+     "mundo": 1,
+     "pct": null,
+     "exc": [],
+     "obs": "história oral (sem texto escrito)"
+    },
+    {
+     "id": "h2",
+     "titulo": "Oi, Ioiô!",
+     "mundo": 2,
+     "pct": 1,
+     "exc": [],
+     "palavras": 16
+    },
+    {
+     "id": "h3",
+     "titulo": "A Mala da Vovó",
+     "mundo": 3,
+     "pct": 1,
+     "exc": [],
+     "palavras": 53
+    },
+    {
+     "id": "h4",
+     "titulo": "A Pipa do Macaco",
+     "mundo": 4,
+     "pct": 1,
+     "exc": [],
+     "palavras": 50
+    },
+    {
+     "id": "h5",
+     "titulo": "O Sapo na Sopa",
+     "mundo": 5,
+     "pct": 0.9615384615384616,
+     "exc": [
+      "NÃO",
+      "QUE"
+     ],
+     "palavras": 52
+    },
+    {
+     "id": "h6",
+     "titulo": "O Dragão e a Flor",
+     "mundo": 6,
+     "pct": 0.9848484848484849,
+     "exc": [
+      "QUE"
+     ],
+     "palavras": 66
+    },
+    {
+     "id": "h7",
+     "titulo": "A Chave do Castelo",
+     "mundo": 7,
+     "pct": 1,
+     "exc": [],
+     "palavras": 54
+    },
+    {
+     "id": "h8a",
+     "titulo": "O Robô que Queria Dançar",
+     "mundo": 8,
+     "pct": 1,
+     "exc": [],
+     "palavras": 47
+    },
+    {
+     "id": "h8b",
+     "titulo": "A Tartaruga Apressada",
+     "mundo": 8,
+     "pct": 1,
+     "exc": [],
+     "palavras": 55
+    },
+    {
+     "id": "h8c",
+     "titulo": "O Ninho no Telhado",
+     "mundo": 8,
+     "pct": 1,
+     "exc": [],
+     "palavras": 50
+    },
+    {
+     "id": "h8d",
+     "titulo": "Lili e a Biblioteca Encantada",
+     "mundo": 8,
+     "pct": 1,
+     "exc": [],
+     "palavras": 58
+    }
+   ]
+  },
+  {
+   "id": "V4",
+   "nome": "Pares mínimos",
+   "status": "APROVADO",
+   "detalhes": [],
+   "resumo": "14 pares; P/B, T/D, F/V, C/G, S/Z, X/J"
+  },
+  {
+   "id": "V5",
+   "nome": "Imagens",
+   "status": "APROVADO",
+   "detalhes": [],
+   "resumo": "363 palavras com emoji e código OpenMoji; 0 emojis repetidos"
+  },
+  {
+   "id": "V6",
+   "nome": "Banco de elogios",
+   "status": "APROVADO",
+   "detalhes": [],
+   "resumo": "acerto: 20 · sequencia3: 15 · sequencia5: 15 · sequencia10: 15 · aposErro: 15 · somNovo: 15 · fasePerfeita: 15 · mundoConcluido: 15"
+  },
+  {
+   "id": "V7",
+   "nome": "Distratores",
+   "status": "APROVADO",
+   "detalhes": [],
+   "resumo": "2838 itens de escolha verificados"
+  },
+  {
+   "id": "V8",
+   "nome": "Volume de conteúdo",
+   "status": "APROVADO",
+   "detalhes": [],
+   "resumo": "363 palavras · 93 fases · 11 histórias · 17/17 minijogos da lista (+ somFinal, juntar, tirar, trocar, historia, licao, abertoFechado, nomeSom, regra, somS, freq, escrita, guardiao)"
+  },
+  {
+   "id": "V9",
+   "nome": "Sequência",
+   "status": "APROVADO",
+   "detalhes": [],
+   "resumo": "ordem de ensino: A@2.1 E@2.2 I@2.3 O@2.4 U@2.5 Ã@2.8 F@3.1 V@3.2 M@3.3 N@3.4 L@3.6 S@3.7 Z@3.7 J@3.8 X@3.8 P@4.1 B@4.2 T@4.3 D@4.4 C@4.5 G@4.6 S_Z@5.1 FREQ@5.6 R_FRACO@6.1 CODA_S@6.2 CODA_Z@6.2 CODA_R@6.3 CODA_L@6.4 NASAL@6.5 ÃO@6.6 CCV@6.7 CH@7.1 LH@7.2 NH@7.2 R_FORTE@7.3 RR@7.3 Ç@7.4 C_SUAVE@7.4 SS@7.4 QU@7.5 GU@7.5 G_SUAVE@7.6 H@7.7 X_VARIOS@7.7"
+  },
+  {
+   "id": "V10",
+   "nome": "Simulação de jogador",
+   "status": "APROVADO",
+   "detalhes": [],
+   "resumo": "Bot 100%: concluiu 93/93 fases em 93 jogadas. Bot 90%: chegou à fase final (concluiu) em 135 jogadas (rejogando quando < 85%). Bot 50%: 34 andaimes, 4 reduções de dificuldade (nível máx. 2), máx. 4 tentativas por item, parou por domínio < 85% na fase 1.1 com a fase sempre rejogável e revisão oferecida (sem beco sem saída)."
+  },
+  {
+   "id": "V11",
+   "nome": "Cobertura do Banco de Áudio",
+   "status": "PENDENTE",
+   "detalhes": [
+    "Banco de Áudio não instalado (pasta audio/ ausente). Rode gerar_audios.py."
+   ],
+   "resumo": "1623 itens de áudio necessários"
+  },
+  {
+   "id": "V12",
+   "nome": "Tempos do karaokê",
+   "status": "PENDENTE",
+   "detalhes": [
+    "Sem manifest: o karaokê usa a alternativa (uma fala por palavra/sílaba, encadeadas por onend)."
+   ]
+  }
+ ]
+}
