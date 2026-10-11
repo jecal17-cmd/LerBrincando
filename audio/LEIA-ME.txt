@@ -1,0 +1,2 @@
+Esta pasta recebe o Banco de Áudio gerado por gerar_audios.py (Piper pt_BR-faber-medium).
+Sem ela, o jogo funciona com a voz do navegador. Veja a seção 4 do LEIAME.md.
