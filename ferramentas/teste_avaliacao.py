@@ -1,13 +1,14 @@
 import threading, http.server, socketserver, functools, os, time
 from playwright.sync_api import sync_playwright
 RAIZ=os.path.dirname(os.path.dirname(os.path.abspath(__file__))); http.server.SimpleHTTPRequestHandler.log_message=lambda *a:None
+CAPT = os.environ.get('CAPTURAS', os.path.join(RAIZ, 'ferramentas', 'capturas')); os.makedirs(CAPT, exist_ok=True)
 class S(socketserver.TCPServer): allow_reuse_address=True
 PORTA=int(os.environ.get('PORTA','8795'))
 srv=S(('127.0.0.1',PORTA),functools.partial(http.server.SimpleHTTPRequestHandler,directory=RAIZ)); threading.Thread(target=srv.serve_forever,daemon=True).start()
 STUB="(() => { const ss = window.speechSynthesis; if (ss) { ss.speak = (u) => setTimeout(() => { u.onend && u.onend({}); }, 5); ss.cancel = () => {}; ss.getVoices = () => []; } })();"
 err=[]
 with sync_playwright() as p:
-    b=p.chromium.launch(executable_path='/opt/pw-browsers/chromium-1208/chrome-linux64/chrome')
+    b=p.chromium.launch(**({'executable_path': os.environ['CHROMIUM']} if os.environ.get('CHROMIUM') else {}))
     pg=b.new_page(viewport={'width':820,'height':1180},reduced_motion='reduce'); pg.add_init_script(STUB)
     pg.on('pageerror',lambda e: err.append(str(e)))
     pg.route('**/cdn.jsdelivr.net/**',lambda r:r.abort()); pg.route('**/fonts.g*/**',lambda r:r.abort())
@@ -33,6 +34,6 @@ with sync_playwright() as p:
         pg.wait_for_timeout(200)
     pg.wait_for_timeout(500)
     print('itens respondidos', n, 'avaliacao:', pg.evaluate("JSON.stringify(LB.Store.perfil.avaliacao)"))
-    pg.screenshot(path=os.path.join(RAIZ,'ferramentas','tela_avaliacao_fim.png'))
+    pg.screenshot(path=os.path.join(CAPT, 'tela_avaliacao_fim.png'))
     b.close()
 srv.shutdown(); print('erros', err)

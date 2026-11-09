@@ -2,15 +2,16 @@
 import threading, http.server, socketserver, functools, os, sys, json
 from playwright.sync_api import sync_playwright
 RAIZ=os.path.dirname(os.path.dirname(os.path.abspath(__file__))); http.server.SimpleHTTPRequestHandler.log_message=lambda *a:None
+CAPT = os.environ.get('CAPTURAS', os.path.join(RAIZ, 'ferramentas', 'capturas')); os.makedirs(CAPT, exist_ok=True)
 class S(socketserver.TCPServer): allow_reuse_address=True
 PORTA=int(os.environ.get('PORTA','8830'))
 srv=S(('127.0.0.1',PORTA),functools.partial(http.server.SimpleHTTPRequestHandler,directory=RAIZ)); threading.Thread(target=srv.serve_forever,daemon=True).start()
 STUB="(() => { const ss = window.speechSynthesis; if (ss) { ss.speak = (u) => setTimeout(() => { u.onend && u.onend({}); }, 5); ss.cancel = () => {}; ss.getVoices = () => []; } })();"
 SVG='<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"><circle cx="36" cy="36" r="28" fill="#ffb347" stroke="#333" stroke-width="3"/><circle cx="27" cy="31" r="4"/><circle cx="45" cy="31" r="4"/><path d="M24 44 q12 10 24 0" stroke="#333" stroke-width="3" fill="none"/></svg>'
 vp=[int(x) for x in sys.argv[1].split('x')]; fases=sys.argv[2].split(',')
-out='/home/claude/shots'; err=[]; rel={}
+out=CAPT; err=[]; rel={}
 with sync_playwright() as p:
-    b=p.chromium.launch(executable_path='/opt/pw-browsers/chromium-1208/chrome-linux64/chrome')
+    b=p.chromium.launch(**({'executable_path': os.environ['CHROMIUM']} if os.environ.get('CHROMIUM') else {}))
     pg=b.new_page(viewport={'width':vp[0],'height':vp[1]},reduced_motion='reduce'); pg.add_init_script(STUB)
     pg.on('pageerror',lambda e: err.append(str(e)))
     pg.route('**/openmoji@*/**',lambda r:r.fulfill(status=200,content_type='image/svg+xml',body=SVG)); pg.route('**/fonts.g*/**',lambda r:r.abort())

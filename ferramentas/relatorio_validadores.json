@@ -1,6 +1,6 @@
 {
- "geral": "APROVADO (com pendências de áudio)",
- "data": "2026-10-11T12:11:09.850Z",
+ "geral": "APROVADO",
+ "data": "2026-11-09T14:46:00.858Z",
  "relatorio": [
   {
    "id": "V1",
@@ -164,24 +164,20 @@
    "nome": "Simulação de jogador",
    "status": "APROVADO",
    "detalhes": [],
-   "resumo": "Bot 100%: concluiu 93/93 fases em 93 jogadas. Bot 90%: chegou à fase final (concluiu) em 130 jogadas (rejogando quando < 85%). Bot 50%: 34 andaimes, 4 reduções de dificuldade (nível máx. 2), máx. 4 tentativas por item, parou por domínio < 85% na fase 1.1 com a fase sempre rejogável e revisão oferecida (sem beco sem saída)."
+   "resumo": "Bot 100%: concluiu 93/93 fases em 93 jogadas. Bot 90%: chegou à fase final (concluiu) em 135 jogadas (rejogando quando < 85%). Bot 50%: 34 andaimes, 4 reduções de dificuldade (nível máx. 2), máx. 4 tentativas por item, parou por domínio < 85% na fase 1.1 com a fase sempre rejogável e revisão oferecida (sem beco sem saída)."
   },
   {
    "id": "V11",
    "nome": "Cobertura do Banco de Áudio",
-   "status": "PENDENTE",
-   "detalhes": [
-    "Banco de Áudio não instalado (pasta audio/ ausente). Rode gerar_audios.py."
-   ],
-   "resumo": "1623 itens de áudio necessários"
+   "status": "APROVADO",
+   "detalhes": [],
+   "resumo": "1623 necessários · 2655 no manifest"
   },
   {
    "id": "V12",
    "nome": "Tempos do karaokê",
-   "status": "PENDENTE",
-   "detalhes": [
-    "Sem manifest: o karaokê usa a alternativa (uma fala por palavra/sílaba, encadeadas por onend)."
-   ]
+   "status": "APROVADO",
+   "detalhes": []
   }
  ]
 }
