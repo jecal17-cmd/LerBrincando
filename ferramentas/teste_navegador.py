@@ -2,6 +2,7 @@
 import sys, time, json, threading, http.server, socketserver, os, functools
 from playwright.sync_api import sync_playwright
 RAIZ = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+CAPT = os.environ.get('CAPTURAS', os.path.join(RAIZ, 'ferramentas', 'capturas')); os.makedirs(CAPT, exist_ok=True)
 PORTA = int(os.environ.get('PORTA', '8765'))
 http.server.SimpleHTTPRequestHandler.log_message = lambda *a: None
 H = functools.partial(http.server.SimpleHTTPRequestHandler, directory=RAIZ)
@@ -14,7 +15,7 @@ STUB = """
 """
 erros = []
 with sync_playwright() as p:
-    b = p.chromium.launch(executable_path='/opt/pw-browsers/chromium-1208/chrome-linux64/chrome', args=['--autoplay-policy=no-user-gesture-required'])
+    b = p.chromium.launch(**({'executable_path': os.environ['CHROMIUM']} if os.environ.get('CHROMIUM') else {}), args=['--autoplay-policy=no-user-gesture-required'])
     vp = json.loads(sys.argv[2]) if len(sys.argv) > 2 else {'width': 390, 'height': 844}
     pg = b.new_page(viewport=vp, has_touch=True, reduced_motion='reduce')
     pg.add_init_script(STUB)
@@ -24,7 +25,7 @@ with sync_playwright() as p:
     pg.goto(f'http://127.0.0.1:{PORTA}/index.html'); pg.wait_for_timeout(300)
     pg.click('#comecar'); pg.wait_for_timeout(2700)
     pg.fill('input[type=text]', 'Teste'); pg.check('#pularAv'); pg.click('text=Criar'); pg.wait_for_timeout(400)
-    pg.screenshot(path=os.path.join(RAIZ, 'ferramentas', 'shot_mapa.png'))
+    pg.screenshot(path=os.path.join(CAPT, 'shot_mapa.png'))
     def ev(js): return pg.evaluate(js)
     for fid in fases:
         pg.wait_for_timeout(200)
@@ -44,7 +45,7 @@ with sync_playwright() as p:
                 pg.wait_for_timeout(150); continue
             ultimo = info['seq']; t_acao = time.time()
             if not shot and ui not in ('mostra','regraMostra','freqMostra','marco'):
-                pg.screenshot(path=os.path.join(RAIZ, 'ferramentas', f'shot_{fid}.png')); shot = True
+                pg.screenshot(path=os.path.join(CAPT, f'shot_{fid}.png')); shot = True
             try:
                 if ui in ('escolha',):
                     esp = info['esp'] or info['certo']
@@ -128,7 +129,7 @@ with sync_playwright() as p:
             erros.append(f'{fid}: tempo esgotado')
         res = pg.query_selector('.resultado .estrelas')
         print(fid, 'OK' if res else 'SEM RESULTADO', res.get_attribute('aria-label') if res else '', flush=True)
-        pg.screenshot(path=os.path.join(RAIZ, 'ferramentas', f'shot_{fid}_fim.png'))
+        pg.screenshot(path=os.path.join(CAPT, f'shot_{fid}_fim.png'))
     b.close()
 srv.shutdown()
 print('ERROS:', len(erros)); [print(' -', e) for e in erros[:30]]

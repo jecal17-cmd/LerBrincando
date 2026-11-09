@@ -58,7 +58,7 @@
     D.avatares.forEach((a) => { const b = el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'avatar ' + a }, a); b.onclick = () => { avatar = a; avs.querySelectorAll('button').forEach((x) => x.classList.remove('pri')); b.classList.add('pri'); falar([S.fala('bomTrabalho')]); }; avs.append(b); });
     avs.firstChild.classList.add('pri');
     const ok = el('button', { class: 'btn pri grande', type: 'button' }, '✔ Criar');
-    const pularAv = el('label', { class: 'linha' }, el('input', { type: 'checkbox', id: 'pularAv' }), 'Pular a avaliação inicial (começar do Mundo 1)');
+    const pularAv = el('label', { class: 'linha' }, el('input', { type: 'checkbox', id: 'pularAv' }), el('span', null, 'Pular a avaliação inicial (começar do Mundo 1)'));
     ok.onclick = () => {
       if (Store.dados.perfis.length >= 4) { toast('Limite de 4 perfis.'); return; }
       const p = Motor.novoPerfil(nome.value.trim() || 'Leitor', avatar);
@@ -270,10 +270,15 @@
     const f = D.fases[idx]; const p = Store.perfil; window.Visual.aplicarCenario(f.mundo, 'resultado');
     const est = el('div', { class: 'estrelas', 'aria-label': `${fim.estrelas} estrelas` });
     for (let k = 1; k <= 3; k++) est.append(el('span', { class: k <= fim.estrelas ? '' : 'apagada' }, '⭐'));
-    const acoes = el('div', { class: 'acoes' });
-    acoes.append(el('button', { class: 'btn', type: 'button', onclick: () => mapa() }, '🗺️ Mapa'), el('button', { class: 'btn', type: 'button', onclick: () => jogarFase(idx) }, '🔁 Jogar de novo'));
-    if (!fim.dominada) acoes.append(el('button', { class: 'btn', type: 'button', onclick: () => { const it = Motor.revisaoRapida(idx, p); if (it.length) jogarFase(idx, { itens: it, revisao: true }); else jogarFase(idx); } }, '🧠 Revisão'));
-    if (idx + 1 < D.fases.length && Motor.faseLiberada(p, idx + 1)) acoes.append(el('button', { class: 'btn pri grande', type: 'button', onclick: () => introFase(idx + 1) }, '▶ Próxima'));
+    // ação principal em destaque (Próxima, ou Jogar de novo quando ainda falta domínio); as demais ficam abaixo, menores
+    const temProxima = idx + 1 < D.fases.length && Motor.faseLiberada(p, idx + 1);
+    const principal = temProxima
+      ? el('button', { class: 'btn pri grande', type: 'button', onclick: () => introFase(idx + 1) }, '▶ Próxima')
+      : el('button', { class: 'btn pri grande', type: 'button', onclick: () => jogarFase(idx) }, '🔁 Jogar de novo');
+    const secundarias = el('div', { class: 'acoes' }, el('button', { class: 'btn mini', type: 'button', onclick: () => mapa() }, '🗺️ Mapa'));
+    if (temProxima) secundarias.append(el('button', { class: 'btn mini', type: 'button', onclick: () => jogarFase(idx) }, '🔁 Jogar de novo'));
+    if (!fim.dominada) secundarias.append(el('button', { class: 'btn mini', type: 'button', onclick: () => { const it = Motor.revisaoRapida(idx, p); if (it.length) jogarFase(idx, { itens: it, revisao: true }); else jogarFase(idx); } }, '🧠 Revisão'));
+    const acoes = el('div', { class: 'acoes-resultado' }, principal, secundarias);
     const msgs = [];
     if (f.tipo !== 'historia' && f.tipo !== 'microfone') msgs.push(el('div', { class: 'pilula' }, `🎯 ${Math.round(fim.prec * 100)}% de acertos`));
     msgs.push(el('div', { class: 'pilula' }, `🪙 +${fim.moedas}`));
@@ -282,10 +287,10 @@
     if (subiu) conquistas.append(el('div', { class: 'pilula' }, '⬆️ ', D.falas.novoNivel, ' ', D.niveis[Motor.nivel(p)].nome));
     novas.forEach((m) => conquistas.append(el('div', { class: 'pilula' }, m.emoji, ' ', m.nome)));
     if (fim.mundoConcluido) conquistas.append(el('button', { class: 'btn', type: 'button', onclick: () => certificado(f.mundo) }, '🎓 Certificado do Mundo ' + f.mundo));
-    tela(el('div', { class: 'resultado' }, el('h2', null, D.falas.faseFim), est, mascote({ humor: 'feliz', anim: 'danca' }), el('div', { class: 'acoes' }, ...msgs), conquistas, acoes));
+    tela(el('div', { class: 'resultado' }, el('h2', null, fim.dominada ? D.falas.faseFim : 'Você está quase lá!'), est, mascote({ humor: 'feliz', anim: 'danca' }), el('div', { class: 'acoes' }, ...msgs), conquistas, acoes));
     Efeito.tocar('estrela'); setTimeout(() => Efeito.tocar(subiu ? 'nivel' : 'moeda'), 400);
     Confete.lancar(fim.estrelas * 40 + (subiu || fim.mundoConcluido ? 80 : 0));
-    const segs = [S.fala('faseFim')];
+    const segs = fim.dominada ? [S.fala('faseFim')] : [];
     if (fim.perfeita) segs.push(S.f(Motor.escolherElogio(p, 'fasePerfeita')));
     if (fim.mundoConcluido) segs.push(S.f(Motor.escolherElogio(p, 'mundoConcluido')));
     if (subiu) segs.push(S.fala('novoNivel'), S.f(D.niveis[Motor.nivel(p)].nome));
@@ -385,7 +390,7 @@
       corpo.innerHTML = ''; ({ progresso: abaProgresso, config: abaConfig, audio: abaAudio, dados: abaDados, autoteste: abaAutoteste, sobre: abaSobre })[atual](corpo);
     };
     desenhar();
-    tela(el('div', { class: 'painel' }, el('div', { class: 'hud' }, el('h2', { style: { margin: 0 } }, '👪 Área dos Pais'), el('span', { class: 'esp' }), el('button', { class: 'btn', type: 'button', onclick: () => (Store.perfil ? mapa() : perfis()) }, '✖ Sair')), barra, corpo));
+    tela(el('div', { class: 'painel' }, el('div', { class: 'hud cab-painel' }, el('h2', { style: { margin: 0 } }, '👪 Área dos Pais'), el('span', { class: 'esp' }), el('button', { class: 'btn mini', type: 'button', onclick: () => (Store.perfil ? mapa() : perfis()) }, '✖ Sair')), barra, corpo));
   }
   function abaProgresso(c) {
     const p = Store.perfil;
@@ -477,7 +482,7 @@
     const tem = man ? lista.filter((x) => man.itens[x.chave]).length : 0;
     c.append(el('h3', null, '🔊 Banco de Áudio'),
       el('p', null, man ? `Banco instalado (gerado em ${man.gerado || '?'}, voz: ${man.voz || '?'}). Cobertura: ${tem}/${lista.length} itens.` : `Banco ausente. ${lista.length} itens seriam gerados. Siga o LEIAME.md (gerar_audios.py) para criar a pasta audio/.`),
-      el('p', null, 'Origem de cada som: banco (Piper), recorte (fonema recortado da sílaba gerada), wikimedia (gravação IPA), síntese + voz do navegador (alternativa).'));
+      el('p', null, 'Origem de cada som: edge/kokoro/piper (voz neural do banco), recorte (fonema recortado da sílaba gerada), wikimedia (gravação IPA), síntese + voz do navegador (alternativa).'));
     const busca = el('input', { type: 'text', placeholder: 'Buscar texto (ex.: BOLA, MA, M)', 'aria-label': 'buscar áudio' });
     const res = el('table');
     const tipoSeg = { palavra: 'palavra', silaba: 'silaba', fonema: 'fonema', nome: 'nome', frase: 'frase', hist: 'hist', frasejogo: 'frasejogo' };

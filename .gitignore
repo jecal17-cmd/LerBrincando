@@ -1,0 +1,10 @@
+# ambiente Python do gerador de áudio
+.venv/
+__pycache__/
+*.pyc
+# capturas de tela dos robôs de teste (ferramentas/*.py)
+ferramentas/capturas/
+node_modules/
+.DS_Store
+Thumbs.db
+modelos_piper/

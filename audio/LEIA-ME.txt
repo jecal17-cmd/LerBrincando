@@ -1,2 +1,7 @@
-Esta pasta recebe o Banco de Áudio gerado por gerar_audios.py (Piper pt_BR-faber-medium).
+Esta pasta guarda o Banco de Áudio gerado por gerar_audios.py (vozes neurais; padrão: edge-tts, voz Francisca).
 Sem ela, o jogo funciona com a voz do navegador. Veja a seção 4 do LEIAME.md.
+
+manifest.js   → lido pelo jogo (funciona até abrindo index.html com duplo clique)
+manifest.json → lido pelo modo offline (Service Worker) e pelos testes
+Os dois precisam ter o mesmo conteúdo. Se uma geração for interrompida, rode:
+    node ferramentas/sincronizar_manifest.js

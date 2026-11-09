@@ -1,7 +1,7 @@
 /* Fonte de dados do Ler Brincando (editável). Rode:  node ferramentas/construir_dados.js
    para gerar data.js (JSON) com os campos derivados e verificados. */
 module.exports = {
-  versao: '1.2.0',
+  versao: '1.2.1',
 
   // ------------------------------------------------------------------ MUNDOS
   mundos: [
@@ -646,16 +646,16 @@ module.exports = {
   // ------------------------------------------------------------------ CRÉDITOS / LICENÇAS / CHANGELOG
   creditos: [
     'Imagens: OpenMoji — o projeto de emojis de código aberto (https://openmoji.org), licença CC BY-SA 4.0. Emojis nativos do sistema são usados como alternativa.',
-    'Fonte: Andika (SIL International), SIL Open Font License 1.1, via Google Fonts. Alternativa: fonte do sistema.',
     'Vozes do Banco de Áudio: vozes neurais Microsoft (pt-BR Francisca/Thalita/Antonio) geradas com a biblioteca livre edge-tts, ou Kokoro-82M (Apache-2.0) offline. Para uso comercial, gere com Azure Speech ou Kokoro.',
     'Imagens reserva: Twemoji (jdecked/twemoji), licença CC BY 4.0.',
-    'Fontes: Baloo 2 e Andika, SIL Open Font License 1.1, via Google Fonts.',
+    'Fontes: Andika (SIL International) e Baloo 2, SIL Open Font License 1.1, via Google Fonts. Sem internet, usa a fonte do sistema.',
     'Voz alternativa: Piper TTS (Rhasspy/Open Home Foundation, licença MIT) com o modelo pt_BR-faber-medium. Confira a licença do modelo baixado no arquivo .onnx.json/MODEL_CARD e registre aqui.',
     'Fonemas alternativos (opcional): gravações do Alfabeto Fonético Internacional no Wikimedia Commons — a atribuição de cada arquivo usado aparece no painel do Banco de Áudio (licenças variam por arquivo).',
     'Efeitos sonoros, música e confete: gerados pelo próprio jogo (Web Audio API e canvas), sem arquivos externos.',
     'Personagens, histórias e textos: originais, criados para este jogo.'
   ],
   changelog: [
+    '1.2.1 — Banco de Áudio consistente: manifest.json e manifest.js sincronizados (o modo offline agora guarda todos os sons, inclusive fonemas e histórias) e o gerador grava os dois juntos; autoteste V1–V12 aprovado. Tela de resultado com a ação principal em destaque e título coerente ("Você está quase lá!" quando ainda falta domínio); Área dos Pais com cabeçalho fixo; caixa de seleção junto do texto.',
     '1.2.0 — Sílabas nunca soletradas (grafia pronunciável + verificação automática no gerador), fala mais calma e sem cortes (margens de silêncio, Web Audio, respiro entre sons); telas de jogo sobre o cenário do mundo, opções centralizadas, nome embaixo das figuras (com proteção nas atividades de leitura), botão de ouvir no lugar de ícones soltos, imagens reserva Twemoji.',
     '1.1.0 — Cenários ilustrados, trilha sinuosa no mapa, botões 3D; vozes neurais (edge-tts/Kokoro), velocidade natural, frases inteiras e karaokê fluido.',
     '1.0.0 — Primeira versão: 8 mundos, 93 fases, 363 palavras, 11 histórias, 17 minijogos, Área dos Pais, autoteste V1–V12.'

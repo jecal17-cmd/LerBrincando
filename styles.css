@@ -205,6 +205,7 @@ button { font-family: inherit; color: inherit; cursor: pointer; }
 table { border-collapse: collapse; width: 100%; font-size: .85em; } td, th { border-bottom: 1px solid #e6e9f2; padding: .35em; text-align: left; vertical-align: top; }
 .APROVADO { color: var(--ok); font-weight: 700; } .REPROVADO { color: #c0392b; font-weight: 700; } .PENDENTE { color: var(--aviso); font-weight: 700; }
 label.linha { display: flex; gap: .6rem; align-items: center; min-height: 56px; flex-wrap: wrap; }
+label.linha:has(> input[type=checkbox]) { flex-wrap: nowrap; cursor: pointer; } label.linha > input[type=checkbox] { flex: none; }
 input[type=text], input[type=number], select { font: inherit; padding: .4em .6em; border-radius: 12px; border: 2px solid #cdd6ea; min-height: 52px; }
 input[type=range] { width: min(320px, 70vw); } input[type=checkbox] { width: 28px; height: 28px; }
 .barras { display: flex; gap: 4px; align-items: flex-end; height: 120px; border-bottom: 2px solid #ddd; }
@@ -420,3 +421,10 @@ body[data-mundo="6"] .palco { background: rgba(255, 255, 255, .12); }
 body.alto-contraste #cenario { display: none; }
 body.menos-estimulos #cenario * { animation: none !important; }
 @media (prefers-reduced-motion: reduce) { #cenario * { animation: none !important; } }
+
+/* v1.2.1 — cabeçalho da Área dos Pais numa linha só e ações do resultado com hierarquia clara */
+.cab-painel { flex-wrap: nowrap; position: sticky; top: 0; z-index: 2; }
+.cab-painel h2 { flex: 1 1 auto; min-width: 0; font-size: clamp(1.15rem, 5vw, 1.6rem); }
+.cab-painel .esp { display: none; }
+.acoes-resultado { display: flex; flex-direction: column; align-items: center; gap: .7rem; width: 100%; }
+.acoes-resultado > .btn.pri { min-width: min(280px, 80vw); }

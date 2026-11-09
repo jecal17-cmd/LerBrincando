@@ -5,10 +5,10 @@ class S(socketserver.TCPServer): allow_reuse_address=True
 PORTA=int(os.environ.get('PORTA','8810'))
 srv=S(('127.0.0.1',PORTA),functools.partial(http.server.SimpleHTTPRequestHandler,directory=RAIZ)); threading.Thread(target=srv.serve_forever,daemon=True).start()
 STUB="(() => { const ss = window.speechSynthesis; if (ss) { ss.speak = (u) => setTimeout(() => { u.onend && u.onend({}); }, 5); ss.cancel = () => {}; ss.getVoices = () => []; } })();"
-err=[]; out='/home/claude/shots'; os.makedirs(out,exist_ok=True)
+err=[]; out=os.environ.get('CAPTURAS', os.path.join(RAIZ, 'ferramentas', 'capturas')); os.makedirs(out,exist_ok=True)
 vp=[int(x) for x in sys.argv[1].split('x')] if len(sys.argv)>1 else [390,844]
 with sync_playwright() as p:
-    b=p.chromium.launch(executable_path='/opt/pw-browsers/chromium-1208/chrome-linux64/chrome')
+    b=p.chromium.launch(**({'executable_path': os.environ['CHROMIUM']} if os.environ.get('CHROMIUM') else {}))
     pg=b.new_page(viewport={'width':vp[0],'height':vp[1]},reduced_motion='reduce'); pg.add_init_script(STUB)
     pg.on('pageerror',lambda e: err.append(str(e)))
     pg.route('**/cdn.jsdelivr.net/**',lambda r:r.abort()); pg.route('**/fonts.g*/**',lambda r:r.abort())

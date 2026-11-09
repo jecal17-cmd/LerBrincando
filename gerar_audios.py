@@ -502,7 +502,16 @@ def principal():
         man['itens'][chave] = dict(arquivo=arq, ms=int(len(x) / taxa * 1000), origem=origem, pico=pico, lufs=lufs, **({'texto': texto} if texto else {}), **(extra or {}))
 
     def existe(k):
-        return k in man['itens'] and os.path.exists(os.path.join(PASTA, man['itens'][k]['arquivo']))
+        # itens "legado" (recuperados de uma geração interrompida) são refeitos com a versão atual
+        return k in man['itens'] and not man['itens'][k].get('legado') and os.path.exists(os.path.join(PASTA, man['itens'][k]['arquivo']))
+
+    def salvar_manifest():
+        # grava SEMPRE os dois: manifest.json (Service Worker/testes) e manifest.js (o jogo, inclusive por duplo clique).
+        # Assim, se a geração for interrompida, o jogo e o modo offline continuam vendo o mesmo banco.
+        man['versaoGerador'] = VERSAO_GERADOR
+        json.dump(man, open(caminho_man, 'w', encoding='utf-8'), ensure_ascii=False)
+        with open(os.path.join(PASTA, 'manifest.js'), 'w', encoding='utf-8') as f:
+            f.write('window.AUDIO_MANIFEST = ' + json.dumps(man, ensure_ascii=False) + ';\n')
 
     # ---- 1) palavras, nomes, frases
     pend = []
@@ -518,7 +527,7 @@ def principal():
         txt = {k: t for k, t, _ in pend[i:i + 60]}
         for k, (x, taxa, _) in res.items(): registrar(k, x, taxa, a.motor, texto=txt[k])
         print(f'  {min(i + 60, len(pend))}/{len(pend)}  ({time.time() - t0:.0f}s)')
-        man['versaoGerador'] = VERSAO_GERADOR; json.dump(man, open(caminho_man, 'w', encoding='utf-8'), ensure_ascii=False)
+        salvar_manifest()
 
     # ---- 2) sílabas: grafia pronunciável + verificação "um som só"
     sil = [it for it in itens if it['tipo'] == 'silaba' and not existe(it['chave'])]
@@ -540,7 +549,7 @@ def principal():
         registrar(k, r['n'][0], r['n'][1], a.motor, {'suspeito': True} if len(escolhido) == 3 else None, texto=c)
         if 'l' in r: registrar(k + '_lento', r['l'][0], r['l'][1], a.motor, texto=c)
         if n % 50 == 0:
-            print(f'  {n}/{len(sil)}  ({time.time() - t0:.0f}s)'); json.dump(man, open(caminho_man, 'w', encoding='utf-8'), ensure_ascii=False)
+            print(f'  {n}/{len(sil)}  ({time.time() - t0:.0f}s)'); salvar_manifest()
 
     # ---- 3) fonemas
     for it in [x for x in itens if x['tipo'] == 'fonema']:
@@ -605,10 +614,8 @@ def principal():
             man['itens'][nome] = dict(arquivo=salvar(xo, taxa, nome), ms=int(len(xo) / taxa * 1000), origem=a.motor, pico=pico, lufs=lufs, palavras=pal, silabas=sils)
 
     man['gerado'] = time.strftime('%Y-%m-%d %H:%M'); man['voz'] = motor.voz; man['motor'] = a.motor
-    man['versaoGerador'] = VERSAO_GERADOR; man['margemIniMs'] = MARGEM_INI_MS
-    json.dump(man, open(caminho_man, 'w', encoding='utf-8'), ensure_ascii=False)
-    with open(os.path.join(PASTA, 'manifest.js'), 'w', encoding='utf-8') as f:
-        f.write('window.AUDIO_MANIFEST = ' + json.dumps(man, ensure_ascii=False) + ';\n')
+    man['margemIniMs'] = MARGEM_INI_MS; man.pop('sincronizado', None)
+    salvar_manifest()
     with open(os.path.join(PASTA, 'revisar.txt'), 'w', encoding='utf-8') as f:
         f.write('Sons que a verificação automática considerou suspeitos (possível soletração ou corte).\n'
                 'Escute em Área dos Pais → Banco de Áudio. Para corrigir, escreva a grafia desejada em\n'

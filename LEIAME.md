@@ -1,6 +1,11 @@
-# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.2
+# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.2.1
 
-> **Novidades da v1.2**
+> **Novidades da v1.2.1**
+> - **Banco de Áudio consistente:** `audio/manifest.json` e `audio/manifest.js` agora têm o mesmo conteúdo (antes o modo offline deixava de guardar 296 sons, como fonemas e histórias). O gerador grava os dois juntos e há `node ferramentas/sincronizar_manifest.js` para consertar uma geração interrompida. Autoteste **V1–V12 aprovado**.
+> - **Mais fácil de usar:** na tela de resultado, a ação principal (▶ Próxima ou 🔁 Jogar de novo) vem em destaque; quando ainda falta domínio, o título diz "Você está quase lá!" em vez de "Fase concluída!". Área dos Pais com cabeçalho fixo e caixas de seleção junto do texto.
+> - **Ferramentas:** robôs de teste sem caminhos fixos (`CHROMIUM` e `CAPTURAS` opcionais; capturas em `ferramentas/capturas/`), `gerar_audios.sh` mais robusto e `.gitignore`.
+>
+> **Da v1.2:**
 > - **Áudio:** sílabas nunca soletradas, fala mais calma e sem cortes (seção 4).
 > - **Telas de jogo:** o cenário ilustrado do mundo aparece ao fundo, e a figura de referência fica em destaque num cartão. As opções ficam **sempre centralizadas**, com o **nome embaixo de cada figura**. Nas atividades de leitura e escrita, o nome só aparece depois da resposta, para não entregar a leitura. Isso pode ser mudado em Área dos Pais → Figuras.
 > - **"Junte os pedacinhos"** e **"Escute o som"** agora são botões de ouvir; antes eram uma peça 🧩 solta, que parecia uma figura quebrada. As imagens têm reserva (Twemoji) se o OpenMoji falhar.
@@ -24,15 +29,16 @@ Jogo web completo para crianças de **5 a 7 anos** que já conhecem o nome e a f
 | `motor.js` | Motor pedagógico sem DOM: geradores de itens por fase, decodificabilidade, Leitner, domínio, adaptatividade, elogios, recompensas e avaliação inicial. |
 | `validadores.js` | Autoteste V1–V12 (no jogo e no Node). |
 | `visual.js` | Cenários SVG de cada mundo e trilha do mapa. |
-| `gerar_audios.bat` / `.sh` | Gera ou atualiza o Banco de Áudio com um clique. |
+| `gerar_audios.bat` / `.sh` | Gera ou atualiza o Banco de Áudio com um clique (Windows / macOS e Linux). |
 | `ferramentas/pronuncias.json` | Correções manuais de pronúncia. |
 | `game.js` | Armazenamento, áudio (Banco → voz do navegador), síntese de fonemas, efeitos, música, microfone, mascote, confete. |
 | `minijogos.js` | Renderizadores dos minijogos, andaime de 3 níveis, karaokê. |
 | `cenas.js` | Cenas: início, perfis, avaliação, mapa, executor de fases, resultado, loja, álbum, medalhas, certificado e Área dos Pais. |
 | `sw.js`, `manifest.webmanifest`, `icones/` | PWA: instala na tela inicial e funciona offline. |
-| `gerar_audios.py` | Gera o **Banco de Áudio** (Piper pt_BR-faber-medium) em `audio/`. |
+| `gerar_audios.py` | Gera o **Banco de Áudio** em `audio/` (vozes neurais: edge-tts por padrão; Kokoro ou Piper como alternativas). |
+| `audio/` | Banco de Áudio já gerado (2.655 sons). `manifest.js` é lido pelo jogo; `manifest.json`, pelo modo offline e pelos testes. |
 | `docs/fichas_pedagogicas.html` | Fichas para imprimir: pré-teste (A), pós-teste equivalente (B), retenção (C), observação, diário, critérios e alertas. |
-| `ferramentas/` | Fonte editável dos dados, construtor, testes no Node e robôs de teste no navegador. |
+| `ferramentas/` | Fonte editável dos dados, construtor, testes no Node, robôs de teste no navegador e `sincronizar_manifest.js`. |
 
 **Para editar o conteúdo:** altere `ferramentas/fonte_palavras.js` ou `ferramentas/fonte_dados.js`, rode `node ferramentas/construir_dados.js` e depois `node ferramentas/testar.js`. Se algum validador reprovar, corrija antes de publicar.
 
@@ -213,7 +219,7 @@ Histórias, fluência e compreensão
 **Abrir no computador:** dê duplo clique em `index.html`. Funciona na hora, com a voz do navegador. Para o modo offline (Service Worker), o microfone e o carregamento automático do `manifest.json`, o jogo precisa estar em `http(s)`. Para isso, rode um servidor local:
 
 ```bash
-cd ler-brincando
+cd LerBrincando
 python -m http.server 8000      # abra http://localhost:8000
 ```
 
@@ -241,6 +247,8 @@ O jogo funciona sem o banco (usa a melhor voz do navegador), mas **com o banco o
 3. Gera o banco completo ou **atualiza automaticamente** um banco da v1.0/1.1.
 
 **macOS/Linux:** `./gerar_audios.sh`
+
+**Geração interrompida?** O gerador salva o progresso e continua de onde parou na próxima rodada. Se `manifest.json` e `manifest.js` ficarem diferentes (por exemplo, num banco copiado de outra máquina), rode `node ferramentas/sincronizar_manifest.js`: ele junta os dois, marca como *legado* o que veio da versão anterior (o gerador refaz esses sons na próxima rodada) e mede a duração real dos arquivos com `ffprobe`, se estiver instalado.
 
 ### O que a v1.2 corrige
 | Problema | Causa | Correção |
@@ -272,7 +280,7 @@ O jogo escolhe a voz mais natural instalada (Edge "Francisca/Thalita Online (Nat
 
 - Abra `index.html?debug=1` (o autoteste roda sozinho e aparece o botão 🐞) ou entre em **Área dos Pais → 🧪 Autoteste**.
 - No computador: `node ferramentas/testar.js` (V1–V12) e `node ferramentas/testes_funcionais.js` (T09, T12, T14, T15, T16, T18 e adaptatividade).
-- No navegador (robôs): `python ferramentas/teste_navegador.py 1.1,3.1,4.11` joga as fases pela interface respondendo certo. `python ferramentas/teste_avaliacao.py` testa a avaliação inicial. É preciso ter o Playwright instalado.
+- No navegador (robôs): `python ferramentas/teste_navegador.py 1.1,3.1,4.11` joga as fases pela interface respondendo certo. `python ferramentas/teste_avaliacao.py` testa a avaliação inicial. É preciso ter o Playwright para Python (`pip install playwright` e `playwright install chromium`). Para usar outro navegador, defina `CHROMIUM=/caminho/do/chrome`; as capturas vão para `ferramentas/capturas/` (ou para a pasta em `CAPTURAS`).
 - **Simular data (T15):** Autoteste → "+1, +2, +4, +7 dias".
 
 ---
@@ -280,7 +288,7 @@ O jogo escolhe a voz mais natural instalada (Edge "Francisca/Thalita Online (Nat
 ## 6. Lista de verificação de testes
 
 ### 6.1 O que já foi verificado nesta entrega
-- **Node:** validadores V1–V10 aprovados. V11 e V12 ficam pendentes até gerar o banco; a lógica deles foi testada com um manifest sintético: aprova o banco completo e reprova corretamente quando falta um item ou há um áudio silencioso.
+- **Node:** validadores **V1–V12 aprovados**, incluindo a cobertura do Banco de Áudio (1.623 sons necessários, 2.655 no manifest) e os tempos do karaokê.
 - **Node:** casos funcionais T09, T12, T14, T15, T16 e T18 aprovados, além do teste de adaptatividade (3 erros → de 4 para 3 opções).
 - **Chromium headless (celular 390×844, tablet 820×1180, desktop 1280×800):** um robô jogou pela interface, respondendo certo, as fases **1.1, 1.2, 1.5, 1.7, 1.9, 1.10, 2.1, 2.7, 2.10, 3.1, 3.5, 3.9, 3.12, 4.7, 4.11, 5.1–5.10, 6.10 e 7.9**. Isso cobre todos os tipos de minijogo (incluindo traçado, trem, fatiador, ditado, memória, bingo, microfone com confirmação do adulto, história com karaokê e guardião) e a avaliação inicial. Resultado: **0 erros de JavaScript**.
 - **Contraste (WCAG):** texto 14,3:1; texto secundário 7,3:1; branco sobre azul 4,7:1; branco sobre verde 5,0:1.
@@ -313,7 +321,7 @@ O jogo escolhe a voz mais natural instalada (Edge "Francisca/Thalita Online (Nat
 | T10 | Modo avião | Service Worker (núcleo + áudio + imagens já vistas) | ☐ aparelho |
 | T11 | Exportar/importar JSON | Área dos Pais → Perfis e dados | ☐ manual |
 | T12 | Vários perfis | Progresso por perfil (até 4) | ✔ Node |
-| T13 | Banco presente/ausente | `manifest.js`/`manifest.json` → banco; senão voz do navegador + aviso | ✔ ausente / ☐ presente |
+| T13 | Banco presente/ausente | `manifest.js`/`manifest.json` → banco; senão voz do navegador + aviso | ✔ ausente / ✔ presente (V11) |
 | T14 | Domínio < 85% | Próxima fase trancada + "Treinar de novo" e "Revisão" | ✔ Node |
 | T15 | Revisão espaçada | +1/+2/+4/+7 dias: o item volta (caixas 1→4) | ✔ Node |
 | T16 | Repetição de elogios | Janela de 5 sem repetição em 50 acertos | ✔ Node |
@@ -328,7 +336,7 @@ O jogo escolhe a voz mais natural instalada (Edge "Francisca/Thalita Online (Nat
 
 | Limitação | Contorno |
 |---|---|
-| O **Banco de Áudio não acompanha** o pacote (a IA não gera arquivos de áudio). | Rode `gerar_audios.py` (seção 4). Até lá, os fonemas contínuos usam **síntese Web Audio + sílaba de apoio**, que é uma aproximação. Gere o banco antes do piloto. |
+| Parte do Banco de Áudio (296 sons, principalmente fonemas e frases das histórias) ainda é da geração v1.1 e está marcada como *legado* no manifest. | Funciona normalmente. Para atualizar esses sons com as melhorias da v1.2, rode `gerar_audios.py` (seção 4): ele refaz só os itens legados. Escute os fonemas antes do piloto. |
 | Recorte automático de fonema pode errar a fronteira. | Escuta humana obrigatória (seção 13.2a) + `--wikimedia` para os que falharem. |
 | A voz do navegador varia por aparelho e pode ler sílabas soltas de forma estranha. | O banco resolve. No iOS, instale a voz "Luciana" (pt-BR) em Ajustes → Acessibilidade → Conteúdo Falado. |
 | Abrindo por duplo clique (`file://`): sem offline, sem microfone e sem `fetch` do manifest. | Use `manifest.js` (gerado pelo script) ou hospede em `https`/`localhost`. |
@@ -377,7 +385,7 @@ Pontos = nota ÷ 3 × peso. ★ = crítico (não pode ficar abaixo de 2).
 
 ## 9. Relatório dos validadores V1–V12
 
-Gerado por `node ferramentas/testar.js`. **Resultado geral: APROVADO (com pendências de áudio).**
+Gerado por `node ferramentas/testar.js`. **Resultado geral: APROVADO.**
 
 | ID | Validador | Status | Resumo |
 |---|---|---|---|
@@ -390,11 +398,11 @@ Gerado por `node ferramentas/testar.js`. **Resultado geral: APROVADO (com pendê
 | V7 | Distratores | **APROVADO** | 2838 itens de escolha verificados |
 | V8 | Volume de conteúdo | **APROVADO** | 363 palavras · 93 fases · 11 histórias · 17/17 minijogos da lista (+ somFinal, juntar, tirar, trocar, historia, licao, abertoFechado, nomeSom, regra, somS, freq, escrita, guardiao) |
 | V9 | Sequência | **APROVADO** | ordem de ensino: A@2.1 E@2.2 I@2.3 O@2.4 U@2.5 Ã@2.8 F@3.1 V@3.2 M@3.3 N@3.4 L@3.6 S@3.7 Z@3.7 J@3.8 X@3.8 P@4.1 B@4.2 T@4.3 D@4.4 C@4.5 G@4.6 S_Z@5.1 FREQ@5.6 R_FRACO@6.1 CODA_S@6.2 CODA_Z@6.2 CODA_R@6.3 CODA_L@6.4 NASAL@6.5 ÃO@6.6 CCV@6.7 CH@7.1 LH@7.2 NH@7.2 R_FORTE@7.3 RR@7.3 Ç@7.4 C_SUAVE@7.4 SS@7.4 QU@7.5 GU@7.5 G_SUAVE@7.6 H@7.7 X_VARIOS@7.7 |
-| V10 | Simulação de jogador | **APROVADO** | Bot 100%: concluiu 93/93 fases em 93 jogadas. Bot 90%: chegou à fase final (concluiu) em 135 jogadas (rejogando quando < 85%). Bot 50%: 34 andaimes, 4 reduções de dificuldade (nível máx. 2), máx. 4 tentativas por item, parou por domínio < 85% na fase 1.1 com a fase sempre rejogável e revisão oferecida (sem beco sem saída). |
-| V11 | Cobertura do Banco de Áudio | **PENDENTE** | 1623 itens de áudio necessários |
-| V12 | Tempos do karaokê | **PENDENTE** | Sem manifest: o karaokê usa a alternativa (uma fala por palavra/sílaba, encadeadas por onend). |
+| V10 | Simulação de jogador | **APROVADO** | Bot 100%: concluiu 93/93 fases em 93 jogadas. Bot 90%: chegou à fase final (concluiu) em cerca de 130 jogadas (rejogando quando < 85%). Bot 50%: 34 andaimes, 4 reduções de dificuldade (nível máx. 2), máx. 4 tentativas por item, parou por domínio < 85% na fase 1.1 com a fase sempre rejogável e revisão oferecida (sem beco sem saída). |
+| V11 | Cobertura do Banco de Áudio | **APROVADO** | 1623 necessários · 2655 no manifest |
+| V12 | Tempos do karaokê | **APROVADO** | Tempos de palavras e sílabas em ordem e dentro da duração de cada áudio. |
 
-V11 e V12 ficam **PENDENTES** até a pasta `audio/` existir. A lógica deles foi testada com um manifest sintético: aprova o banco completo e reprova corretamente quando falta um item ou há um áudio silencioso.
+Sons muito curtos, cujo volume não pode ser medido (`lufs: null`), não contam como erro no V11, assim como na checagem de qualidade do `gerar_audios.py`.
 
 **Casos funcionais (Node):**
 
@@ -420,4 +428,4 @@ Abra `docs/fichas_pedagogicas.html` e imprima. O arquivo contém:
 ## 11. Privacidade e licenças
 - Sem anúncios, compras ou rastreadores. O progresso fica no `localStorage` do aparelho; exportação e importação são manuais.
 - O microfone vem desligado e exige consentimento do adulto. O aviso de privacidade fica na Área dos Pais.
-- Créditos (OpenMoji CC BY-SA 4.0, Andika OFL, Piper MIT + licença do modelo, Wikimedia por arquivo) e registro de alterações ficam na tela **Sobre**.
+- Créditos (OpenMoji CC BY-SA 4.0, Andika e Baloo 2 OFL, vozes edge-tts/Kokoro/Piper, Wikimedia por arquivo) e registro de alterações ficam na tela **Sobre**.
