@@ -52,7 +52,12 @@
         u.onend = seguir; u.onerror = seguir; speechSynthesis.speak(u);
         setTimeout(seguir, 8000);
       } else setTimeout(seguir, 600);
-      $('#comecar').disabled = true;
+      // resposta visível ao toque: a Lili "fala" num balão, com opção de pular
+      const pular = el('button', { class: 'btn mini', type: 'button' }, 'Pular ▶');
+      pular.onclick = () => { if (Som.audioAtual) Som.audioAtual.pause(); if ('speechSynthesis' in window) speechSynthesis.cancel(); seguir(); };
+      $('#comecar').replaceWith(el('div', { class: 'bolha bolha-intro' }, D.falas.boasVindas), pular);
+      const sobre = $('#sobre'); if (sobre) sobre.remove();
+      const ms = document.querySelector('.tela-inicio .mascote'); if (ms) ms.classList.add('falando');
       Som.desbloquear().then(() => { Musica.iniciar(); Musica.abaixar(true); manterTela(); });
       iniciarRelogio();
       terminou.then(() => {
@@ -124,7 +129,7 @@
     } catch (e) { return; }
     const av = Motor.posicionar(p, resultados); Store.salvar();
     palco.innerHTML = '';
-    palco.append(mascote({ humor: 'feliz', anim: 'danca' }), el('div', { class: 'bolha' }, D.falas.avaliacaoFim), el('button', { class: 'btn pri grande', type: 'button', onclick: mapa }, '🗺️ ', 'Mapa'));
+    palco.append(mascote({ humor: 'feliz', anim: 'danca' }), el('div', { class: 'bolha' }, D.falas.avaliacaoFim), el('button', { class: 'btn pri grande', type: 'button', onclick: () => mapa() }, '🗺️ ', 'Mapa'));
     Confete.lancar(60); await falar([S.fala('avaliacaoFim')]);
     estado.mundoAtual = av.mundoInicial;
   }
@@ -157,7 +162,9 @@
     estado.emJogo = false; Som.parar();
     const p = Store.perfil; if (!p) return perfis();
     const prox = proximaFase(p);
-    const mundo = mundoSel || estado.mundoSel || D.fases[prox].mundo;
+    // aceita só um número de mundo válido (um evento de clique aqui travava o mapa até fechar o app)
+    const valido = (x) => Number.isInteger(x) && x >= 1 && x <= D.mundos.length;
+    const mundo = valido(mundoSel) ? mundoSel : valido(estado.mundoSel) ? estado.mundoSel : D.fases[prox].mundo;
     estado.mundoSel = mundo; estado.mundoAtual = mundo;
     const m = D.mundos[mundo - 1];
     const equipMapa = p.loja.equip.mapa && D.loja.find((x) => x.id === p.loja.equip.mapa);
@@ -619,7 +626,8 @@
   window.addEventListener('pagehide', () => Store.salvar());
   // impede zoom acidental por duplo toque e gesto de pinça no iOS
   document.addEventListener('gesturestart', (e) => e.preventDefault());
-  let ultimoToque = 0; document.addEventListener('touchend', (e) => { const t = Date.now(); if (t - ultimoToque < 300 && e.target.closest('button')) e.preventDefault(); ultimoToque = t; }, { passive: false });
+  // (o zoom por toque duplo é impedido pelo CSS touch-action: manipulation; não descartar toques rápidos,
+  //  senão palmas no tambor e o botão Pronto deixam de responder no celular)
 
   window.Cenas = { inicio, perfis, mapa, jogarFase, introFase, painelPais, portaoPais, avaliacaoInicial };
   inicio();

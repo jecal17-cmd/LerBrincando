@@ -65,6 +65,66 @@ def candidatos_silaba(s):
     c = [pronunciavel(s), pronunciavel(s, True), s.lower() + '.', pronunciavel(s) + '!', s.lower()]
     return list(dict.fromkeys(c))
 
+# ----------------------------------------------------------------------------- pronúncia fonética (IPA) para o Azure
+# Com o Azure, cada sílaba e fonema é enviado como <phoneme alphabet="ipa">: a voz diz EXATAMENTE esses sons,
+# então nada sai soletrado ("nha" nunca vira "ene agá a"). Pronúncia de cartilha: bá-bé-bí-bó-bú.
+IPA_MONO = {'sol': 'sɔw', 'mar': 'maɾ', 'mel': 'mɛw', 'sal': 'saw', 'gol': 'ɡɔw', 'flor': 'floɾ', 'trem': 'tɾẽj̃', 'tem': 'tẽj̃',
+            'com': 'kõ', 'um': 'ũ', 'rei': 'ʁej', 'boi': 'boj', 'pau': 'paw', 'cor': 'koɾ', 'dor': 'doɾ', 'mal': 'maw', 'mil': 'miw',
+            'sim': 'sĩ', 'não': 'nɐ̃w̃', 'são': 'sɐ̃w̃', 'pão': 'pɐ̃w̃', 'mão': 'mɐ̃w̃', 'luz': 'lus', 'paz': 'pas', 'voz': 'vɔs', 'nós': 'nɔs'}
+_ONSET = ['ch', 'lh', 'nh', 'qu', 'gu', 'ss', 'rr', 'sc', 'br', 'bl', 'cr', 'cl', 'dr', 'fr', 'fl', 'gr', 'gl', 'pr', 'pl', 'tr', 'tl', 'vr',
+          'b', 'c', 'ç', 'd', 'f', 'g', 'h', 'j', 'k', 'l', 'm', 'n', 'p', 'r', 's', 't', 'v', 'w', 'x', 'y', 'z']
+_VOG = {'a': 'a', 'á': 'a', 'à': 'a', 'â': 'ɐ', 'ã': 'ɐ̃', 'e': 'ɛ', 'é': 'ɛ', 'ê': 'e', 'i': 'i', 'í': 'i', 'o': 'ɔ', 'ó': 'ɔ', 'ô': 'o',
+        'õ': 'õ', 'u': 'u', 'ú': 'u', 'ü': 'u'}
+_NASAL = {'a': 'ɐ̃', 'ɐ': 'ɐ̃', 'ɛ': 'ẽ', 'e': 'ẽ', 'i': 'ĩ', 'ɔ': 'õ', 'o': 'õ', 'u': 'ũ'}
+_BASE = {'á': 'a', 'à': 'a', 'â': 'a', 'ã': 'a', 'é': 'e', 'ê': 'e', 'í': 'i', 'ó': 'o', 'ô': 'o', 'õ': 'o', 'ú': 'u'}
+
+def ipa_silaba(silaba):
+    """Sílaba (como no jogo, ex.: 'NHA', 'QUE', 'TRÊS') → IPA tônica (ex.: 'ˈɲa'). None se não souber converter."""
+    t = silaba.lower()
+    if t in IPA_MONO: return 'ˈ' + IPA_MONO[t]
+    p = pronunciavel(silaba)
+    if p in IPA_MONO: return 'ˈ' + IPA_MONO[p]
+    on = next((o for o in _ONSET if p.startswith(o)), '')
+    resto = p[len(on):]
+    if not resto: return None
+    v0 = _BASE.get(resto[0], resto[0])
+    # QU/GU: antes de E/I o U não soa; antes de A/O vira /w/
+    if on in ('qu', 'gu'):
+        oi = ('k' if on == 'qu' else 'ɡ') + ('' if v0 in 'ei' else 'w')
+    else:
+        dur = v0 in 'ei'
+        base = {'b': 'b', 'c': 's' if dur else 'k', 'ç': 's', 'd': 'dʒ' if v0 == 'i' else 'd', 'f': 'f', 'g': 'ʒ' if dur else 'ɡ',
+                'h': '', 'j': 'ʒ', 'k': 'k', 'l': 'l', 'm': 'm', 'n': 'n', 'p': 'p', 'r': 'ʁ', 's': 's', 't': 'tʃ' if v0 == 'i' else 't',
+                'v': 'v', 'w': 'w', 'x': 'ʃ', 'y': 'j', 'z': 'z', 'ch': 'ʃ', 'lh': 'ʎ', 'nh': 'ɲ', 'ss': 's', 'rr': 'ʁ', 'sc': 's', '': ''}
+        if on in base: oi = base[on]
+        else:  # encontro consonantal: BR, CL...
+            c1 = {'b': 'b', 'c': 'k', 'd': 'd', 'f': 'f', 'g': 'ɡ', 'p': 'p', 't': 't', 'v': 'v'}[on[0]]
+            oi = c1 + ('ɾ' if on[1] == 'r' else 'l')
+    # núcleo (+ ditongo) e coda
+    r = resto
+    for fim, som in (('ao', 'aw'), ('áo', 'aw'), ('ão', 'ɐ̃w̃'), ('ãe', 'ɐ̃j̃'), ('õe', 'õj̃'), ('ãos', 'ɐ̃w̃s')):
+        if r == fim: return 'ˈ' + oi + som
+    # I/U átono antes de vogal acentuada vira semivogal (ciá → sja, viú → vju)
+    pre = ''
+    if len(r) > 1 and r[0] in 'iu' and r[1] in _VOG and r[1] not in 'iu':
+        pre = 'j' if r[0] == 'i' else 'w'; r = r[1:]
+    elif r.startswith('iú'): pre = 'j'; r = r[1:]
+    if r[0] not in _VOG: return None
+    nuc = _VOG[r[0]]; r = r[1:]
+    glide = ''
+    if r[:1] in ('i', 'u') and (len(r) == 1 or r[1] in 'smnrlz'):
+        glide = 'j' if r[0] == 'i' else 'w'; r = r[1:]
+    coda = ''
+    if r in ('m', 'n', 'ns', 'ms'):
+        coda = 's' if r.endswith('s') else ''
+        if nuc in ('e', 'ɛ') and r.startswith('m'): return 'ˈ' + oi + pre + 'ẽj̃' + coda  # BEM, TEM (EN, de PENTE, fica ẽ)
+        nuc = _NASAL.get(nuc, nuc); r = ''
+    if glide and r in ('m', 'n'): r = ''
+    for ch in r:
+        coda += {'s': 's', 'z': 's', 'r': 'ɾ', 'l': 'w', 'x': 'ks'}.get(ch, '?')
+    if '?' in coda: return None
+    return 'ˈ' + oi + pre + nuc + glide + coda
+
 # ----------------------------------------------------------------------------- utilidades (iguais ao nucleo.js)
 MAPA = {'á': 'a1', 'â': 'a2', 'ã': 'a3', 'à': 'a4', 'é': 'e1', 'ê': 'e2', 'í': 'i1', 'ó': 'o1', 'ô': 'o2', 'õ': 'o3', 'ú': 'u1', 'ç': 'c1', 'ü': 'u2'}
 def slug(texto):
@@ -400,16 +460,25 @@ class MotorAzure:
         self.url = f'https://{self.regiao}.tts.speech.microsoft.com/cognitiveservices/v1'
     def _um(self, texto, rate):
         from xml.sax.saxutils import escape
+        if texto.startswith('ipa:'):  # pronúncia exata: "ipa:ˈɲa|nhá"
+            import unicodedata
+            ipa, _, graf = texto[4:].partition('|')
+            ipa = unicodedata.normalize('NFD', ipa)  # o Azure só aceita o til combinante (ĩ → i + ◌̃)
+            corpo = f"<phoneme alphabet='ipa' ph='{escape(ipa)}'>{escape(graf or 'a')}</phoneme>"
+        else:
+            corpo = escape(texto)
         ssml = (f"<speak version='1.0' xml:lang='pt-BR'><voice name='{self.voz}'>"
-                f"<prosody rate='{rate}'>{escape(texto)}</prosody></voice></speak>").encode('utf-8')
+                f"<prosody rate='{rate}'>{corpo}</prosody></voice></speak>").encode('utf-8')
         req = urllib.request.Request(self.url, data=ssml, method='POST', headers={
             'Ocp-Apim-Subscription-Key': self.chave, 'Content-Type': 'application/ssml+xml',
             'X-Microsoft-OutputFormat': 'audio-24khz-96kbitrate-mono-mp3', 'User-Agent': 'LerBrincando-gerador'})
-        for tent in range(5):
+        for tent in range(12):
             try:
                 with urllib.request.urlopen(req, timeout=60) as r: return r.read()
             except urllib.error.HTTPError as e:
-                if e.code in (429, 500, 503) and tent < 4: time.sleep(2 * (tent + 1)); continue
+                # plano gratuito (F0): ~20 pedidos por minuto → espera o tempo pedido pelo Azure e tenta de novo
+                if e.code in (429, 500, 503) and tent < 11:
+                    time.sleep(float(e.headers.get('Retry-After') or 0) or min(60, 5 * (tent + 1))); continue
                 raise
     def sintetizar(self, pedidos):
         from concurrent.futures import ThreadPoolExecutor
@@ -441,7 +510,8 @@ def texto_fala(item, D, PRON):
         f = D['fonemas'].get(t)
         if f and f['tipo'] == 'vogal': return f['tts']
         if f and f['tipo'] == 'continua': return ALONGADO.get(t, pronunciavel(f['apoio']))
-        return pronunciavel(t) if len(t) > 1 else t.lower()
+        if f and f.get('apoio'): return pronunciavel(f['apoio'])  # oclusiva: sempre dentro da sílaba ("bá"), nunca "bê"
+        return pronunciavel(t + 'A' if len(t) == 1 else t)
     if tp in ('hist', 'frasejogo'):
         return ' '.join(tk['palavra'].lower() for tk in tokenizar(item['frase'])) + '.'
     return t
@@ -498,6 +568,7 @@ def principal():
     ap.add_argument('--listar', action='store_true'); ap.add_argument('--refazer', action='store_true')
     ap.add_argument('--wikimedia', action='store_true'); ap.add_argument('--qc', action='store_true')
     ap.add_argument('--amostra', action='store_true')
+    ap.add_argument('--regerar', action='store_true', help='com --tipos: refaz esses tipos mesmo que já existam (o resto do banco fica)')
     a = ap.parse_args()
     D = ler_dados(); itens = lista_audios(D); PRON = carregar_pronuncias()
     print(f'{len(itens)} itens de áudio necessários.')
@@ -517,6 +588,11 @@ def principal():
     caminho_man = os.path.join(PASTA, 'manifest.json')
     man = json.load(open(caminho_man, encoding='utf-8')) if os.path.exists(caminho_man) and not a.refazer else {'itens': {}, 'atribuicoes': []}
     if a.qc: return qualidade(man, itens, D)
+    if a.regerar:
+        alvo = {it['chave'] for it in itens}
+        for k in list(man['itens']):
+            if k in alvo or (k.endswith('_lento') and k[:-6] in alvo): man['itens'][k]['legado'] = True
+        print(f'Regerando {len(alvo)} itens (os demais sons do banco são mantidos).')
     import numpy as np
     vn, vl = VEL[a.motor]
     if a.velocidade and a.motor in ('edge', 'azure'):
@@ -570,6 +646,8 @@ def principal():
     for n, it in enumerate(sil, 1):
         k = it['chave']
         cands = [PRON[k]] if k in PRON else candidatos_silaba(it['texto'])
+        if a.motor == 'azure' and k not in PRON and ipa_silaba(it['texto']):
+            cands = ['ipa:' + ipa_silaba(it['texto']) + '|' + pronunciavel(it['texto'])] + cands
         escolhido = None
         for c in cands:
             r = motor.sintetizar([('n', c, vn), ('l', c, vl)])
@@ -590,8 +668,24 @@ def principal():
     for it in [x for x in itens if x['tipo'] == 'fonema']:
         k = it['chave']; g = it['texto']; f = D['fonemas'].get(g)
         if existe(k): continue
+        if a.motor == 'azure' and g in ('NH', 'LH'):
+            ipa = ipa_silaba(CONTINUAS[g])
+            x, taxa, _ = motor.sintetizar([('x', 'ipa:' + ipa + '|' + pronunciavel(CONTINUAS[g]), vl)])['x']
+            registrar(k, aparar_rel(x, taxa), taxa, 'azure-ipa', {'apoio': CONTINUAS[g]}, texto=ipa); continue
+        if a.motor == 'azure' and (not f or f['tipo'] not in ('vogal', 'continua')):
+            apoio = (f or {}).get('apoio') or (g + 'A' if len(g) == 1 else g)
+            ipa = ipa_silaba(apoio)
+            if ipa:
+                x, taxa, _ = motor.sintetizar([('x', 'ipa:' + ipa + '|' + pronunciavel(apoio), vl)])['x']
+                registrar(k, aparar_rel(x, taxa), taxa, 'azure-ipa', {'apoio': apoio}, texto=ipa); continue
+        if a.motor == 'azure' and f and f['tipo'] == 'vogal':
+            ipa = {'A': 'ˈa', 'E': 'ˈɛ', 'Ê': 'ˈe', 'É': 'ˈɛ', 'I': 'ˈi', 'O': 'ˈɔ', 'Ô': 'ˈo', 'Ó': 'ˈɔ', 'U': 'ˈu', 'Ã': 'ˈɐ̃'}.get(g)
+            if ipa:
+                x, taxa, _ = motor.sintetizar([('x', 'ipa:' + ipa + '|' + g.lower(), vl)])['x']; xs = aparar_rel(x, taxa)
+                if len(xs) < taxa * 0.5: xs = prolongar(xs, taxa, 650)
+                registrar(k, xs, taxa, 'azure-ipa', texto=ipa); continue
         if k in PRON or f is None or f['tipo'] != 'continua':
-            cands = [PRON[k]] if k in PRON else ([texto_fala(it, D, PRON)] + VOGAL_TTS_ALT.get(f['tts'].upper() if f else '', []) if f else candidatos_silaba(g))
+            cands = [PRON[k]] if k in PRON else ([texto_fala(it, D, PRON)] + VOGAL_TTS_ALT.get((f.get('tts') or '').upper() if f else '', []) if f else candidatos_silaba(g))
             ok = None
             for c in dict.fromkeys(cands):
                 x, taxa, _ = motor.sintetizar([('x', c, vl)])['x']; xs = aparar_rel(x, taxa)
