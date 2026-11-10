@@ -28,6 +28,7 @@ Uso:
 import argparse, asyncio, io, json, os, re, shutil, subprocess, sys, time, urllib.request, urllib.parse, wave
 
 VERSAO_GERADOR = 3
+VOZ_NH = 'pt-BR-ThalitaMultilingualNeural'   # voz usada só nas sílabas com NH (motor azure)
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 PASTA = os.path.join(RAIZ, 'audio')
 META_LUFS = -16.0
@@ -460,6 +461,9 @@ class MotorAzure:
         self.url = f'https://{self.regiao}.tts.speech.microsoft.com/cognitiveservices/v1'
     def _um(self, texto, rate):
         from xml.sax.saxutils import escape
+        voz = self.voz
+        if texto.startswith('voz:'):  # outra voz só para este som: "voz:pt-BR-ThalitaMultilingualNeural|nhá"
+            voz, _, texto = texto[4:].partition('|')
         if texto.startswith('ipa:'):  # pronúncia exata: "ipa:ˈɲa|nhá"
             import unicodedata
             ipa, _, graf = texto[4:].partition('|')
@@ -471,7 +475,7 @@ class MotorAzure:
             corpo = f"<phoneme alphabet='ipa' ph='{escape(ipa)}'>{escape(graf or 'a')}</phoneme>"
         else:
             corpo = escape(texto)
-        ssml = (f"<speak version='1.0' xml:lang='pt-BR'><voice name='{self.voz}'>"
+        ssml = (f"<speak version='1.0' xml:lang='pt-BR'><voice name='{voz}'>"
                 f"<prosody rate='{rate}'>{corpo}</prosody></voice></speak>").encode('utf-8')
         req = urllib.request.Request(self.url, data=ssml, method='POST', headers={
             'Ocp-Apim-Subscription-Key': self.chave, 'Content-Type': 'application/ssml+xml',
@@ -650,7 +654,10 @@ def principal():
     for n, it in enumerate(sil, 1):
         k = it['chave']
         cands = [PRON[k]] if k in PRON else candidatos_silaba(it['texto'])
-        if a.motor == 'azure' and k not in PRON and ipa_silaba(it['texto']):
+        if a.motor == 'azure' and k not in PRON and it['texto'].upper().startswith('NH'):
+            # a Francisca não pronuncia bem o NH em início de sílaba (soa "na"/"uó"); a Thalita pronuncia (escolha por escuta)
+            cands = ['voz:' + VOZ_NH + '|' + pronunciavel(it['texto'])] + cands
+        elif a.motor == 'azure' and k not in PRON and ipa_silaba(it['texto']):
             cands = ['ipa:' + ipa_silaba(it['texto']) + '|' + pronunciavel(it['texto'])] + cands
         escolhido = None
         for c in cands:
@@ -673,6 +680,9 @@ def principal():
     for it in [x for x in itens if x['tipo'] == 'fonema']:
         k = it['chave']; g = it['texto']; f = D['fonemas'].get(g)
         if existe(k): continue
+        if a.motor == 'azure' and g == 'NH':
+            x, taxa, _ = motor.sintetizar([('x', 'voz:' + VOZ_NH + '|' + pronunciavel(CONTINUAS[g]), vl)])['x']
+            registrar(k, aparar_rel(x, taxa), taxa, 'azure', {'apoio': CONTINUAS[g], 'voz': VOZ_NH}, texto=pronunciavel(CONTINUAS[g])); continue
         if a.motor == 'azure' and g in ('NH', 'LH'):
             ipa = ipa_silaba(CONTINUAS[g])
             x, taxa, _ = motor.sintetizar([('x', 'ipa:' + ipa + '|' + pronunciavel(CONTINUAS[g]), vl)])['x']
