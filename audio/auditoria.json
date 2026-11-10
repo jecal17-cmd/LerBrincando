@@ -10736,14 +10736,14 @@
    "problemas": []
   },
   "silaba_en": {
-   "ms_real": 897,
-   "pico": -0.4,
+   "ms_real": 758,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_en_lento": {
-   "ms_real": 1066,
-   "pico": -0.6,
+   "ms_real": 889,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
@@ -11156,14 +11156,14 @@
    "problemas": []
   },
   "silaba_am": {
-   "ms_real": 843,
-   "pico": -0.5,
+   "ms_real": 878,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_am_lento": {
-   "ms_real": 983,
-   "pico": -0.4,
+   "ms_real": 1043,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -11636,14 +11636,14 @@
    "problemas": []
   },
   "silaba_an": {
-   "ms_real": 843,
-   "pico": -0.5,
+   "ms_real": 878,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_an_lento": {
-   "ms_real": 983,
-   "pico": -0.4,
+   "ms_real": 1042,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -13015,8 +13015,8 @@
    "problemas": []
   },
   "fonema_a3": {
-   "ms_real": 983,
-   "pico": -0.4,
+   "ms_real": 1042,
+   "pico": -2.6,
    "problemas": []
   },
   "fonema_j": {

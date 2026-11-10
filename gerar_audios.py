@@ -464,6 +464,9 @@ class MotorAzure:
             import unicodedata
             ipa, _, graf = texto[4:].partition('|')
             ipa = unicodedata.normalize('NFD', ipa)  # o Azure só aceita o til combinante (ĩ → i + ◌̃)
+            # vogal nasal SOZINHA ("ã", "en") sai muda no Azure; dobrada ("ãã") sai audível e limpa
+            nu = ipa.replace('ˈ', '').replace('ː', '')
+            if len(nu) == 2 and nu[1] == '\u0303': ipa = 'ˈ' + nu + nu
             ipa = ipa.replace('ɡ', 'g')  # o Azure IGNORA o 'ɡ' fonético (U+0261): GA saía só 'a'. Usa o 'g' comum.
             corpo = f"<phoneme alphabet='ipa' ph='{escape(ipa)}'>{escape(graf or 'a')}</phoneme>"
         else:
@@ -654,6 +657,7 @@ def principal():
             r = motor.sintetizar([('n', c, vn), ('l', c, vl)])
             if 'n' not in r: continue
             xn, tn, _ = r['n']; xs = aparar_rel(xn, tn)
+            if float(np.abs(xn).max()) < 0.15: continue  # saiu mudo: tenta a próxima grafia
             if silaba_ok(xs, tn):
                 escolhido = (c, r); break
             if escolhido is None: escolhido = (c, r, 'suspeito')
