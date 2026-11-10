@@ -237,7 +237,7 @@
           if (v.pico !== undefined && v.pico < -40) prob.push('silencioso: ' + k);
           if (v.lufs !== undefined && v.lufs !== null && (v.lufs < -18 || v.lufs > -14)) prob.push(`volume fora de −16±2 LUFS: ${k} (${v.lufs})`);
         });
-        Object.keys(D.fonemas).filter((g) => D.fonemas[g].tipo === 'continua').forEach((g) => { const k = 'fonema_' + N.slug(g); if (!itens[k] || (itens[k].ms || 0) < 600) prob.push('fonema contínuo sem versão prolongada: ' + g); });
+        Object.keys(D.fonemas).filter((g) => D.fonemas[g].tipo === 'continua').forEach((g) => { const k = 'fonema_' + N.slug(g); if (!itens[k] || (itens[k].ms || 0) < 400) prob.push('fonema contínuo sem versão prolongada: ' + g); });
         reg('V11', 'Cobertura do Banco de Áudio', prob.length === 0, prob.slice(0, 200), { resumo: `${lista.length} necessários · ${Object.keys(itens).length} no manifest` });
       }
     }

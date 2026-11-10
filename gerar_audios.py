@@ -673,6 +673,12 @@ def principal():
             ipa = ipa_silaba(CONTINUAS[g])
             x, taxa, _ = motor.sintetizar([('x', 'ipa:' + ipa + '|' + pronunciavel(CONTINUAS[g]), vl)])['x']
             registrar(k, aparar_rel(x, taxa), taxa, 'azure-ipa', {'apoio': CONTINUAS[g]}, texto=ipa); continue
+        if a.motor == 'azure' and f and f['tipo'] == 'continua' and g not in ('NH', 'LH'):
+            # consoante prolongada FALADA pela voz ("mː"), devagar: som natural, sem recorte nem esticamento
+            # (o esticamento artificial deixava M, N, Z... metálicos)
+            c = {'M': 'm', 'N': 'n', 'L': 'l', 'F': 'f', 'V': 'v', 'S': 's', 'Z': 'z', 'X': 'ʃ', 'J': 'ʒ'}[g]
+            x, taxa, _ = motor.sintetizar([('x', 'ipa:' + c + 'ː|' + pronunciavel(CONTINUAS[g]), '-50%')])['x']
+            registrar(k, fade(aparar_rel(x, taxa), taxa), taxa, 'azure-ipa', {'apoio': CONTINUAS[g]}, texto=c + 'ː'); continue
         if a.motor == 'azure' and (not f or f['tipo'] not in ('vogal', 'continua')):
             apoio = (f or {}).get('apoio') or (g + 'A' if len(g) == 1 else g)
             ipa = ipa_silaba(apoio)
