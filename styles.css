@@ -449,3 +449,9 @@ body.menos-estimulos #cenario * { animation: none !important; }
   .grade-perfis .opcao { min-height: 72px; font-size: 1.2rem; }
   .grade-perfis .opcao .fig { font-size: 2.2rem; }
 }
+
+/* v1.2.3 — Lili falando na tela inicial (resposta visível ao toque em "Toque para começar") */
+.bolha-intro { font-size: clamp(1.1rem, 4.6vw, 1.5rem); font-weight: 700; max-width: min(30em, 92vw); animation: aparece .3s ease; }
+.tela-inicio .mascote.falando { animation: flutua 1.4s ease-in-out infinite; }
+@keyframes aparece { from { opacity: 0; transform: translateY(8px); } }
+@media (prefers-reduced-motion: reduce) { .tela-inicio .mascote.falando, .bolha-intro { animation: none; } }
