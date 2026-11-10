@@ -1,0 +1,84 @@
+# Gera o app Android do Ler Brincando.
+# - Sempre: roda o autoteste (V1–V12) e gera um APK de teste (instala direto no celular).
+# - Com a chave de upload configurada nos "Secrets" do repositório: gera também o AAB assinado
+#   para enviar à Google Play e um APK assinado. Veja ANDROID.md.
+# Para rodar: aba Actions → "App Android" → Run workflow. Também roda ao criar uma tag v1.2.3.
+name: App Android
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+  pull_request:
+    paths: ['android/**', 'package.json', 'package-lock.json', 'capacitor.config.json', 'ferramentas/preparar_app.js', '.github/workflows/app-android.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      # versionCode precisa aumentar a cada envio para a Play: usa o número da execução deste fluxo
+      VERSION_CODE: ${{ github.run_number }}
+      TEM_CHAVE: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 21
+          cache: gradle
+
+      - name: Dependências
+        run: npm ci
+
+      - name: Autoteste do conteúdo (V1–V12) e testes funcionais
+        run: node ferramentas/testar.js && node ferramentas/testes_funcionais.js
+
+      - name: Monta o app (www/ → android/)
+        run: npm run app:sync
+
+      - name: Chave de upload
+        if: env.TEM_CHAVE == 'true'
+        run: |
+          echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -d > "$RUNNER_TEMP/upload.jks"
+          echo "ANDROID_KEYSTORE_PATH=$RUNNER_TEMP/upload.jks" >> "$GITHUB_ENV"
+
+      - name: Compila (APK de teste)
+        working-directory: android
+        run: ./gradlew --no-daemon assembleDebug
+
+      - name: Compila (AAB e APK assinados para a Play)
+        if: env.TEM_CHAVE == 'true'
+        working-directory: android
+        env:
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+        run: ./gradlew --no-daemon bundleRelease assembleRelease
+
+      - name: Junta os arquivos
+        run: |
+          mkdir -p saida
+          cp android/app/build/outputs/apk/debug/app-debug.apk "saida/ler-brincando-teste-${VERSION_CODE}.apk"
+          if [ "$TEM_CHAVE" = "true" ]; then
+            cp android/app/build/outputs/bundle/release/app-release.aab "saida/ler-brincando-play-${VERSION_CODE}.aab"
+            cp android/app/build/outputs/apk/release/app-release.apk "saida/ler-brincando-${VERSION_CODE}.apk"
+          else
+            echo "::warning::Sem chave de upload nos Secrets: só o APK de teste foi gerado. Veja ANDROID.md para gerar o AAB da Play."
+          fi
+          ls -la saida
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ler-brincando-android-${{ github.run_number }}
+          path: saida/
+          retention-days: 30

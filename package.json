@@ -1,0 +1,19 @@
+{
+  "name": "ler-brincando",
+  "version": "1.2.2",
+  "private": true,
+  "description": "Ler Brincando: jogo de alfabetização pelo método fônico (web/PWA e app Android).",
+  "scripts": {
+    "testar": "node ferramentas/testar.js && node ferramentas/testes_funcionais.js",
+    "dados": "node ferramentas/construir_dados.js",
+    "app:preparar": "node ferramentas/preparar_app.js",
+    "app:sync": "node ferramentas/preparar_app.js && npx cap sync android",
+    "app:abrir": "npx cap open android"
+  },
+  "devDependencies": {
+    "@capacitor/android": "8.6.0",
+    "@capacitor/app": "8.1.2",
+    "@capacitor/cli": "8.6.0",
+    "@capacitor/core": "8.6.0"
+  }
+}

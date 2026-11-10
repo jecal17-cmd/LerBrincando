@@ -9,6 +9,19 @@
   const falar = (s, o) => Som.falar(s, o);
   const ICONES = { rima: '🎵', palmas: '👏', somInicial: '🔤', somFinal: '🔚', juntar: '🧩', tirar: '🪄', trocar: '🔄', memoria: '🃏', licao: '🔊', cacaSom: '👂', tracado: '✍️', abertoFechado: '😮', bingo: '🎱', historia: '📖', guardiao: '🛡️', nomeSom: '🔤', leiaEncontre: '👀', gemeos: '👯', letraPerdida: '❓', regra: '💡', fabrica: '🏭', trem: '🚂', fatiador: '✂️', freq: '✨', ditado: '✍️', trocaLetra: '🪄', frase: '📜', microfone: '🎤' };
   const hoje = () => Motor.hoje();
+  // Rodando como app Android (Capacitor)?
+  const APP = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
+  // No app, o download de arquivos do navegador não funciona: mostra o JSON para copiar e guardar
+  function exportarNoApp() {
+    const texto = JSON.stringify(Store.dados);
+    const area = el('textarea', { readonly: 'true', rows: '6', style: { width: '100%', fontSize: '.8rem' } }); area.value = texto;
+    modal((fechar) => [el('h2', null, '⬇️ Exportar progresso'),
+      el('p', null, 'Copie o texto abaixo e guarde (por exemplo, envie para você mesmo por e-mail). Para restaurar, salve-o num arquivo .json e use "Importar".'),
+      area,
+      el('div', { class: 'acoes' },
+        el('button', { class: 'btn pri', type: 'button', onclick: async () => { try { await navigator.clipboard.writeText(texto); toast('Copiado!'); } catch (e) { area.select(); document.execCommand('copy'); toast('Copiado!'); } } }, '📋 Copiar'),
+        el('button', { class: 'btn', type: 'button', onclick: () => fechar() }, 'Fechar'))], { fecharFora: true });
+  }
 
   // ======================================================================
   // INÍCIO — "Toque para começar" (desbloqueia o áudio no iOS/Safari)
@@ -23,12 +36,29 @@
     tela(t);
     $('#comecar').addEventListener('click', () => {
       // desbloqueio síncrono dentro do gesto (exigência do iOS)
+      // A fala de boas-vindas da Lili precisa TERMINAR antes da próxima tela falar ("Toque na sua figura...");
+      // antes, a tela de perfis abria após 2,6 s e as duas falas tocavam juntas.
+      let seguir; const terminou = new Promise((r) => { seguir = r; });
       const bv = Som.itemBanco({ k: 'frase', t: D.falas.boasVindas });
-      if (bv) { const a = new Audio('audio/' + bv.arquivo); a.play().catch(() => {}); }
-      else if ('speechSynthesis' in window) { const u = new SpeechSynthesisUtterance(D.falas.boasVindas); u.lang = 'pt-BR'; if (Som.voz) u.voice = Som.voz; u.rate = Store.cfg.taxa; speechSynthesis.speak(u); }
-      Som.desbloquear().then(() => { Musica.iniciar(); manterTela(); });
+      const meu = ++Som.token;
+      if (bv) {
+        const a = new Audio('audio/' + bv.arquivo); a.volume = Store.cfg.volVoz;
+        Som.audioAtual = a; // assim Som.parar() também interrompe esta fala
+        a.addEventListener('ended', seguir); a.addEventListener('error', seguir);
+        a.play().catch(seguir);
+        setTimeout(seguir, (bv.ms || 5000) + 1500); // segurança: nunca prende a criança nesta tela
+      } else if ('speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance(D.falas.boasVindas); u.lang = 'pt-BR'; if (Som.voz) u.voice = Som.voz; u.rate = Store.cfg.taxa || 0.95;
+        u.onend = seguir; u.onerror = seguir; speechSynthesis.speak(u);
+        setTimeout(seguir, 8000);
+      } else setTimeout(seguir, 600);
+      $('#comecar').disabled = true;
+      Som.desbloquear().then(() => { Musica.iniciar(); Musica.abaixar(true); manterTela(); });
       iniciarRelogio();
-      setTimeout(() => perfis(), bv ? 2600 : 2400);
+      terminou.then(() => {
+        if (meu !== Som.token) return; // outra fala já assumiu (ex.: botão Sobre)
+        Som.audioAtual = null; Musica.abaixar(false); perfis();
+      });
     }, { once: true });
     $('#sobre').onclick = () => sobreModal();
   }
@@ -40,7 +70,7 @@
   function perfis() {
     const ps = Store.dados.perfis;
     if (!ps.length) return criarPerfil();
-    const grade = el('div', { class: 'grade', style: { maxWidth: '760px', margin: '0 auto', width: '100%' } });
+    const grade = el('div', { class: 'grade grade-perfis' });
     ps.forEach((p) => {
       const b = el('button', { class: 'opcao', type: 'button', 'aria-label': 'perfil ' + p.nome }, el('span', { class: 'fig' }, p.avatar), el('span', { class: 'txt' }, p.nome));
       b.onclick = () => { Store.dados.atual = p.id; Store.salvar(); if (!p.avaliacao) avaliacaoInicial(); else mapa(); };
@@ -509,7 +539,7 @@
     });
     const novo = el('button', { class: 'btn', type: 'button', disabled: Store.dados.perfis.length >= 4 }, '➕ Nova criança'); novo.onclick = criarPerfil;
     const exp = el('button', { class: 'btn', type: 'button' }, '⬇️ Exportar progresso (JSON)');
-    exp.onclick = () => { const blob = new Blob([JSON.stringify(Store.dados, null, 1)], { type: 'application/json' }); const a = el('a', { href: URL.createObjectURL(blob), download: `ler-brincando-${hoje()}.json` }); document.body.append(a); a.click(); a.remove(); };
+    exp.onclick = () => { if (APP) return exportarNoApp(); const blob = new Blob([JSON.stringify(Store.dados, null, 1)], { type: 'application/json' }); const a = el('a', { href: URL.createObjectURL(blob), download: `ler-brincando-${hoje()}.json` }); document.body.append(a); a.click(); a.remove(); };
     const arq = el('input', { type: 'file', accept: 'application/json,.json', 'aria-label': 'arquivo para importar' });
     arq.onchange = async () => { try { const d = JSON.parse(await arq.files[0].text()); if (!Array.isArray(d.perfis)) throw new Error('formato'); localStorage.setItem('lerBrincando.v1', JSON.stringify(d)); Store.carregar(); aplicarModos(); toast('Progresso importado!'); c.innerHTML = ''; abaDados(c); } catch (e) { toast('Arquivo inválido.'); } };
     const zerar = el('button', { class: 'btn', type: 'button' }, '⚠️ Zerar todos os dados');
@@ -530,7 +560,7 @@
       // teste de carregamento das imagens OpenMoji (amostra)
       const amostra = D.palavras.slice(0, 40); let falhas = 0; let feitos = 0;
       const pi = el('p', null, 'Testando imagens OpenMoji (amostra de 40)...'); out.append(pi);
-      amostra.forEach((w) => { const im = new Image(); im.onload = im.onerror = (e) => { feitos++; if (e.type === 'error') falhas++; if (feitos === amostra.length) pi.textContent = `Imagens OpenMoji: ${amostra.length - falhas}/${amostra.length} carregaram (as que falharem usam o emoji nativo).`; }; im.src = `https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/${w.om}.svg`; });
+      amostra.forEach((w) => { const im = new Image(); im.onload = im.onerror = (e) => { feitos++; if (e.type === 'error') falhas++; if (feitos === amostra.length) pi.textContent = `Imagens OpenMoji (locais): ${amostra.length - falhas}/${amostra.length} carregaram (as que falharem usam o CDN ou o emoji nativo).`; }; im.src = `imagens/${w.om}.svg`; });
     };
     // simulação de data (T15)
     const dias = el('span', null, String(Motor.offsetDias));
@@ -573,7 +603,19 @@
     try { if (Store.cfg.manterTela && 'wakeLock' in navigator) { wake = await navigator.wakeLock.request('screen'); } else if (wake) { await wake.release(); wake = null; } } catch (e) { /* sem suporte */ }
   }
   document.addEventListener('visibilitychange', () => { if (document.visibilityState === 'visible' && Store.cfg.manterTela) manterTela(); if (document.visibilityState === 'hidden') Store.salvar(); });
-  if ('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
+  // No app Android (Capacitor) tudo já está no aparelho: não precisa de Service Worker
+  if (!APP && 'serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('sw.js').catch(() => {});
+  // Botão "voltar" do Android: fecha janelas abertas e volta ao mapa, em vez de fechar o jogo no meio da fase
+  const AppNativo = APP && window.Capacitor.Plugins && window.Capacitor.Plugins.App;
+  if (AppNativo) {
+    AppNativo.addListener('backButton', () => {
+      const m = document.querySelector('.modal-fundo'); if (m) { m.remove(); return; }
+      if (document.querySelector('.tela-inicio #comecar')) { AppNativo.minimizeApp(); return; }
+      if (Store.perfil && !document.querySelector('.mapa')) { Som.parar(); mapa(); return; }
+      AppNativo.minimizeApp();
+    });
+    AppNativo.addListener('pause', () => { Som.parar(); Store.salvar(); });
+  }
   window.addEventListener('pagehide', () => Store.salvar());
   // impede zoom acidental por duplo toque e gesto de pinça no iOS
   document.addEventListener('gesturestart', (e) => e.preventDefault());

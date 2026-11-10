@@ -12,7 +12,8 @@ NOVIDADES v1.2
     corte de bordas relativo ao volume do próprio som (não come o "f", "s", "v" do começo/fim).
   • Bancos gerados pela v1.1 são atualizados automaticamente (sílabas, fonemas e margens).
 
-MOTORES (--motor):  edge (padrão, vozes neurais Microsoft via edge-tts) · kokoro (offline, Apache-2.0) · piper (offline, robótico)
+MOTORES (--motor):  edge (padrão, vozes neurais Microsoft via edge-tts; uso pessoal) · azure (mesmas vozes, com licença
+                    para publicar; precisa de AZURE_SPEECH_KEY) · kokoro (offline, Apache-2.0) · piper (offline, robótico)
 
 Uso:
   Windows: duplo clique em gerar_audios.bat
@@ -36,7 +37,7 @@ ALONGADO = {'M': 'mmmmmm', 'N': 'nnnnnn', 'L': 'llllll', 'F': 'ffffff', 'V': 'vv
 WIKI_BUSCA = {'M': 'Bilabial nasal', 'N': 'Alveolar nasal', 'F': 'Voiceless labiodental fricative', 'V': 'Voiced labiodental fricative',
               'S': 'Voiceless alveolar sibilant', 'Z': 'Voiced alveolar sibilant', 'X': 'Voiceless postalveolar fricative',
               'J': 'Voiced postalveolar fricative', 'L': 'Alveolar lateral approximant', 'NH': 'Palatal nasal', 'LH': 'Palatal lateral approximant'}
-VEL = {'edge': ('-15%', '-35%'), 'kokoro': (0.88, 0.72), 'piper': (1.1, 1.4)}
+VEL = {'edge': ('-15%', '-35%'), 'azure': ('-15%', '-35%'), 'kokoro': (0.88, 0.72), 'piper': (1.1, 1.4)}
 VOGAL_TTS_ALT = {'Ã': ['ã', 'ãã', 'lã'], 'Á': ['á', 'aah'], 'Ê': ['ê', 'êê'], 'É': ['é', 'éé'], 'Í': ['í', 'ii'], 'Ô': ['ô', 'ôô'], 'Ó': ['ó', 'óó'], 'Ú': ['ú', 'uu']}
 
 # ----------------------------------------------------------------------------- grafia pronunciável (igual ao nucleo.js → pronunciavel)
@@ -387,8 +388,42 @@ class MotorPiper:
                 res[k] = (np.frombuffer(r.readframes(r.getnframes()), dtype=np.int16).astype('float32') / 32768, r.getframerate(), [])
         return res
 
+class MotorAzure:
+    """Azure Speech (mesmas vozes neurais do Edge, COM licença para publicar em apps).
+    Precisa de AZURE_SPEECH_KEY e AZURE_SPEECH_REGION (ex.: brazilsouth) nas variáveis de ambiente.
+    A camada gratuita (F0) cobre o banco inteiro."""
+    nome = 'azure'
+    def __init__(self, voz):
+        self.chave = os.environ.get('AZURE_SPEECH_KEY'); self.regiao = os.environ.get('AZURE_SPEECH_REGION', 'brazilsouth')
+        if not self.chave: sys.exit('Defina AZURE_SPEECH_KEY (e AZURE_SPEECH_REGION) com os dados do recurso Speech no portal do Azure.')
+        self.voz = voz or 'pt-BR-FranciscaNeural'
+        self.url = f'https://{self.regiao}.tts.speech.microsoft.com/cognitiveservices/v1'
+    def _um(self, texto, rate):
+        from xml.sax.saxutils import escape
+        ssml = (f"<speak version='1.0' xml:lang='pt-BR'><voice name='{self.voz}'>"
+                f"<prosody rate='{rate}'>{escape(texto)}</prosody></voice></speak>").encode('utf-8')
+        req = urllib.request.Request(self.url, data=ssml, method='POST', headers={
+            'Ocp-Apim-Subscription-Key': self.chave, 'Content-Type': 'application/ssml+xml',
+            'X-Microsoft-OutputFormat': 'audio-24khz-96kbitrate-mono-mp3', 'User-Agent': 'LerBrincando-gerador'})
+        for tent in range(5):
+            try:
+                with urllib.request.urlopen(req, timeout=60) as r: return r.read()
+            except urllib.error.HTTPError as e:
+                if e.code in (429, 500, 503) and tent < 4: time.sleep(2 * (tent + 1)); continue
+                raise
+    def sintetizar(self, pedidos):
+        from concurrent.futures import ThreadPoolExecutor
+        res = {}
+        def tarefa(p):
+            k, t, r = p
+            try:
+                x, taxa = decodificar(self._um(t, r)); res[k] = (x, taxa, [])  # sem tempos por palavra: o karaokê usa o modo palavra a palavra
+            except Exception as e: print('  ! falhou', k, e)
+        with ThreadPoolExecutor(max_workers=4) as ex: list(ex.map(tarefa, pedidos))
+        return res
+
 def criar_motor(nome, voz):
-    return {'edge': MotorEdge, 'kokoro': MotorKokoro, 'piper': MotorPiper}[nome](voz)
+    return {'edge': MotorEdge, 'azure': MotorAzure, 'kokoro': MotorKokoro, 'piper': MotorPiper}[nome](voz)
 
 def carregar_pronuncias():
     p = os.path.join(RAIZ, 'ferramentas', 'pronuncias.json')
@@ -456,7 +491,7 @@ def tempos_silabas(tk, ini, fim):
 # ----------------------------------------------------------------------------- principal
 def principal():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
-    ap.add_argument('--motor', default='edge', choices=['edge', 'kokoro', 'piper'])
+    ap.add_argument('--motor', default='edge', choices=['edge', 'azure', 'kokoro', 'piper'])
     ap.add_argument('--voz', default=None)
     ap.add_argument('--velocidade', default=None, help='edge: ex. -15%% (normal); a lenta fica 20 pontos abaixo')
     ap.add_argument('--tipos', default=None, help='lista separada por vírgula: palavra,silaba,fonema,nome,frase,hist,frasejogo')
@@ -484,7 +519,7 @@ def principal():
     if a.qc: return qualidade(man, itens, D)
     import numpy as np
     vn, vl = VEL[a.motor]
-    if a.velocidade and a.motor == 'edge':
+    if a.velocidade and a.motor in ('edge', 'azure'):
         vn = a.velocidade; vl = f"{int(a.velocidade.strip('%')) - 20}%"
     # banco antigo (v1.0/v1.1): refaz o que mudou
     velho = man.get('versaoGerador', 1) < VERSAO_GERADOR and man['itens']

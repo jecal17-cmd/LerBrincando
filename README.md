@@ -2,7 +2,7 @@
 
 Jogo de alfabetização em português do Brasil, pelo **método fônico**, para crianças de **5 a 7 anos**.
 São 8 mundos, 93 fases, 363 palavras ilustradas, 11 histórias e uma Área dos Pais.
-Funciona no navegador, no celular e offline (PWA). Não tem anúncios, compras nem rastreadores.
+Funciona no navegador, no celular, offline (PWA) e como app Android. Não tem anúncios, compras nem rastreadores.
 
 ## Começar em 1 minuto
 
@@ -26,6 +26,8 @@ Funciona no navegador, no celular e offline (PWA). Não tem anúncios, compras n
 | Gerar ou atualizar o Banco de Áudio | `gerar_audios.bat` (Windows) ou `./gerar_audios.sh` (macOS/Linux) |
 | Consertar os manifests de áudio após uma geração interrompida | `node ferramentas/sincronizar_manifest.js` |
 | Robô que joga pela interface (Playwright para Python) | `python ferramentas/teste_navegador.py 1.1,3.1,4.11` |
+| Auditar o Banco de Áudio | `python ferramentas/auditar_audios.py` |
+| Gerar o app Android (APK de teste e AAB da Play) | GitHub → Actions → **App Android** → Run workflow (guia em [ANDROID.md](ANDROID.md)) |
 
 Depois de mudar o conteúdo ou o código, rode o autoteste. Se algum validador reprovar, corrija antes de publicar.
 Ao publicar uma versão nova, aumente `VERSAO` em `sw.js` para os aparelhos baixarem os arquivos novos.

@@ -1,0 +1,2 @@
+Imagens OpenMoji 16 (https://openmoji.org), licença CC BY-SA 4.0.
+Geradas por ferramentas/recursos_locais.js — só os emojis usados pelo jogo.

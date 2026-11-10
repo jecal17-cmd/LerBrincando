@@ -1,0 +1,77 @@
+apply plugin: 'com.android.application'
+
+// Versão: versionName vem do jogo (data.json); versionCode precisa SEMPRE aumentar a cada envio para a Play.
+// No GitHub Actions ele vem do número da execução; localmente, use -PversionCode=N.
+def dadosJogo = new groovy.json.JsonSlurper().parse(file('../../data.json'))
+def codigoVersao = (project.findProperty('versionCode') ?: System.getenv('VERSION_CODE') ?: '1') as Integer
+
+// Assinatura (chave de upload da Play). Lida de variáveis de ambiente ou de android/chave.properties (nunca vai para o git).
+def chaveProps = new Properties()
+def chaveArq = rootProject.file('chave.properties')
+if (chaveArq.exists()) chaveArq.withInputStream { chaveProps.load(it) }
+def chave = { String nome -> System.getenv(nome) ?: chaveProps.getProperty(nome) }
+def temChave = chave('ANDROID_KEYSTORE_PATH') && file(chave('ANDROID_KEYSTORE_PATH')).exists()
+
+android {
+    namespace = "com.lerbrincando.app"
+    compileSdk = rootProject.ext.compileSdkVersion
+    defaultConfig {
+        applicationId "com.lerbrincando.app"
+        minSdkVersion rootProject.ext.minSdkVersion
+        targetSdkVersion rootProject.ext.targetSdkVersion
+        versionCode codigoVersao
+        versionName dadosJogo.versao
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        aaptOptions {
+             // Files and dirs to omit from the packaged assets dir, modified to accommodate modern web apps.
+             // Default: https://android.googlesource.com/platform/frameworks/base/+/282e181b58cf72b6ca770dc7ca5f91f135444502/tools/aapt/AaptAssets.cpp#61
+            ignoreAssetsPattern = '!.svn:!.git:!.ds_store:!*.scc:.*:!CVS:!thumbs.db:!picasa.ini:!*~'
+        }
+    }
+    signingConfigs {
+        if (temChave) {
+            release {
+                storeFile file(chave('ANDROID_KEYSTORE_PATH'))
+                storePassword chave('ANDROID_KEYSTORE_PASSWORD')
+                keyAlias chave('ANDROID_KEY_ALIAS')
+                keyPassword chave('ANDROID_KEY_PASSWORD')
+            }
+        }
+    }
+    buildTypes {
+        release {
+            if (temChave) signingConfig signingConfigs.release
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+repositories {
+    flatDir{
+        dirs '../capacitor-cordova-android-plugins/src/main/libs', 'libs'
+    }
+}
+
+dependencies {
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
+    implementation "androidx.appcompat:appcompat:$androidxAppCompatVersion"
+    implementation "androidx.coordinatorlayout:coordinatorlayout:$androidxCoordinatorLayoutVersion"
+    implementation "androidx.core:core-splashscreen:$coreSplashScreenVersion"
+    implementation project(':capacitor-android')
+    testImplementation "junit:junit:$junitVersion"
+    androidTestImplementation "androidx.test.ext:junit:$androidxJunitVersion"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$androidxEspressoCoreVersion"
+    implementation project(':capacitor-cordova-android-plugins')
+}
+
+apply from: 'capacitor.build.gradle'
+
+try {
+    def servicesJSON = file('google-services.json')
+    if (servicesJSON.text) {
+        apply plugin: 'com.google.gms.google-services'
+    }
+} catch(Exception e) {
+    logger.info("google-services.json not found, google-services plugin not applied. Push Notifications won't work")
+}

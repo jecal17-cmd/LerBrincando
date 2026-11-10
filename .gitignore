@@ -8,3 +8,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 modelos_piper/
+# app Android: dependências e pasta gerada
+www/
+*.jks
+*.keystore
