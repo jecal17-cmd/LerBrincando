@@ -8432,14 +8432,14 @@
    "problemas": []
   },
   "silaba_nha": {
-   "ms_real": 716,
-   "pico": -3.5,
+   "ms_real": 722,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nha_lento": {
-   "ms_real": 832,
-   "pico": -4.1,
+   "ms_real": 850,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
@@ -8924,13 +8924,13 @@
    "problemas": []
   },
   "silaba_nho": {
-   "ms_real": 674,
-   "pico": -3.1,
+   "ms_real": 727,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nho_lento": {
-   "ms_real": 785,
+   "ms_real": 874,
    "pico": -3.6,
    "nucleos": 1,
    "problemas": []
@@ -10736,14 +10736,14 @@
    "problemas": []
   },
   "silaba_en": {
-   "ms_real": 897,
-   "pico": -0.4,
+   "ms_real": 758,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_en_lento": {
-   "ms_real": 1066,
-   "pico": -0.6,
+   "ms_real": 889,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
@@ -11132,14 +11132,14 @@
    "problemas": []
   },
   "silaba_nha3o": {
-   "ms_real": 784,
-   "pico": -1.9,
+   "ms_real": 807,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nha3o_lento": {
-   "ms_real": 925,
-   "pico": -2.6,
+   "ms_real": 916,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
@@ -11156,14 +11156,14 @@
    "problemas": []
   },
   "silaba_am": {
-   "ms_real": 843,
-   "pico": -0.5,
+   "ms_real": 878,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_am_lento": {
-   "ms_real": 983,
-   "pico": -0.4,
+   "ms_real": 1043,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -11636,14 +11636,14 @@
    "problemas": []
   },
   "silaba_an": {
-   "ms_real": 843,
-   "pico": -0.5,
+   "ms_real": 878,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_an_lento": {
-   "ms_real": 983,
-   "pico": -0.4,
+   "ms_real": 1042,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -11984,14 +11984,14 @@
    "problemas": []
   },
   "silaba_nha3": {
-   "ms_real": 709,
-   "pico": -4.9,
+   "ms_real": 765,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nha3_lento": {
-   "ms_real": 823,
-   "pico": -5.6,
+   "ms_real": 898,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
@@ -12152,14 +12152,14 @@
    "problemas": []
   },
   "silaba_nhou": {
-   "ms_real": 743,
-   "pico": -3.1,
+   "ms_real": 670,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nhou_lento": {
-   "ms_real": 867,
-   "pico": -3.7,
+   "ms_real": 861,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
@@ -12512,14 +12512,14 @@
    "problemas": []
   },
   "silaba_nhos": {
-   "ms_real": 871,
-   "pico": -3.0,
+   "ms_real": 723,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nhos_lento": {
-   "ms_real": 1018,
-   "pico": -4.4,
+   "ms_real": 802,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
@@ -12848,14 +12848,14 @@
    "problemas": []
   },
   "silaba_nhas": {
-   "ms_real": 905,
-   "pico": -2.8,
+   "ms_real": 833,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nhas_lento": {
-   "ms_real": 1075,
-   "pico": -3.4,
+   "ms_real": 984,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
@@ -13015,8 +13015,8 @@
    "problemas": []
   },
   "fonema_a3": {
-   "ms_real": 983,
-   "pico": -0.4,
+   "ms_real": 1042,
+   "pico": -2.6,
    "problemas": []
   },
   "fonema_j": {
@@ -13030,8 +13030,8 @@
    "problemas": []
   },
   "fonema_nh": {
-   "ms_real": 832,
-   "pico": -4.1,
+   "ms_real": 873,
+   "pico": -2.0,
    "problemas": []
   },
   "fonema_lh": {

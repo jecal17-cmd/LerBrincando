@@ -1,7 +1,7 @@
 /* Fonte de dados do Ler Brincando (editável). Rode:  node ferramentas/construir_dados.js
    para gerar data.js (JSON) com os campos derivados e verificados. */
 module.exports = {
-  versao: '1.2.5',
+  versao: '1.2.6',
 
   // ------------------------------------------------------------------ MUNDOS
   mundos: [
@@ -646,7 +646,7 @@ module.exports = {
   // ------------------------------------------------------------------ CRÉDITOS / LICENÇAS / CHANGELOG
   creditos: [
     'Imagens: OpenMoji — o projeto de emojis de código aberto (https://openmoji.org), licença CC BY-SA 4.0, incluídas no jogo (pasta imagens/). Emojis nativos do sistema são usados como alternativa.',
-    'Vozes do Banco de Áudio: vozes neurais Microsoft (pt-BR Francisca/Thalita/Antonio) geradas com a biblioteca livre edge-tts, ou Kokoro-82M (Apache-2.0) offline. Para publicar o app numa loja, gere com Azure Speech (--motor azure) ou Kokoro.',
+    'Vozes do Banco de Áudio: vozes neurais Microsoft (pt-BR Francisca; Thalita nas sílabas com NH) geradas com Azure Speech (sílabas e fonemas) e com a biblioteca livre edge-tts (palavras, frases e histórias), ou Kokoro-82M (Apache-2.0) offline. Para publicar o app numa loja, gere com Azure Speech (--motor azure) ou Kokoro.',
     'Imagens reserva: Twemoji (jdecked/twemoji), licença CC BY 4.0.',
     'Fontes: Andika (SIL International) e Baloo 2, SIL Open Font License 1.1, incluídas no jogo (pasta fontes/).',
     'Voz alternativa: Piper TTS (Rhasspy/Open Home Foundation, licença MIT) com o modelo pt_BR-faber-medium. Confira a licença do modelo baixado no arquivo .onnx.json/MODEL_CARD e registre aqui.',
@@ -655,6 +655,7 @@ module.exports = {
     'Personagens, histórias e textos: originais, criados para este jogo.'
   ],
   changelog: [
+    '1.2.6 — Sons: AN, AM, EN e o som do Ã estavam mudos e foram refeitos; as sílabas com NH (NHA, NHO, NHÃ, NHÃO...) e o som do NH agora usam a voz Thalita, que pronuncia o NH corretamente.',
     '1.2.5 — Sons do M, N, L, F, V, S, Z, J e X refeitos: agora a própria voz fala a consoante prolongada, sem o recorte esticado que deixava o som metálico.',
     '1.2.4 — Sons: as sílabas com G (GA, GO, GU, GUE, GUI, GUA, GRE, GLO...) saíam sem a consoante; foram refeitas.',
     '1.2.3 — Celular: toques rápidos não são mais ignorados (palmas no tambor e botão Pronto voltavam a falhar); o botão Mapa no fim da avaliação inicial travava o mapa e impedia continuar pelo perfil; a tela inicial mostra a fala da Lili com opção de pular. Sons: todas as 385 sílabas e os fonemas regerados com Azure Speech e pronúncia fonética exata (IPA): nenhuma sílaba soletrada; NH e LH soam como "nhá"/"lhá"; B, P, R e outras oclusivas soam na sílaba de apoio ("bá"), nunca pelo nome da letra.',
