@@ -8300,14 +8300,14 @@
    "problemas": []
   },
   "silaba_ga": {
-   "ms_real": 640,
-   "pico": -2.9,
+   "ms_real": 681,
+   "pico": -1.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ga_lento": {
-   "ms_real": 726,
-   "pico": -3.4,
+   "ms_real": 785,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
@@ -8756,14 +8756,14 @@
    "problemas": []
   },
   "silaba_gre": {
-   "ms_real": 634,
-   "pico": -1.7,
+   "ms_real": 694,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gre_lento": {
-   "ms_real": 723,
-   "pico": -2.2,
+   "ms_real": 805,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -8852,14 +8852,14 @@
    "problemas": []
   },
   "silaba_gue": {
-   "ms_real": 643,
-   "pico": -3.2,
+   "ms_real": 740,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gue_lento": {
-   "ms_real": 737,
-   "pico": -3.7,
+   "ms_real": 864,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
@@ -8900,14 +8900,14 @@
    "problemas": []
   },
   "silaba_gol": {
-   "ms_real": 678,
-   "pico": -3.4,
+   "ms_real": 760,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gol_lento": {
-   "ms_real": 781,
-   "pico": -4.9,
+   "ms_real": 894,
+   "pico": -3.9,
    "nucleos": 1,
    "problemas": []
   },
@@ -9092,14 +9092,14 @@
    "problemas": []
   },
   "silaba_gai": {
-   "ms_real": 702,
-   "pico": -2.5,
+   "ms_real": 765,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gai_lento": {
-   "ms_real": 812,
-   "pico": -3.2,
+   "ms_real": 897,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -9152,14 +9152,14 @@
    "problemas": []
   },
   "silaba_gri": {
-   "ms_real": 684,
-   "pico": -4.5,
+   "ms_real": 718,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gri_lento": {
-   "ms_real": 795,
-   "pico": -5.0,
+   "ms_real": 837,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
@@ -9200,14 +9200,14 @@
    "problemas": []
   },
   "silaba_go": {
-   "ms_real": 652,
-   "pico": -2.5,
+   "ms_real": 685,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_go_lento": {
-   "ms_real": 749,
-   "pico": -4.1,
+   "ms_real": 791,
+   "pico": -3.9,
    "nucleos": 1,
    "problemas": []
   },
@@ -9248,13 +9248,13 @@
    "problemas": []
   },
   "silaba_gu": {
-   "ms_real": 668,
-   "pico": -3.0,
+   "ms_real": 680,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gu_lento": {
-   "ms_real": 774,
+   "ms_real": 790,
    "pico": -3.6,
    "nucleos": 1,
    "problemas": []
@@ -9320,14 +9320,14 @@
    "problemas": []
   },
   "silaba_gar": {
-   "ms_real": 619,
-   "pico": -2.5,
+   "ms_real": 735,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gar_lento": {
-   "ms_real": 694,
-   "pico": -3.3,
+   "ms_real": 849,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
@@ -9380,14 +9380,14 @@
    "problemas": []
   },
   "silaba_gan": {
-   "ms_real": 843,
-   "pico": -0.5,
+   "ms_real": 756,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gan_lento": {
-   "ms_real": 983,
-   "pico": -0.4,
+   "ms_real": 881,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
@@ -9548,14 +9548,14 @@
    "problemas": []
   },
   "silaba_gui": {
-   "ms_real": 618,
-   "pico": -4.1,
+   "ms_real": 720,
+   "pico": -4.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gui_lento": {
-   "ms_real": 707,
-   "pico": -4.3,
+   "ms_real": 838,
+   "pico": -5.0,
    "nucleos": 1,
    "problemas": []
   },
@@ -9632,14 +9632,14 @@
    "problemas": []
   },
   "silaba_gua": {
-   "ms_real": 750,
-   "pico": -3.9,
+   "ms_real": 730,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gua_lento": {
-   "ms_real": 874,
-   "pico": -4.2,
+   "ms_real": 856,
+   "pico": -4.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -9692,14 +9692,14 @@
    "problemas": []
   },
   "silaba_ga3o": {
-   "ms_real": 719,
-   "pico": -2.2,
+   "ms_real": 741,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ga3o_lento": {
-   "ms_real": 835,
-   "pico": -2.5,
+   "ms_real": 867,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -10712,14 +10712,14 @@
    "problemas": []
   },
   "silaba_glo": {
-   "ms_real": 689,
-   "pico": -2.7,
+   "ms_real": 722,
+   "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_glo_lento": {
-   "ms_real": 802,
-   "pico": -3.4,
+   "ms_real": 842,
+   "pico": -4.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -12020,14 +12020,14 @@
    "problemas": []
   },
   "silaba_gou": {
-   "ms_real": 667,
-   "pico": -4.3,
+   "ms_real": 756,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gou_lento": {
-   "ms_real": 766,
-   "pico": -5.9,
+   "ms_real": 881,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
@@ -12380,14 +12380,14 @@
    "problemas": []
   },
   "silaba_gun": {
-   "ms_real": 594,
-   "pico": 0.0,
+   "ms_real": 743,
+   "pico": -5.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gun_lento": {
-   "ms_real": 667,
-   "pico": -0.2,
+   "ms_real": 857,
+   "pico": -4.9,
    "nucleos": 1,
    "problemas": []
   },
@@ -12476,13 +12476,13 @@
    "problemas": []
   },
   "silaba_guar": {
-   "ms_real": 740,
-   "pico": -3.8,
+   "ms_real": 730,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_guar_lento": {
-   "ms_real": 862,
+   "ms_real": 846,
    "pico": -4.5,
    "nucleos": 1,
    "problemas": []
