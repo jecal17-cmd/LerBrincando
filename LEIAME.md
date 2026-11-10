@@ -1,6 +1,13 @@
-# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.2.1
+# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.2.2
 
-> **Novidades da v1.2.1**
+> **Novidades da v1.2.2**
+> - **Tela de perfis no celular:** os botões não saem mais da tela (2 colunas em pé, 4 deitado) e a fala de boas-vindas da Lili termina antes de "Toque na sua figura" começar.
+> - **Banco de Áudio auditado:** `python ferramentas/auditar_audios.py` confere todos os 2.655 sons (cortes, silêncio, distorção, soletração, duração). Dois fonemas com corte foram corrigidos.
+> - **100% offline:** imagens OpenMoji (`imagens/`) e fontes (`fontes/`) agora vêm junto com o jogo.
+> - **App Android para a Google Play:** veja **[ANDROID.md](ANDROID.md)** e `loja/` (textos, ícone, imagem de destaque e capturas).
+> - **Gerador de áudio:** novo motor `--motor azure` (vozes neurais com licença para publicar).
+>
+> **Da v1.2.1:**
 > - **Banco de Áudio consistente:** `audio/manifest.json` e `audio/manifest.js` agora têm o mesmo conteúdo (antes o modo offline deixava de guardar 296 sons, como fonemas e histórias). O gerador grava os dois juntos e há `node ferramentas/sincronizar_manifest.js` para consertar uma geração interrompida. Autoteste **V1–V12 aprovado**.
 > - **Mais fácil de usar:** na tela de resultado, a ação principal (▶ Próxima ou 🔁 Jogar de novo) vem em destaque; quando ainda falta domínio, o título diz "Você está quase lá!" em vez de "Fase concluída!". Área dos Pais com cabeçalho fixo e caixas de seleção junto do texto.
 > - **Ferramentas:** robôs de teste sem caminhos fixos (`CHROMIUM` e `CAPTURAS` opcionais; capturas em `ferramentas/capturas/`), `gerar_audios.sh` mais robusto e `.gitignore`.
@@ -35,6 +42,9 @@ Jogo web completo para crianças de **5 a 7 anos** que já conhecem o nome e a f
 | `minijogos.js` | Renderizadores dos minijogos, andaime de 3 níveis, karaokê. |
 | `cenas.js` | Cenas: início, perfis, avaliação, mapa, executor de fases, resultado, loja, álbum, medalhas, certificado e Área dos Pais. |
 | `sw.js`, `manifest.webmanifest`, `icones/` | PWA: instala na tela inicial e funciona offline. |
+| `imagens/`, `fontes/` | Imagens OpenMoji e fontes usadas pelo jogo (geradas por `ferramentas/recursos_locais.js`). |
+| `android/`, `capacitor.config.json`, `package.json` | App Android (Capacitor). Guia em `ANDROID.md`. |
+| `loja/` | Material da Google Play: textos, ícone 512, imagem de destaque e capturas de tela. |
 | `gerar_audios.py` | Gera o **Banco de Áudio** em `audio/` (vozes neurais: edge-tts por padrão; Kokoro ou Piper como alternativas). |
 | `audio/` | Banco de Áudio já gerado (2.655 sons). `manifest.js` é lido pelo jogo; `manifest.json`, pelo modo offline e pelos testes. |
 | `docs/fichas_pedagogicas.html` | Fichas para imprimir: pré-teste (A), pós-teste equivalente (B), retenção (C), observação, diário, critérios e alertas. |
@@ -248,6 +258,10 @@ O jogo funciona sem o banco (usa a melhor voz do navegador), mas **com o banco o
 
 **macOS/Linux:** `./gerar_audios.sh`
 
+**Auditoria:** `python ferramentas/auditar_audios.py` ouve todos os sons e grava `audio/revisar.txt` (lista para escutar) e `audio/auditoria.json`. Precisa só de numpy e ffmpeg.
+
+**Para publicar o app numa loja:** o edge-tts é só para uso pessoal. Gere o banco com `--motor azure` (defina `AZURE_SPEECH_KEY` e `AZURE_SPEECH_REGION`) ou `--motor kokoro`, com `--refazer`.
+
 **Geração interrompida?** O gerador salva o progresso e continua de onde parou na próxima rodada. Se `manifest.json` e `manifest.js` ficarem diferentes (por exemplo, num banco copiado de outra máquina), rode `node ferramentas/sincronizar_manifest.js`: ele junta os dois, marca como *legado* o que veio da versão anterior (o gerador refaz esses sons na próxima rodada) e mede a duração real dos arquivos com `ffprobe`, se estiver instalado.
 
 ### O que a v1.2 corrige
@@ -340,7 +354,7 @@ O jogo escolhe a voz mais natural instalada (Edge "Francisca/Thalita Online (Nat
 | Recorte automático de fonema pode errar a fronteira. | Escuta humana obrigatória (seção 13.2a) + `--wikimedia` para os que falharem. |
 | A voz do navegador varia por aparelho e pode ler sílabas soltas de forma estranha. | O banco resolve. No iOS, instale a voz "Luciana" (pt-BR) em Ajustes → Acessibilidade → Conteúdo Falado. |
 | Abrindo por duplo clique (`file://`): sem offline, sem microfone e sem `fetch` do manifest. | Use `manifest.js` (gerado pelo script) ou hospede em `https`/`localhost`. |
-| **OpenMoji** vem do CDN: a primeira visita precisa de internet. | O Service Worker guarda em cache. Sem internet, aparece o emoji nativo do sistema. |
+| As imagens **OpenMoji** usadas estão em `imagens/`. Palavras novas com emojis novos precisam delas. | Rode `node ferramentas/recursos_locais.js` (instruções no topo do arquivo). Se faltar alguma, o jogo usa o CDN e, por último, o emoji nativo. |
 | Emojis recentes (🪼 🫏 🪿 🫛 🪮) podem não existir em sistemas antigos. | O OpenMoji 16 cobre todos. A troca para emoji nativo só ocorre se o SVG falhar. |
 | Reconhecimento de fala infantil é impreciso; Firefox não tem; Safari é parcial. | Desligado por padrão, com consentimento do adulto; nunca bloqueia (adulto confirma / pular). |
 | O evento `boundary` falha no Android/Safari. | Padrão = uma fala por palavra encadeada por `onend`. Com o banco, o karaokê usa os tempos do manifest. |

@@ -59,9 +59,9 @@
   // Formata texto conforme a configuração (letra bastão ou minúscula)
   const fmt = (t) => (Store.cfg.caixa === 'baixa' ? N.maiusc(t).toLocaleLowerCase('pt-BR') : N.maiusc(t));
   const mostrarAmbas = () => (estado.mundoAtual >= 6);
-  // Imagem: OpenMoji (SVG via CDN) com emoji nativo como alternativa
-  // Imagem: OpenMoji (SVG) → Twemoji (SVG, reserva) → emoji nativo do sistema
+  // Imagem: OpenMoji local (imagens/, funciona offline) → OpenMoji no CDN → Twemoji (reserva) → emoji nativo do sistema
   const CDN_IMG = [
+    (c) => `imagens/${c}.svg`,
     (c) => `https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/${c}.svg`,
     (c) => `https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/${c.toLowerCase()}.svg`
   ];

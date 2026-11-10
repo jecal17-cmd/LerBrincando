@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Ler Brincando</string>
+    <string name="title_activity_main">Ler Brincando</string>
+    <string name="package_name">com.lerbrincando.app</string>
+    <string name="custom_url_scheme">com.lerbrincando.app</string>
+</resources>

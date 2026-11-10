@@ -1,11 +1,18 @@
 /* Ler Brincando — Service Worker: funciona offline após o primeiro acesso (PWA) */
-const VERSAO = 'lb-v1.2.1';
+const VERSAO = 'lb-v1.2.2';
 const NUCLEO = ['./', 'index.html', 'styles.css', 'nucleo.js', 'data.js', 'motor.js', 'validadores.js', 'game.js', 'minijogos.js', 'cenas.js', 'visual.js',
-  'manifest.webmanifest', 'icones/icone.svg', 'icones/icone-192.png', 'icones/icone-512.png'];
+  'manifest.webmanifest', 'icones/icone.svg', 'icones/icone-192.png', 'icones/icone-512.png',
+  'fontes/fontes.css', 'fontes/andika-latin-400-normal.woff2', 'fontes/andika-latin-700-normal.woff2',
+  'fontes/baloo-2-latin-500-normal.woff2', 'fontes/baloo-2-latin-700-normal.woff2', 'fontes/baloo-2-latin-800-normal.woff2'];
 self.addEventListener('install', (e) => {
   e.waitUntil((async () => {
     const c = await caches.open(VERSAO);
     await c.addAll(NUCLEO);
+    // Imagens locais (OpenMoji): a lista é gerada por ferramentas/recursos_locais.js
+    try {
+      const r = await fetch('imagens/lista.json', { cache: 'no-cache' });
+      if (r.ok) { const lista = await r.json(); await Promise.all(lista.map((f) => c.add('imagens/' + f).catch(() => {}))); }
+    } catch (err) { /* sem imagens locais: usa o CDN */ }
     // Banco de Áudio: se existir, guarda o manifest e todos os arquivos
     try {
       const r = await fetch('audio/manifest.json', { cache: 'no-cache' });

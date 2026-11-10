@@ -1,0 +1,6 @@
+Auditoria automática do Banco de Áudio (ferramentas/auditar_audios.py).
+Escute estes sons em Área dos Pais → Banco de Áudio. Para corrigir uma pronúncia, escreva a grafia
+desejada em ferramentas/pronuncias.json (ex.: "silaba_ve": "vê") e rode: python gerar_audios.py --tipos silaba,fonema
+
+Total: 2655 sons · com algum alerta: 0 · legado (v1.1, serão refeitos): 296
+

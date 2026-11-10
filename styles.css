@@ -428,3 +428,24 @@ body.menos-estimulos #cenario * { animation: none !important; }
 .cab-painel .esp { display: none; }
 .acoes-resultado { display: flex; flex-direction: column; align-items: center; gap: .7rem; width: 100%; }
 .acoes-resultado > .btn.pri { min-width: min(280px, 80vw); }
+
+/* v1.2.2 — tela inicial/perfis cabe no celular: a coluna não cresce além da tela e os perfis ficam em 2 colunas */
+.tela-inicio { grid-template-columns: minmax(0, 1fr); width: 100%; }
+.tela-inicio > * { max-width: 100%; min-width: 0; }
+.mascote-bolha { flex-wrap: wrap; justify-content: center; }
+.mascote-bolha .bolha { min-width: 0; }
+.grade-perfis { width: 100%; max-width: 760px; margin: 0 auto; grid-template-columns: repeat(auto-fit, minmax(120px, 170px)); justify-content: center; }
+@media (max-width: 520px) {
+  .grade-perfis { grid-template-columns: repeat(2, minmax(0, 1fr)); max-width: 360px; }
+  .grade-perfis .opcao { min-height: 88px; }
+  .grade-perfis .opcao .fig { font-size: clamp(2.4rem, 12vw, 3.4rem); }
+  .tela-inicio .mascote-bolha .mascote { width: clamp(90px, 26vw, 130px); }
+}
+@media (max-height: 520px) {
+  .tela-inicio { align-content: safe center; overflow-y: auto; gap: .5rem; padding-block: .4rem; }
+  .tela-inicio .mascote-bolha { flex-wrap: nowrap; }
+  .tela-inicio .mascote-bolha .mascote { width: 72px; }
+  .grade-perfis { grid-template-columns: repeat(auto-fit, minmax(110px, 150px)); max-width: 680px; }
+  .grade-perfis .opcao { min-height: 72px; font-size: 1.2rem; }
+  .grade-perfis .opcao .fig { font-size: 2.2rem; }
+}
