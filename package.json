@@ -1,6 +1,6 @@
 {
   "name": "ler-brincando",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "private": true,
   "description": "Ler Brincando: jogo de alfabetização pelo método fônico (web/PWA e app Android).",
   "scripts": {
