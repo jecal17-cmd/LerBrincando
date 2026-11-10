@@ -461,7 +461,9 @@ class MotorAzure:
     def _um(self, texto, rate):
         from xml.sax.saxutils import escape
         if texto.startswith('ipa:'):  # pronúncia exata: "ipa:ˈɲa|nhá"
+            import unicodedata
             ipa, _, graf = texto[4:].partition('|')
+            ipa = unicodedata.normalize('NFD', ipa)  # o Azure só aceita o til combinante (ĩ → i + ◌̃)
             corpo = f"<phoneme alphabet='ipa' ph='{escape(ipa)}'>{escape(graf or 'a')}</phoneme>"
         else:
             corpo = escape(texto)
@@ -470,11 +472,13 @@ class MotorAzure:
         req = urllib.request.Request(self.url, data=ssml, method='POST', headers={
             'Ocp-Apim-Subscription-Key': self.chave, 'Content-Type': 'application/ssml+xml',
             'X-Microsoft-OutputFormat': 'audio-24khz-96kbitrate-mono-mp3', 'User-Agent': 'LerBrincando-gerador'})
-        for tent in range(5):
+        for tent in range(12):
             try:
                 with urllib.request.urlopen(req, timeout=60) as r: return r.read()
             except urllib.error.HTTPError as e:
-                if e.code in (429, 500, 503) and tent < 4: time.sleep(2 * (tent + 1)); continue
+                # plano gratuito (F0): ~20 pedidos por minuto → espera o tempo pedido pelo Azure e tenta de novo
+                if e.code in (429, 500, 503) and tent < 11:
+                    time.sleep(float(e.headers.get('Retry-After') or 0) or min(60, 5 * (tent + 1))); continue
                 raise
     def sintetizar(self, pedidos):
         from concurrent.futures import ThreadPoolExecutor
