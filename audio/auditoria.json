@@ -12945,13 +12945,13 @@
    "problemas": []
   },
   "fonema_v": {
-   "ms_real": 1080,
-   "pico": -4.4,
+   "ms_real": 897,
+   "pico": -5.1,
    "problemas": []
   },
   "fonema_f": {
-   "ms_real": 1080,
-   "pico": -6.1,
+   "ms_real": 1022,
+   "pico": -2.8,
    "problemas": []
   },
   "fonema_p": {
@@ -12965,28 +12965,28 @@
    "problemas": []
   },
   "fonema_n": {
-   "ms_real": 1030,
-   "pico": -5.0,
+   "ms_real": 887,
+   "pico": -6.5,
    "problemas": []
   },
   "fonema_m": {
-   "ms_real": 1080,
-   "pico": -2.3,
+   "ms_real": 790,
+   "pico": -6.1,
    "problemas": []
   },
   "fonema_z": {
-   "ms_real": 1080,
-   "pico": -5.6,
+   "ms_real": 1020,
+   "pico": -4.5,
    "problemas": []
   },
   "fonema_s": {
-   "ms_real": 1080,
-   "pico": -5.4,
+   "ms_real": 984,
+   "pico": -4.1,
    "problemas": []
   },
   "fonema_l": {
-   "ms_real": 1030,
-   "pico": -3.8,
+   "ms_real": 660,
+   "pico": -0.7,
    "problemas": []
   },
   "fonema_r": {
@@ -13020,13 +13020,13 @@
    "problemas": []
   },
   "fonema_j": {
-   "ms_real": 1080,
-   "pico": -4.4,
+   "ms_real": 1231,
+   "pico": -0.2,
    "problemas": []
   },
   "fonema_x": {
-   "ms_real": 1080,
-   "pico": -1.7,
+   "ms_real": 727,
+   "pico": -2.7,
    "problemas": []
   },
   "fonema_nh": {

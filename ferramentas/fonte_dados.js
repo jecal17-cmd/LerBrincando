@@ -1,7 +1,7 @@
 /* Fonte de dados do Ler Brincando (editável). Rode:  node ferramentas/construir_dados.js
    para gerar data.js (JSON) com os campos derivados e verificados. */
 module.exports = {
-  versao: '1.2.4',
+  versao: '1.2.5',
 
   // ------------------------------------------------------------------ MUNDOS
   mundos: [
@@ -655,6 +655,7 @@ module.exports = {
     'Personagens, histórias e textos: originais, criados para este jogo.'
   ],
   changelog: [
+    '1.2.5 — Sons do M, N, L, F, V, S, Z, J e X refeitos: agora a própria voz fala a consoante prolongada, sem o recorte esticado que deixava o som metálico.',
     '1.2.4 — Sons: as sílabas com G (GA, GO, GU, GUE, GUI, GUA, GRE, GLO...) saíam sem a consoante; foram refeitas.',
     '1.2.3 — Celular: toques rápidos não são mais ignorados (palmas no tambor e botão Pronto voltavam a falhar); o botão Mapa no fim da avaliação inicial travava o mapa e impedia continuar pelo perfil; a tela inicial mostra a fala da Lili com opção de pular. Sons: todas as 385 sílabas e os fonemas regerados com Azure Speech e pronúncia fonética exata (IPA): nenhuma sílaba soletrada; NH e LH soam como "nhá"/"lhá"; B, P, R e outras oclusivas soam na sílaba de apoio ("bá"), nunca pelo nome da letra.',
     '1.2.2 — Tela de perfis cabe em qualquer celular (em pé ou deitado); a fala de boas-vindas da Lili não é mais interrompida pela próxima fala; auditoria automática do Banco de Áudio (2 fonemas com corte corrigidos); imagens e fontes dentro do jogo (funciona 100% offline); versão para Android (Google Play) com botão Voltar que retorna ao mapa.',
