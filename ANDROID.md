@@ -100,10 +100,11 @@ e rode `cd android && ./gradlew bundleRelease`.
 
 ## 7. Atenção: licença das vozes
 
-O Banco de Áudio atual foi gerado com o **edge-tts** (vozes do recurso "Ler em voz alta" do Microsoft Edge). Os termos desse serviço
-**não autorizam** usar o áudio num app publicado. Antes da produção na Play, gere o banco com uma fonte que permita a publicação:
+**Sílabas e fonemas** já foram gerados com o **Azure Speech** (licença para apps), com pronúncia fonética exata (IPA).
+**Palavras, frases e histórias** ainda vêm do **edge-tts** (recurso "Ler em voz alta" do Microsoft Edge), cujos termos
+**não autorizam** usar o áudio num app publicado. Antes da produção na Play, gere esses tipos com uma fonte que permita a publicação:
 
-- **Azure Speech** (mesmas vozes neurais, com licença para apps; a camada gratuita cobre o banco inteiro), ou
+- **Azure Speech**: `python gerar_audios.py --motor azure --tipos palavra,nome,frase,hist,frasejogo --regerar` com `AZURE_SPEECH_KEY` e `AZURE_SPEECH_REGION` definidas (a camada gratuita cobre o banco inteiro), ou
 - **Kokoro** (`python gerar_audios.py --motor kokoro --refazer`, licença Apache-2.0, 100% offline), ou
 - gravação humana.
 

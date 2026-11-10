@@ -2,7 +2,7 @@
  "total": 2655,
  "com_problema": 0,
  "resumo": {},
- "legado": 296,
+ "legado": 202,
  "itens": {
   "palavra_gato": {
    "ms_real": 897,
@@ -8300,146 +8300,146 @@
    "problemas": []
   },
   "silaba_ga": {
-   "ms_real": 685,
-   "pico": -1.5,
+   "ms_real": 640,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ga_lento": {
-   "ms_real": 784,
-   "pico": -2.0,
+   "ms_real": 726,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_to": {
    "ms_real": 603,
-   "pico": -2.3,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_to_lento": {
    "ms_real": 684,
-   "pico": -2.8,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pa": {
    "ms_real": 623,
-   "pico": -1.9,
+   "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pa_lento": {
-   "ms_real": 709,
-   "pico": -2.1,
+   "ms_real": 710,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_va": {
-   "ms_real": 729,
-   "pico": -3.0,
+   "ms_real": 730,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_va_lento": {
    "ms_real": 847,
-   "pico": -3.4,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ca": {
-   "ms_real": 613,
-   "pico": -0.3,
+   "ms_real": 614,
+   "pico": -0.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ca_lento": {
    "ms_real": 694,
-   "pico": -0.8,
+   "pico": -1.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sa": {
-   "ms_real": 808,
-   "pico": -1.0,
+   "ms_real": 809,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sa_lento": {
-   "ms_real": 951,
-   "pico": -2.1,
+   "ms_real": 954,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_po": {
    "ms_real": 599,
-   "pico": -2.3,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_po_lento": {
    "ms_real": 681,
-   "pico": -2.7,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ma": {
-   "ms_real": 717,
+   "ms_real": 716,
    "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ma_lento": {
    "ms_real": 833,
-   "pico": -3.6,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_co": {
    "ms_real": 623,
-   "pico": -3.0,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_co_lento": {
    "ms_real": 709,
-   "pico": -3.6,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lo": {
    "ms_real": 689,
-   "pico": -2.5,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lo_lento": {
-   "ms_real": 805,
-   "pico": -3.2,
+   "ms_real": 802,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_li": {
-   "ms_real": 751,
-   "pico": -5.0,
+   "ms_real": 750,
+   "pico": -4.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_li_lento": {
    "ms_real": 878,
-   "pico": -5.2,
+   "pico": -5.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nha": {
    "ms_real": 716,
-   "pico": -3.3,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nha_lento": {
-   "ms_real": 830,
-   "pico": -3.6,
+   "ms_real": 832,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
@@ -8451,49 +8451,49 @@
   },
   "silaba_chor_lento": {
    "ms_real": 993,
-   "pico": -3.0,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ro": {
-   "ms_real": 649,
-   "pico": -3.1,
+   "ms_real": 650,
+   "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ro_lento": {
-   "ms_real": 744,
-   "pico": -3.5,
+   "ms_real": 747,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_e": {
    "ms_real": 643,
-   "pico": -3.3,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_e_lento": {
    "ms_real": 737,
-   "pico": -3.4,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lho": {
-   "ms_real": 745,
-   "pico": -4.3,
+   "ms_real": 747,
+   "pico": -4.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lho_lento": {
-   "ms_real": 868,
+   "ms_real": 871,
    "pico": -5.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_le": {
    "ms_real": 698,
-   "pico": -2.8,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
@@ -8504,68 +8504,68 @@
    "problemas": []
   },
   "silaba_a3o": {
-   "ms_real": 654,
-   "pico": -2.7,
+   "ms_real": 719,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_a3o_lento": {
-   "ms_real": 748,
-   "pico": -4.0,
+   "ms_real": 835,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pei": {
    "ms_real": 666,
-   "pico": -0.2,
+   "pico": -0.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pei_lento": {
    "ms_real": 765,
-   "pico": -0.7,
+   "pico": -1.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_xe": {
    "ms_real": 771,
-   "pico": -1.1,
+   "pico": -1.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_xe_lento": {
-   "ms_real": 904,
-   "pico": -1.7,
+   "ms_real": 903,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_a": {
-   "ms_real": 639,
-   "pico": -2.8,
+   "ms_real": 640,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_a_lento": {
    "ms_real": 726,
-   "pico": -2.9,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_be": {
    "ms_real": 714,
-   "pico": -3.5,
+   "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_be_lento": {
-   "ms_real": 829,
-   "pico": -4.0,
+   "ms_real": 830,
+   "pico": -4.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lha": {
-   "ms_real": 739,
-   "pico": -3.3,
+   "ms_real": 740,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
@@ -8577,19 +8577,19 @@
   },
   "silaba_bor": {
    "ms_real": 728,
-   "pico": -3.7,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bor_lento": {
    "ms_real": 852,
-   "pico": -4.4,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bo": {
    "ms_real": 721,
-   "pico": -3.9,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
@@ -8601,37 +8601,37 @@
   },
   "silaba_ta": {
    "ms_real": 636,
-   "pico": -2.2,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ta_lento": {
    "ms_real": 712,
-   "pico": -2.3,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bra": {
-   "ms_real": 737,
-   "pico": -2.6,
+   "ms_real": 740,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bra_lento": {
-   "ms_real": 854,
-   "pico": -3.6,
+   "ms_real": 858,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ra": {
-   "ms_real": 670,
-   "pico": -1.8,
+   "ms_real": 671,
+   "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ra_lento": {
-   "ms_real": 768,
-   "pico": -2.7,
+   "ms_real": 769,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
@@ -8643,169 +8643,169 @@
   },
   "silaba_ur_lento": {
    "ms_real": 701,
-   "pico": -2.9,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_so": {
-   "ms_real": 758,
-   "pico": -1.4,
+   "ms_real": 759,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_so_lento": {
-   "ms_real": 888,
-   "pico": -2.1,
+   "ms_real": 889,
+   "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pan": {
    "ms_real": 683,
-   "pico": -0.2,
+   "pico": -0.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pan_lento": {
    "ms_real": 790,
-   "pico": -0.9,
+   "pico": -1.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_da": {
-   "ms_real": 714,
-   "pico": -2.8,
+   "ms_real": 717,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_da_lento": {
-   "ms_real": 834,
-   "pico": -3.5,
+   "ms_real": 836,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ze": {
-   "ms_real": 748,
-   "pico": -2.9,
+   "ms_real": 747,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ze_lento": {
-   "ms_real": 881,
-   "pico": -2.4,
+   "ms_real": 879,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gi": {
    "ms_real": 773,
-   "pico": -3.6,
+   "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gi_lento": {
    "ms_real": 903,
-   "pico": -4.4,
+   "pico": -4.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fa": {
-   "ms_real": 669,
-   "pico": -1.6,
+   "ms_real": 661,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fa_lento": {
-   "ms_real": 772,
-   "pico": -2.6,
+   "ms_real": 754,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fan": {
-   "ms_real": 766,
-   "pico": -1.5,
+   "ms_real": 769,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fan_lento": {
    "ms_real": 906,
-   "pico": -2.4,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_te": {
-   "ms_real": 623,
-   "pico": -2.3,
+   "ms_real": 609,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_te_lento": {
-   "ms_real": 709,
-   "pico": -3.0,
+   "ms_real": 694,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ti": {
-   "ms_real": 685,
-   "pico": -3.0,
+   "ms_real": 684,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ti_lento": {
    "ms_real": 793,
-   "pico": -3.7,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gre": {
-   "ms_real": 694,
-   "pico": -2.7,
+   "ms_real": 634,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gre_lento": {
-   "ms_real": 807,
-   "pico": -3.4,
+   "ms_real": 723,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ru": {
    "ms_real": 692,
-   "pico": -3.4,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ru_lento": {
    "ms_real": 799,
-   "pico": -4.1,
+   "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ja": {
    "ms_real": 774,
-   "pico": -1.6,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ja_lento": {
    "ms_real": 915,
-   "pico": -1.9,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pol": {
    "ms_real": 661,
-   "pico": -2.5,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pol_lento": {
    "ms_real": 753,
-   "pico": -3.0,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vo": {
    "ms_real": 756,
-   "pico": -2.3,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
@@ -8817,13 +8817,13 @@
   },
   "silaba_lu": {
    "ms_real": 750,
-   "pico": -2.8,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lu_lento": {
    "ms_real": 881,
-   "pico": -4.2,
+   "pico": -4.3,
    "nucleos": 1,
    "problemas": []
   },
@@ -8834,56 +8834,56 @@
    "problemas": []
   },
   "silaba_la_lento": {
-   "ms_real": 768,
-   "pico": -2.9,
+   "ms_real": 767,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ran": {
-   "ms_real": 770,
-   "pico": -2.5,
+   "ms_real": 772,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ran_lento": {
-   "ms_real": 919,
+   "ms_real": 918,
    "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gue": {
-   "ms_real": 742,
-   "pico": -2.5,
+   "ms_real": 643,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gue_lento": {
-   "ms_real": 862,
-   "pico": -3.0,
+   "ms_real": 737,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_jo": {
    "ms_real": 781,
-   "pico": -3.1,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_jo_lento": {
-   "ms_real": 914,
+   "ms_real": 916,
    "pico": -3.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ba": {
-   "ms_real": 739,
-   "pico": -3.4,
+   "ms_real": 740,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ba_lento": {
    "ms_real": 856,
-   "pico": -3.9,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
@@ -8895,43 +8895,43 @@
   },
   "silaba_lei_lento": {
    "ms_real": 866,
-   "pico": -5.1,
+   "pico": -5.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gol": {
-   "ms_real": 756,
-   "pico": -3.2,
+   "ms_real": 678,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gol_lento": {
-   "ms_real": 881,
-   "pico": -4.0,
+   "ms_real": 781,
+   "pico": -4.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fi": {
-   "ms_real": 755,
-   "pico": -3.5,
+   "ms_real": 757,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fi_lento": {
-   "ms_real": 883,
-   "pico": -4.6,
+   "ms_real": 881,
+   "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nho": {
-   "ms_real": 673,
-   "pico": -2.9,
+   "ms_real": 674,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nho_lento": {
-   "ms_real": 782,
-   "pico": -3.5,
+   "ms_real": 785,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -8948,67 +8948,67 @@
    "problemas": []
   },
   "silaba_ra3o": {
-   "ms_real": 721,
-   "pico": -2.1,
+   "ms_real": 722,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ra3o_lento": {
-   "ms_real": 836,
-   "pico": -2.6,
+   "ms_real": 837,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tar": {
-   "ms_real": 643,
-   "pico": -2.7,
+   "ms_real": 644,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tar_lento": {
-   "ms_real": 727,
+   "ms_real": 726,
    "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_re1": {
    "ms_real": 656,
-   "pico": -1.1,
+   "pico": -1.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_re1_lento": {
-   "ms_real": 753,
+   "ms_real": 754,
    "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_me": {
    "ms_real": 719,
-   "pico": -2.9,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_me_lento": {
    "ms_real": 830,
-   "pico": -3.8,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_o": {
-   "ms_real": 653,
+   "ms_real": 652,
    "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_o_lento": {
-   "ms_real": 750,
-   "pico": -4.2,
+   "ms_real": 749,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ve": {
-   "ms_real": 736,
+   "ms_real": 735,
    "pico": -3.1,
    "nucleos": 1,
    "problemas": []
@@ -9021,31 +9021,31 @@
   },
   "silaba_por": {
    "ms_real": 625,
-   "pico": -3.3,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_por_lento": {
-   "ms_real": 712,
+   "ms_real": 711,
    "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_de": {
    "ms_real": 699,
-   "pico": -2.6,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_de_lento": {
-   "ms_real": 805,
-   "pico": -3.3,
+   "ms_real": 806,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_boi": {
-   "ms_real": 802,
-   "pico": -3.0,
+   "ms_real": 801,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
@@ -9056,8 +9056,8 @@
    "problemas": []
   },
   "silaba_mu": {
-   "ms_real": 758,
-   "pico": -5.2,
+   "ms_real": 760,
+   "pico": -5.1,
    "nucleos": 1,
    "problemas": []
   },
@@ -9069,7 +9069,7 @@
   },
   "silaba_pe": {
    "ms_real": 608,
-   "pico": -2.6,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
@@ -9080,181 +9080,181 @@
    "problemas": []
   },
   "silaba_pom": {
-   "ms_real": 640,
-   "pico": -1.8,
+   "ms_real": 691,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pom_lento": {
-   "ms_real": 731,
-   "pico": -2.3,
+   "ms_real": 798,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gai": {
-   "ms_real": 766,
-   "pico": -1.8,
-   "nucleos": 1,
-   "problemas": []
-  },
-  "silaba_gai_lento": {
-   "ms_real": 897,
+   "ms_real": 702,
    "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
+  "silaba_gai_lento": {
+   "ms_real": 812,
+   "pico": -3.2,
+   "nucleos": 1,
+   "problemas": []
+  },
   "silaba_for": {
-   "ms_real": 681,
-   "pico": -1.8,
+   "ms_real": 665,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_for_lento": {
-   "ms_real": 781,
-   "pico": -2.7,
+   "ms_real": 764,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mi": {
    "ms_real": 754,
-   "pico": -5.2,
+   "pico": -5.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mi_lento": {
-   "ms_real": 880,
+   "ms_real": 881,
    "pico": -5.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_col": {
    "ms_real": 680,
-   "pico": -2.0,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_col_lento": {
    "ms_real": 782,
-   "pico": -3.6,
+   "pico": -3.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ni": {
    "ms_real": 747,
-   "pico": -6.3,
+   "pico": -6.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ni_lento": {
    "ms_real": 876,
-   "pico": -6.4,
+   "pico": -6.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gri": {
-   "ms_real": 718,
-   "pico": -3.1,
+   "ms_real": 684,
+   "pico": -4.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gri_lento": {
-   "ms_real": 837,
-   "pico": -3.4,
+   "ms_real": 795,
+   "pico": -5.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mos": {
-   "ms_real": 851,
-   "pico": -3.2,
+   "ms_real": 850,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mos_lento": {
-   "ms_real": 1001,
-   "pico": -4.1,
+   "ms_real": 999,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mor": {
    "ms_real": 709,
-   "pico": -3.7,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mor_lento": {
-   "ms_real": 817,
-   "pico": -4.1,
+   "ms_real": 820,
+   "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ce": {
-   "ms_real": 773,
-   "pico": -2.7,
+   "ms_real": 772,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ce_lento": {
    "ms_real": 906,
-   "pico": -3.1,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_go": {
-   "ms_real": 686,
-   "pico": -3.3,
+   "ms_real": 652,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_go_lento": {
-   "ms_real": 791,
-   "pico": -3.7,
+   "ms_real": 749,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_es": {
-   "ms_real": 784,
-   "pico": -2.7,
+   "ms_real": 781,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_es_lento": {
-   "ms_real": 907,
+   "ms_real": 904,
    "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_qui": {
    "ms_real": 627,
-   "pico": -3.5,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_qui_lento": {
    "ms_real": 717,
-   "pico": -4.1,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_can": {
-   "ms_real": 646,
+   "ms_real": 645,
    "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_can_lento": {
    "ms_real": 742,
-   "pico": -2.8,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gu": {
-   "ms_real": 680,
+   "ms_real": 668,
    "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gu_lento": {
-   "ms_real": 789,
+   "ms_real": 774,
    "pico": -3.6,
    "nucleos": 1,
    "problemas": []
@@ -9266,25 +9266,25 @@
    "problemas": []
   },
   "silaba_ri_lento": {
-   "ms_real": 777,
-   "pico": -4.5,
+   "ms_real": 775,
+   "pico": -5.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cis": {
-   "ms_real": 918,
-   "pico": -2.9,
+   "ms_real": 915,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cis_lento": {
-   "ms_real": 1083,
-   "pico": -3.3,
+   "ms_real": 1082,
+   "pico": -3.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ne": {
-   "ms_real": 708,
+   "ms_real": 709,
    "pico": -2.4,
    "nucleos": 1,
    "problemas": []
@@ -9296,98 +9296,98 @@
    "problemas": []
   },
   "silaba_va3o": {
-   "ms_real": 741,
+   "ms_real": 740,
    "pico": -0.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_va3o_lento": {
    "ms_real": 860,
-   "pico": -1.3,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fo": {
-   "ms_real": 702,
-   "pico": -2.5,
+   "ms_real": 703,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fo_lento": {
-   "ms_real": 824,
-   "pico": -3.1,
+   "ms_real": 822,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gar": {
-   "ms_real": 735,
-   "pico": -3.1,
+   "ms_real": 619,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gar_lento": {
-   "ms_real": 849,
-   "pico": -3.4,
+   "ms_real": 694,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_di": {
    "ms_real": 787,
-   "pico": -4.0,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_di_lento": {
    "ms_real": 926,
-   "pico": -4.3,
+   "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nos": {
-   "ms_real": 853,
-   "pico": -4.5,
+   "ms_real": 852,
+   "pico": -4.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nos_lento": {
-   "ms_real": 995,
-   "pico": -5.2,
+   "ms_real": 994,
+   "pico": -5.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sau": {
-   "ms_real": 862,
-   "pico": -2.0,
+   "ms_real": 863,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sau_lento": {
    "ms_real": 1025,
-   "pico": -2.0,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pin": {
-   "ms_real": 633,
-   "pico": -4.2,
+   "ms_real": 645,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pin_lento": {
-   "ms_real": 721,
-   "pico": -4.2,
+   "ms_real": 740,
+   "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gan": {
-   "ms_real": 753,
-   "pico": -2.9,
+   "ms_real": 843,
+   "pico": -0.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gan_lento": {
-   "ms_real": 881,
-   "pico": -3.5,
+   "ms_real": 983,
+   "pico": -0.4,
    "nucleos": 1,
    "problemas": []
   },
@@ -9399,85 +9399,85 @@
   },
   "silaba_do_lento": {
    "ms_real": 829,
-   "pico": -3.9,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_hi": {
-   "ms_real": 620,
-   "pico": -3.7,
+   "ms_real": 618,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_hi_lento": {
    "ms_real": 707,
-   "pico": -4.4,
+   "pico": -4.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_po1": {
    "ms_real": 599,
-   "pico": -2.3,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_po1_lento": {
    "ms_real": 681,
-   "pico": -2.7,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mo": {
-   "ms_real": 704,
-   "pico": -3.8,
+   "ms_real": 702,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mo_lento": {
    "ms_real": 826,
-   "pico": -4.2,
+   "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_no": {
    "ms_real": 722,
-   "pico": -4.1,
+   "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_no_lento": {
    "ms_real": 839,
-   "pico": -4.6,
+   "pico": -4.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ron": {
-   "ms_real": 755,
+   "ms_real": 756,
    "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ron_lento": {
-   "ms_real": 884,
-   "pico": -4.0,
+   "ms_real": 885,
+   "pico": -4.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cor": {
    "ms_real": 652,
-   "pico": -0.8,
+   "pico": -1.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cor_lento": {
-   "ms_real": 745,
-   "pico": -2.4,
+   "ms_real": 746,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pi": {
    "ms_real": 617,
-   "pico": -3.5,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -9488,26 +9488,26 @@
    "problemas": []
   },
   "silaba_fla": {
-   "ms_real": 699,
-   "pico": -2.5,
+   "ms_real": 683,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fla_lento": {
-   "ms_real": 805,
+   "ms_real": 795,
    "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_min": {
-   "ms_real": 732,
-   "pico": -6.0,
+   "ms_real": 751,
+   "pico": -4.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_min_lento": {
-   "ms_real": 852,
-   "pico": -5.2,
+   "ms_real": 874,
+   "pico": -5.1,
    "nucleos": 1,
    "problemas": []
   },
@@ -9519,109 +9519,109 @@
   },
   "silaba_lon_lento": {
    "ms_real": 823,
-   "pico": -4.4,
+   "pico": -4.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tra": {
    "ms_real": 646,
-   "pico": -1.1,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tra_lento": {
    "ms_real": 733,
-   "pico": -1.9,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pre": {
-   "ms_real": 607,
-   "pico": -0.4,
-   "nucleos": 1,
-   "problemas": []
-  },
-  "silaba_pre_lento": {
-   "ms_real": 684,
+   "ms_real": 606,
    "pico": -0.6,
    "nucleos": 1,
    "problemas": []
   },
-  "silaba_gui": {
-   "ms_real": 717,
-   "pico": -3.7,
-   "nucleos": 1,
-   "problemas": []
-  },
-  "silaba_gui_lento": {
-   "ms_real": 838,
-   "pico": -5.1,
-   "nucleos": 1,
-   "problemas": []
-  },
-  "silaba_c1a": {
-   "ms_real": 808,
+  "silaba_pre_lento": {
+   "ms_real": 686,
    "pico": -1.0,
    "nucleos": 1,
    "problemas": []
   },
+  "silaba_gui": {
+   "ms_real": 618,
+   "pico": -4.1,
+   "nucleos": 1,
+   "problemas": []
+  },
+  "silaba_gui_lento": {
+   "ms_real": 707,
+   "pico": -4.3,
+   "nucleos": 1,
+   "problemas": []
+  },
+  "silaba_c1a": {
+   "ms_real": 809,
+   "pico": -1.9,
+   "nucleos": 1,
+   "problemas": []
+  },
   "silaba_c1a_lento": {
-   "ms_real": 951,
-   "pico": -2.1,
+   "ms_real": 954,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_os": {
    "ms_real": 787,
-   "pico": -3.1,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_os_lento": {
    "ms_real": 927,
-   "pico": -3.5,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_du": {
    "ms_real": 718,
-   "pico": -2.7,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_du_lento": {
    "ms_real": 832,
-   "pico": -3.1,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sou": {
    "ms_real": 897,
-   "pico": -1.5,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sou_lento": {
-   "ms_real": 1065,
+   "ms_real": 1066,
    "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cas": {
-   "ms_real": 826,
-   "pico": -2.8,
+   "ms_real": 828,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cas_lento": {
-   "ms_real": 970,
-   "pico": -2.5,
+   "ms_real": 969,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tor": {
-   "ms_real": 651,
-   "pico": -2.3,
+   "ms_real": 652,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
@@ -9632,92 +9632,92 @@
    "problemas": []
   },
   "silaba_gua": {
-   "ms_real": 730,
-   "pico": -4.0,
-   "nucleos": 1,
-   "problemas": []
-  },
-  "silaba_gua_lento": {
-   "ms_real": 855,
-   "pico": -4.3,
-   "nucleos": 1,
-   "problemas": []
-  },
-  "silaba_xi": {
-   "ms_real": 769,
-   "pico": -3.0,
-   "nucleos": 1,
-   "problemas": []
-  },
-  "silaba_xi_lento": {
-   "ms_real": 903,
+   "ms_real": 750,
    "pico": -3.9,
    "nucleos": 1,
    "problemas": []
   },
+  "silaba_gua_lento": {
+   "ms_real": 874,
+   "pico": -4.2,
+   "nucleos": 1,
+   "problemas": []
+  },
+  "silaba_xi": {
+   "ms_real": 774,
+   "pico": -3.1,
+   "nucleos": 1,
+   "problemas": []
+  },
+  "silaba_xi_lento": {
+   "ms_real": 900,
+   "pico": -3.7,
+   "nucleos": 1,
+   "problemas": []
+  },
   "silaba_nim": {
-   "ms_real": 747,
-   "pico": -6.2,
+   "ms_real": 769,
+   "pico": -5.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nim_lento": {
-   "ms_real": 871,
-   "pico": -5.9,
+   "ms_real": 904,
+   "pico": -6.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_on": {
-   "ms_real": 696,
-   "pico": -2.9,
+   "ms_real": 703,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_on_lento": {
-   "ms_real": 803,
-   "pico": -3.6,
+   "ms_real": 819,
+   "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dra": {
-   "ms_real": 735,
-   "pico": -2.9,
+   "ms_real": 733,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dra_lento": {
    "ms_real": 857,
-   "pico": -3.3,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ga3o": {
-   "ms_real": 741,
-   "pico": -1.6,
+   "ms_real": 719,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ga3o_lento": {
-   "ms_real": 867,
-   "pico": -1.4,
+   "ms_real": 835,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_u": {
    "ms_real": 668,
-   "pico": -2.9,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_u_lento": {
-   "ms_real": 773,
+   "ms_real": 774,
    "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_co1r": {
    "ms_real": 663,
-   "pico": -2.4,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -9728,20 +9728,20 @@
    "problemas": []
   },
   "silaba_nio": {
-   "ms_real": 843,
-   "pico": -3.8,
+   "ms_real": 776,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nio_lento": {
-   "ms_real": 1000,
-   "pico": -4.3,
+   "ms_real": 906,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_c1a3": {
-   "ms_real": 821,
-   "pico": -0.3,
+   "ms_real": 822,
+   "pico": -0.5,
    "nucleos": 1,
    "problemas": []
   },
@@ -9752,146 +9752,146 @@
    "problemas": []
   },
   "silaba_na": {
-   "ms_real": 718,
-   "pico": -2.5,
+   "ms_real": 719,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_na_lento": {
-   "ms_real": 832,
-   "pico": -3.8,
+   "ms_real": 833,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ma3o": {
    "ms_real": 749,
-   "pico": -1.9,
+   "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ma3o_lento": {
    "ms_real": 877,
-   "pico": -1.9,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lan": {
-   "ms_real": 779,
-   "pico": -2.2,
+   "ms_real": 783,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lan_lento": {
-   "ms_real": 918,
-   "pico": -2.9,
+   "ms_real": 917,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ci": {
    "ms_real": 797,
-   "pico": -3.8,
+   "pico": -3.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ci_lento": {
    "ms_real": 941,
-   "pico": -4.1,
+   "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_re": {
    "ms_real": 656,
-   "pico": -1.1,
+   "pico": -1.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_re_lento": {
-   "ms_real": 753,
+   "ms_real": 754,
    "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pe2s": {
-   "ms_real": 794,
-   "pico": -0.9,
+   "ms_real": 789,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pe2s_lento": {
-   "ms_real": 924,
-   "pico": -2.5,
+   "ms_real": 919,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_se": {
-   "ms_real": 773,
-   "pico": -2.7,
+   "ms_real": 772,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_se_lento": {
    "ms_real": 906,
-   "pico": -3.1,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_man": {
    "ms_real": 796,
-   "pico": -2.8,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_man_lento": {
    "ms_real": 930,
-   "pico": -3.2,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nou": {
    "ms_real": 754,
-   "pico": -3.3,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nou_lento": {
-   "ms_real": 876,
+   "ms_real": 878,
    "pico": -4.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_men": {
-   "ms_real": 741,
+   "ms_real": 764,
    "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_men_lento": {
-   "ms_real": 863,
-   "pico": -2.2,
+   "ms_real": 896,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bro1": {
    "ms_real": 717,
-   "pico": -2.9,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bro1_lento": {
    "ms_real": 835,
-   "pico": -3.5,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lis": {
-   "ms_real": 858,
+   "ms_real": 853,
    "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lis_lento": {
    "ms_real": 1011,
-   "pico": -4.7,
+   "pico": -4.5,
    "nucleos": 1,
    "problemas": []
   },
@@ -9903,7 +9903,7 @@
   },
   "silaba_pa3o_lento": {
    "ms_real": 756,
-   "pico": -2.3,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
@@ -9915,49 +9915,49 @@
   },
   "silaba_quei_lento": {
    "ms_real": 759,
-   "pico": -2.4,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mel": {
    "ms_real": 751,
-   "pico": -2.2,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mel_lento": {
    "ms_real": 880,
-   "pico": -2.7,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_su": {
    "ms_real": 819,
-   "pico": -0.6,
+   "pico": -0.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_su_lento": {
    "ms_real": 963,
-   "pico": -0.6,
+   "pico": -0.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fe1": {
-   "ms_real": 733,
-   "pico": -3.3,
+   "ms_real": 730,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fe1_lento": {
-   "ms_real": 851,
-   "pico": -3.4,
+   "ms_real": 850,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cha1": {
-   "ms_real": 763,
-   "pico": -0.8,
+   "ms_real": 764,
+   "pico": -1.2,
    "nucleos": 1,
    "problemas": []
   },
@@ -9968,116 +9968,116 @@
    "problemas": []
   },
   "silaba_bis": {
-   "ms_real": 869,
+   "ms_real": 866,
    "pico": -3.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bis_lento": {
-   "ms_real": 1015,
-   "pico": -4.5,
+   "ms_real": 1013,
+   "pico": -4.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_coi": {
    "ms_real": 700,
-   "pico": -2.4,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_coi_lento": {
    "ms_real": 808,
-   "pico": -2.9,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sor": {
    "ms_real": 827,
-   "pico": -2.7,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sor_lento": {
-   "ms_real": 978,
-   "pico": -3.6,
+   "ms_real": 973,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cho": {
    "ms_real": 754,
-   "pico": -2.2,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cho_lento": {
-   "ms_real": 874,
-   "pico": -2.8,
+   "ms_real": 875,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ar": {
    "ms_real": 619,
-   "pico": -2.7,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ar_lento": {
    "ms_real": 694,
-   "pico": -3.0,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_roz": {
-   "ms_real": 807,
-   "pico": -2.5,
+   "ms_real": 818,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_roz_lento": {
-   "ms_real": 950,
-   "pico": -3.4,
+   "ms_real": 946,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fei": {
-   "ms_real": 701,
-   "pico": -0.2,
+   "ms_real": 695,
+   "pico": -0.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fei_lento": {
-   "ms_real": 817,
-   "pico": -0.9,
+   "ms_real": 810,
+   "pico": -0.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ja3o": {
    "ms_real": 817,
-   "pico": -1.6,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ja3o_lento": {
    "ms_real": 965,
-   "pico": -2.6,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_car": {
-   "ms_real": 645,
-   "pico": -2.9,
+   "ms_real": 646,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_car_lento": {
    "ms_real": 741,
-   "pico": -3.8,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_san": {
-   "ms_real": 821,
-   "pico": -0.3,
+   "ms_real": 822,
+   "pico": -0.5,
    "nucleos": 1,
    "problemas": []
   },
@@ -10088,92 +10088,92 @@
    "problemas": []
   },
   "silaba_i1": {
-   "ms_real": 620,
-   "pico": -3.7,
+   "ms_real": 618,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_i1_lento": {
    "ms_real": 707,
-   "pico": -4.4,
+   "pico": -4.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_che": {
    "ms_real": 771,
-   "pico": -1.1,
+   "pico": -1.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_che_lento": {
-   "ms_real": 904,
-   "pico": -1.7,
+   "ms_real": 903,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sal": {
-   "ms_real": 862,
-   "pico": -2.0,
+   "ms_real": 863,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sal_lento": {
    "ms_real": 1025,
-   "pico": -2.0,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_que": {
    "ms_real": 618,
-   "pico": -1.8,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_que_lento": {
    "ms_real": 701,
-   "pico": -2.1,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_zei": {
-   "ms_real": 810,
-   "pico": -1.5,
+   "ms_real": 809,
+   "pico": -1.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_zei_lento": {
-   "ms_real": 954,
-   "pico": -1.9,
+   "ms_real": 953,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_im": {
-   "ms_real": 694,
-   "pico": -4.6,
+   "ms_real": 679,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_im_lento": {
-   "ms_real": 805,
-   "pico": -4.9,
+   "ms_real": 780,
+   "pico": -4.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_la3o": {
    "ms_real": 739,
-   "pico": -3.0,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_la3o_lento": {
    "ms_real": 861,
-   "pico": -3.5,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ge": {
-   "ms_real": 763,
-   "pico": -1.6,
+   "ms_real": 762,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
@@ -10184,14 +10184,14 @@
    "problemas": []
   },
   "silaba_a1": {
-   "ms_real": 639,
-   "pico": -2.8,
+   "ms_real": 640,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_a1_lento": {
    "ms_real": 726,
-   "pico": -2.9,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
@@ -10203,49 +10203,49 @@
   },
   "silaba_pu_lento": {
    "ms_real": 662,
-   "pico": -2.7,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dim": {
-   "ms_real": 790,
+   "ms_real": 843,
    "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dim_lento": {
-   "ms_real": 931,
-   "pico": -4.4,
+   "ms_real": 1001,
+   "pico": -4.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ta3o": {
-   "ms_real": 641,
-   "pico": -1.3,
+   "ms_real": 642,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ta3o_lento": {
-   "ms_real": 737,
+   "ms_real": 739,
    "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_si": {
    "ms_real": 797,
-   "pico": -3.8,
+   "pico": -3.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_si_lento": {
    "ms_real": 941,
-   "pico": -4.1,
+   "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cha": {
-   "ms_real": 763,
-   "pico": -0.8,
+   "ms_real": 764,
+   "pico": -1.2,
    "nucleos": 1,
    "problemas": []
   },
@@ -10256,104 +10256,104 @@
    "problemas": []
   },
   "silaba_ros": {
-   "ms_real": 807,
-   "pico": -2.5,
+   "ms_real": 818,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ros_lento": {
-   "ms_real": 950,
-   "pico": -3.4,
+   "ms_real": 946,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_er": {
-   "ms_real": 637,
-   "pico": -3.6,
+   "ms_real": 636,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_er_lento": {
    "ms_real": 720,
-   "pico": -3.8,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vi": {
-   "ms_real": 763,
-   "pico": -3.2,
+   "ms_real": 765,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vi_lento": {
    "ms_real": 896,
-   "pico": -4.2,
+   "pico": -4.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dei": {
-   "ms_real": 750,
+   "ms_real": 749,
    "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dei_lento": {
    "ms_real": 871,
-   "pico": -2.6,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fa1": {
-   "ms_real": 669,
-   "pico": -1.6,
+   "ms_real": 661,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fa1_lento": {
-   "ms_real": 772,
-   "pico": -2.6,
+   "ms_real": 754,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_la2m": {
-   "ms_real": 739,
-   "pico": -3.0,
+   "ms_real": 783,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_la2m_lento": {
-   "ms_real": 861,
-   "pico": -3.5,
+   "ms_real": 917,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lo1": {
    "ms_real": 689,
-   "pico": -2.5,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lo1_lento": {
-   "ms_real": 805,
-   "pico": -3.2,
+   "ms_real": 802,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gio": {
-   "ms_real": 872,
-   "pico": -1.7,
+   "ms_real": 798,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gio_lento": {
-   "ms_real": 1039,
-   "pico": -2.2,
+   "ms_real": 938,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lar": {
-   "ms_real": 694,
-   "pico": -3.2,
+   "ms_real": 699,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
@@ -10364,14 +10364,14 @@
    "problemas": []
   },
   "silaba_vro": {
-   "ms_real": 764,
-   "pico": -2.5,
+   "ms_real": 763,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vro_lento": {
    "ms_real": 901,
-   "pico": -3.1,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
@@ -10382,49 +10382,49 @@
    "problemas": []
   },
   "silaba_la1_lento": {
-   "ms_real": 768,
-   "pico": -2.9,
+   "ms_real": 767,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pis": {
-   "ms_real": 773,
-   "pico": -3.1,
+   "ms_real": 770,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pis_lento": {
-   "ms_real": 900,
-   "pico": -3.5,
+   "ms_real": 899,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mei": {
-   "ms_real": 767,
-   "pico": -2.0,
+   "ms_real": 769,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mei_lento": {
    "ms_real": 897,
-   "pico": -2.8,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pe1u": {
    "ms_real": 683,
-   "pico": -2.7,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pe1u_lento": {
    "ms_real": 791,
-   "pico": -3.0,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ne1": {
-   "ms_real": 708,
+   "ms_real": 709,
    "pico": -2.4,
    "nucleos": 1,
    "problemas": []
@@ -10437,13 +10437,13 @@
   },
   "silaba_cal": {
    "ms_real": 692,
-   "pico": -1.6,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cal_lento": {
    "ms_real": 800,
-   "pico": -3.6,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
@@ -10454,56 +10454,56 @@
    "problemas": []
   },
   "silaba_ves_lento": {
-   "ms_real": 1083,
-   "pico": -3.3,
+   "ms_real": 1084,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_o1": {
-   "ms_real": 653,
+   "ms_real": 652,
    "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_o1_lento": {
-   "ms_real": 750,
-   "pico": -4.2,
+   "ms_real": 749,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cu": {
-   "ms_real": 554,
-   "pico": -2.1,
+   "ms_real": 600,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cu_lento": {
-   "ms_real": 626,
-   "pico": -3.6,
+   "ms_real": 678,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_los": {
    "ms_real": 827,
-   "pico": -3.6,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_los_lento": {
-   "ms_real": 977,
-   "pico": -3.6,
+   "ms_real": 983,
+   "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nel": {
-   "ms_real": 776,
-   "pico": -2.5,
+   "ms_real": 777,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nel_lento": {
-   "ms_real": 910,
-   "pico": -2.6,
+   "ms_real": 913,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
@@ -10520,92 +10520,92 @@
    "problemas": []
   },
   "silaba_chi": {
-   "ms_real": 769,
-   "pico": -3.0,
+   "ms_real": 774,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_chi_lento": {
-   "ms_real": 903,
-   "pico": -3.9,
+   "ms_real": 900,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pen": {
-   "ms_real": 648,
-   "pico": -1.1,
+   "ms_real": 593,
+   "pico": -0.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pen_lento": {
-   "ms_real": 745,
-   "pico": -1.3,
+   "ms_real": 673,
+   "pico": -1.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bal": {
    "ms_real": 779,
-   "pico": -2.7,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bal_lento": {
    "ms_real": 914,
-   "pico": -3.7,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bu": {
-   "ms_real": 732,
+   "ms_real": 731,
    "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bu_lento": {
-   "ms_real": 848,
-   "pico": -3.0,
+   "ms_real": 847,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lher": {
-   "ms_real": 804,
-   "pico": -3.3,
+   "ms_real": 805,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lher_lento": {
-   "ms_real": 948,
+   "ms_real": 949,
    "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pra": {
    "ms_real": 669,
-   "pico": -0.7,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pra_lento": {
    "ms_real": 763,
-   "pico": -2.5,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cai": {
    "ms_real": 686,
-   "pico": -1.6,
+   "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cai_lento": {
    "ms_real": 789,
-   "pico": -3.5,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_xa": {
-   "ms_real": 763,
-   "pico": -0.8,
+   "ms_real": 764,
+   "pico": -1.2,
    "nucleos": 1,
    "problemas": []
   },
@@ -10616,32 +10616,32 @@
    "problemas": []
   },
   "silaba_sen": {
-   "ms_real": 836,
-   "pico": -0.1,
+   "ms_real": 653,
+   "pico": -1.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sen_lento": {
-   "ms_real": 987,
-   "pico": -0.2,
+   "ms_real": 751,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_i": {
-   "ms_real": 620,
-   "pico": -3.7,
+   "ms_real": 618,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_i_lento": {
    "ms_real": 707,
-   "pico": -4.4,
+   "pico": -4.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_o2": {
-   "ms_real": 676,
-   "pico": -4.5,
+   "ms_real": 674,
+   "pico": -4.7,
    "nucleos": 1,
    "problemas": []
   },
@@ -10653,43 +10653,43 @@
   },
   "silaba_bo2": {
    "ms_real": 771,
-   "pico": -3.1,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bo2_lento": {
-   "ms_real": 904,
+   "ms_real": 906,
    "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tam": {
-   "ms_real": 641,
-   "pico": -1.3,
+   "ms_real": 637,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tam_lento": {
-   "ms_real": 737,
-   "pico": -2.0,
+   "ms_real": 739,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_trom": {
-   "ms_real": 689,
-   "pico": -0.1,
+   "ms_real": 737,
+   "pico": -0.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_trom_lento": {
-   "ms_real": 797,
-   "pico": -0.5,
+   "ms_real": 861,
+   "pico": -0.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mar": {
    "ms_real": 731,
-   "pico": -3.5,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -10701,55 +10701,55 @@
   },
   "silaba_ma3": {
    "ms_real": 796,
-   "pico": -2.8,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ma3_lento": {
    "ms_real": 930,
-   "pico": -3.2,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_glo": {
-   "ms_real": 722,
-   "pico": -4.4,
+   "ms_real": 689,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_glo_lento": {
-   "ms_real": 842,
-   "pico": -4.7,
+   "ms_real": 802,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bu1s": {
-   "ms_real": 821,
+   "ms_real": 815,
    "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bu1s_lento": {
-   "ms_real": 961,
+   "ms_real": 962,
    "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_en": {
-   "ms_real": 728,
-   "pico": -3.1,
+   "ms_real": 897,
+   "pico": -0.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_en_lento": {
-   "ms_real": 846,
-   "pico": -3.3,
+   "ms_real": 1066,
+   "pico": -0.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_jor": {
    "ms_real": 822,
-   "pico": -3.7,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
@@ -10772,8 +10772,8 @@
    "problemas": []
   },
   "silaba_qua": {
-   "ms_real": 645,
-   "pico": -2.3,
+   "ms_real": 644,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
@@ -10785,13 +10785,13 @@
   },
   "silaba_dro": {
    "ms_real": 709,
-   "pico": -3.6,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dro_lento": {
-   "ms_real": 821,
-   "pico": -3.9,
+   "ms_real": 822,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
@@ -10803,109 +10803,109 @@
   },
   "silaba_sa3o_lento": {
    "ms_real": 958,
-   "pico": -1.2,
+   "pico": -1.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_com": {
-   "ms_real": 634,
-   "pico": -1.7,
+   "ms_real": 648,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_com_lento": {
-   "ms_real": 725,
-   "pico": -2.1,
+   "ms_real": 747,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dor": {
    "ms_real": 715,
-   "pico": -1.9,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dor_lento": {
    "ms_real": 822,
-   "pico": -2.2,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cla": {
-   "ms_real": 680,
+   "ms_real": 679,
    "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cla_lento": {
-   "ms_real": 780,
-   "pico": -3.0,
+   "ms_real": 781,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ra1": {
-   "ms_real": 670,
-   "pico": -1.8,
+   "ms_real": 671,
+   "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ra1_lento": {
-   "ms_real": 768,
-   "pico": -2.7,
+   "ms_real": 769,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dio": {
-   "ms_real": 876,
-   "pico": -2.3,
+   "ms_real": 773,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dio_lento": {
-   "ms_real": 1040,
-   "pico": -2.6,
+   "ms_real": 907,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pel": {
    "ms_real": 683,
-   "pico": -2.7,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pel_lento": {
    "ms_real": 791,
-   "pico": -3.0,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cli": {
-   "ms_real": 664,
-   "pico": -4.9,
+   "ms_real": 665,
+   "pico": -5.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cli_lento": {
    "ms_real": 771,
-   "pico": -5.7,
+   "pico": -5.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tro": {
    "ms_real": 664,
-   "pico": -1.0,
+   "pico": -0.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tro_lento": {
    "ms_real": 764,
-   "pico": -1.2,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fe1u": {
    "ms_real": 732,
-   "pico": -3.5,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
@@ -10916,140 +10916,140 @@
    "problemas": []
   },
   "silaba_ban": {
-   "ms_real": 812,
-   "pico": -2.9,
+   "ms_real": 807,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ban_lento": {
-   "ms_real": 957,
-   "pico": -3.5,
+   "ms_real": 955,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vas": {
-   "ms_real": 919,
-   "pico": -2.2,
+   "ms_real": 913,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vas_lento": {
-   "ms_real": 1081,
+   "ms_real": 1078,
    "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pon": {
-   "ms_real": 690,
-   "pico": -1.1,
+   "ms_real": 691,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pon_lento": {
-   "ms_real": 797,
-   "pico": -1.8,
+   "ms_real": 798,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ter": {
-   "ms_real": 659,
-   "pico": -2.9,
+   "ms_real": 658,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ter_lento": {
-   "ms_real": 757,
-   "pico": -4.1,
+   "ms_real": 758,
+   "pico": -4.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bar": {
-   "ms_real": 759,
+   "ms_real": 760,
    "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bar_lento": {
    "ms_real": 889,
-   "pico": -4.6,
+   "pico": -4.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ces": {
-   "ms_real": 907,
-   "pico": -2.1,
+   "ms_real": 906,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ces_lento": {
-   "ms_real": 1072,
-   "pico": -2.6,
+   "ms_real": 1069,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ma1s": {
-   "ms_real": 886,
-   "pico": -3.0,
+   "ms_real": 880,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ma1s_lento": {
-   "ms_real": 1041,
-   "pico": -3.9,
+   "ms_real": 1038,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_c1o": {
-   "ms_real": 758,
-   "pico": -1.4,
+   "ms_real": 759,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_c1o_lento": {
-   "ms_real": 888,
-   "pico": -2.1,
+   "ms_real": 889,
+   "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_xo": {
    "ms_real": 754,
-   "pico": -2.2,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_xo_lento": {
-   "ms_real": 874,
-   "pico": -2.8,
+   "ms_real": 875,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_te2": {
-   "ms_real": 620,
-   "pico": -3.5,
+   "ms_real": 621,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_te2_lento": {
-   "ms_real": 713,
+   "ms_real": 703,
    "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nis": {
    "ms_real": 842,
-   "pico": -5.0,
+   "pico": -4.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nis_lento": {
    "ms_real": 990,
-   "pico": -5.7,
+   "pico": -5.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mu1": {
-   "ms_real": 758,
-   "pico": -5.2,
+   "ms_real": 760,
+   "pico": -5.1,
    "nucleos": 1,
    "problemas": []
   },
@@ -11061,73 +11061,73 @@
   },
   "silaba_pau": {
    "ms_real": 684,
-   "pico": -1.5,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pau_lento": {
    "ms_real": 784,
-   "pico": -2.7,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_u1": {
    "ms_real": 668,
-   "pico": -2.9,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_u1_lento": {
-   "ms_real": 773,
+   "ms_real": 774,
    "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bi": {
    "ms_real": 745,
-   "pico": -4.0,
+   "pico": -4.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bi_lento": {
-   "ms_real": 873,
-   "pico": -4.0,
+   "ms_real": 871,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cle": {
    "ms_real": 668,
-   "pico": -1.3,
+   "pico": -1.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cle_lento": {
-   "ms_real": 769,
+   "ms_real": 773,
    "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bus": {
-   "ms_real": 821,
+   "ms_real": 815,
    "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bus_lento": {
-   "ms_real": 963,
+   "ms_real": 962,
    "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_trem": {
    "ms_real": 671,
-   "pico": -1.1,
+   "pico": -1.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_trem_lento": {
    "ms_real": 780,
-   "pico": -1.6,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
@@ -11138,104 +11138,104 @@
    "problemas": []
   },
   "silaba_nha3o_lento": {
-   "ms_real": 923,
-   "pico": -2.2,
+   "ms_real": 925,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ta1": {
    "ms_real": 636,
-   "pico": -2.2,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ta1_lento": {
    "ms_real": 712,
-   "pico": -2.3,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_am": {
-   "ms_real": 719,
-   "pico": -1.9,
+   "ms_real": 843,
+   "pico": -0.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_am_lento": {
-   "ms_real": 834,
-   "pico": -2.8,
+   "ms_real": 983,
+   "pico": -0.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_la2n": {
-   "ms_real": 779,
-   "pico": -2.2,
+   "ms_real": 783,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_la2n_lento": {
-   "ms_real": 918,
-   "pico": -2.9,
+   "ms_real": 917,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cia": {
-   "ms_real": 891,
-   "pico": -3.5,
+   "ms_real": 812,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cia_lento": {
-   "ms_real": 1058,
-   "pico": -4.0,
+   "ms_real": 957,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tro2": {
-   "ms_real": 652,
-   "pico": -1.4,
+   "ms_real": 681,
+   "pico": -0.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tro2_lento": {
-   "ms_real": 744,
-   "pico": -2.8,
+   "ms_real": 780,
+   "pico": -1.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tins": {
-   "ms_real": 860,
-   "pico": -4.0,
+   "ms_real": 858,
+   "pico": -4.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tins_lento": {
-   "ms_real": 1004,
-   "pico": -4.6,
+   "ms_real": 999,
+   "pico": -4.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tre": {
    "ms_real": 626,
-   "pico": -1.8,
+   "pico": -1.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tre_lento": {
    "ms_real": 717,
-   "pico": -1.7,
+   "pico": -1.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_no1": {
    "ms_real": 722,
-   "pico": -4.1,
+   "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_no1_lento": {
    "ms_real": 839,
-   "pico": -4.6,
+   "pico": -4.9,
    "nucleos": 1,
    "problemas": []
   },
@@ -11246,128 +11246,128 @@
    "problemas": []
   },
   "silaba_sol_lento": {
-   "ms_real": 1005,
+   "ms_real": 1004,
    "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nu": {
-   "ms_real": 774,
-   "pico": -5.0,
+   "ms_real": 775,
+   "pico": -5.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nu_lento": {
    "ms_real": 901,
-   "pico": -5.8,
+   "pico": -5.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vem": {
    "ms_real": 753,
-   "pico": -0.3,
+   "pico": -0.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vem_lento": {
    "ms_real": 877,
-   "pico": -0.6,
+   "pico": -1.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_chu": {
    "ms_real": 756,
-   "pico": -2.0,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_chu_lento": {
-   "ms_real": 888,
+   "ms_real": 882,
    "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_rai": {
    "ms_real": 774,
-   "pico": -2.6,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_rai_lento": {
    "ms_real": 913,
-   "pico": -3.4,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_a1r": {
    "ms_real": 619,
-   "pico": -2.7,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_a1r_lento": {
    "ms_real": 694,
-   "pico": -3.0,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_flor": {
    "ms_real": 728,
-   "pico": -2.0,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_flor_lento": {
    "ms_real": 845,
-   "pico": -2.3,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ras": {
    "ms_real": 893,
-   "pico": -1.8,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ras_lento": {
-   "ms_real": 1045,
-   "pico": -2.5,
+   "ms_real": 1048,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pal": {
    "ms_real": 684,
-   "pico": -1.5,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pal_lento": {
    "ms_real": 784,
-   "pico": -2.7,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mon": {
    "ms_real": 793,
-   "pico": -2.7,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mon_lento": {
    "ms_real": 933,
-   "pico": -3.3,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vul": {
    "ms_real": 705,
-   "pico": -2.3,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vul_lento": {
    "ms_real": 820,
-   "pico": -2.9,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
@@ -11379,79 +11379,79 @@
   },
   "silaba_ca3o_lento": {
    "ms_real": 775,
-   "pico": -1.8,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_prai": {
-   "ms_real": 709,
-   "pico": -1.1,
+   "ms_real": 710,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_prai_lento": {
    "ms_real": 825,
-   "pico": -2.3,
+   "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_con": {
-   "ms_real": 664,
-   "pico": -1.6,
+   "ms_real": 648,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_con_lento": {
-   "ms_real": 764,
-   "pico": -2.0,
+   "ms_real": 747,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pla": {
-   "ms_real": 664,
-   "pico": -1.9,
+   "ms_real": 663,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pla_lento": {
-   "ms_real": 762,
-   "pico": -3.2,
+   "ms_real": 763,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_hos": {
    "ms_real": 787,
-   "pico": -3.1,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_hos_lento": {
    "ms_real": 927,
-   "pico": -3.5,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tal": {
    "ms_real": 685,
-   "pico": -1.5,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tal_lento": {
    "ms_real": 791,
-   "pico": -2.9,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cir": {
-   "ms_real": 801,
-   "pico": -3.1,
+   "ms_real": 799,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cir_lento": {
    "ms_real": 948,
-   "pico": -3.2,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
@@ -11462,14 +11462,14 @@
    "problemas": []
   },
   "silaba_bri_lento": {
-   "ms_real": 821,
-   "pico": -1.0,
+   "ms_real": 820,
+   "pico": -1.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pe1": {
    "ms_real": 608,
-   "pico": -2.6,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
@@ -11480,38 +11480,38 @@
    "problemas": []
   },
   "silaba_riz": {
-   "ms_real": 790,
-   "pico": -2.0,
+   "ms_real": 785,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_riz_lento": {
-   "ms_real": 925,
-   "pico": -3.1,
+   "ms_real": 916,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_den": {
-   "ms_real": 725,
-   "pico": -1.9,
+   "ms_real": 740,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_den_lento": {
-   "ms_real": 832,
-   "pico": -2.4,
+   "ms_real": 861,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_per": {
    "ms_real": 644,
-   "pico": -2.6,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_per_lento": {
-   "ms_real": 738,
-   "pico": -3.4,
+   "ms_real": 737,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
@@ -11523,43 +11523,43 @@
   },
   "silaba_c1a3o_lento": {
    "ms_real": 958,
-   "pico": -1.2,
+   "pico": -1.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_li1n": {
-   "ms_real": 783,
-   "pico": -5.2,
+   "ms_real": 804,
+   "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_li1n_lento": {
-   "ms_real": 919,
-   "pico": -5.6,
+   "ms_real": 947,
+   "pico": -4.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_be2": {
    "ms_real": 743,
-   "pico": -2.7,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_be2_lento": {
    "ms_real": 869,
-   "pico": -3.4,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ma3e": {
-   "ms_real": 780,
+   "ms_real": 779,
    "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ma3e_lento": {
    "ms_real": 913,
-   "pico": -2.5,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
@@ -11571,13 +11571,13 @@
   },
   "silaba_pai_lento": {
    "ms_real": 822,
-   "pico": -3.3,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vo1": {
    "ms_real": 756,
-   "pico": -2.3,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
@@ -11588,260 +11588,260 @@
    "problemas": []
   },
   "silaba_vo2": {
-   "ms_real": 776,
-   "pico": -3.9,
+   "ms_real": 772,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vo2_lento": {
    "ms_real": 906,
-   "pico": -4.7,
+   "pico": -4.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bru": {
    "ms_real": 730,
-   "pico": -2.4,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bru_lento": {
    "ms_real": 848,
-   "pico": -3.0,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_rei": {
    "ms_real": 716,
-   "pico": -1.9,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_rei_lento": {
-   "ms_real": 827,
-   "pico": -2.3,
+   "ms_real": 834,
+   "pico": -2.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tas": {
    "ms_real": 800,
-   "pico": -1.2,
+   "pico": -1.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tas_lento": {
-   "ms_real": 937,
-   "pico": -1.8,
+   "ms_real": 936,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_an": {
-   "ms_real": 844,
-   "pico": -0.7,
+   "ms_real": 843,
+   "pico": -0.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_an_lento": {
-   "ms_real": 985,
-   "pico": -0.3,
+   "ms_real": 983,
+   "pico": -0.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nin": {
-   "ms_real": 747,
-   "pico": -6.2,
+   "ms_real": 769,
+   "pico": -5.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nin_lento": {
-   "ms_real": 871,
-   "pico": -5.9,
+   "ms_real": 904,
+   "pico": -6.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_zum": {
-   "ms_real": 814,
-   "pico": -4.2,
+   "ms_real": 862,
+   "pico": -5.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_zum_lento": {
-   "ms_real": 962,
-   "pico": -4.0,
+   "ms_real": 1022,
+   "pico": -5.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vam": {
-   "ms_real": 741,
-   "pico": -0.7,
+   "ms_real": 814,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vam_lento": {
-   "ms_real": 860,
-   "pico": -1.3,
+   "ms_real": 955,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ge2": {
-   "ms_real": 821,
-   "pico": -1.8,
+   "ms_real": 822,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ge2_lento": {
-   "ms_real": 976,
+   "ms_real": 975,
    "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_na3o": {
    "ms_real": 755,
-   "pico": -1.9,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_na3o_lento": {
    "ms_real": 872,
-   "pico": -2.5,
+   "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_um": {
-   "ms_real": 745,
-   "pico": -6.8,
+   "ms_real": 594,
+   "pico": 0.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_um_lento": {
-   "ms_real": 868,
-   "pico": -6.5,
+   "ms_real": 667,
+   "pico": -0.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_em": {
-   "ms_real": 728,
-   "pico": -3.1,
+   "ms_real": 727,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_em_lento": {
    "ms_real": 846,
-   "pico": -3.3,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tem": {
    "ms_real": 645,
-   "pico": -1.3,
+   "pico": -1.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tem_lento": {
    "ms_real": 740,
-   "pico": -1.6,
+   "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_oi": {
-   "ms_real": 776,
-   "pico": -2.7,
+   "ms_real": 712,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_oi_lento": {
-   "ms_real": 907,
-   "pico": -3.3,
+   "ms_real": 827,
+   "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_e1": {
    "ms_real": 643,
-   "pico": -3.3,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_e1_lento": {
    "ms_real": 737,
-   "pico": -3.4,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ui": {
-   "ms_real": 796,
-   "pico": -5.7,
+   "ms_real": 779,
+   "pico": -5.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ui_lento": {
-   "ms_real": 936,
-   "pico": -6.1,
+   "ms_real": 914,
+   "pico": -6.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ai": {
-   "ms_real": 799,
+   "ms_real": 702,
    "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ai_lento": {
-   "ms_real": 940,
+   "ms_real": 812,
    "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_au": {
-   "ms_real": 777,
-   "pico": -2.6,
+   "ms_real": 703,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_au_lento": {
-   "ms_real": 919,
-   "pico": -3.3,
+   "ms_real": 812,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vai": {
    "ms_real": 803,
-   "pico": -2.4,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_vai_lento": {
    "ms_real": 946,
-   "pico": -3.1,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_a4": {
-   "ms_real": 639,
-   "pico": -2.8,
+   "ms_real": 640,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_a4_lento": {
    "ms_real": 726,
-   "pico": -2.9,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ve2": {
    "ms_real": 795,
-   "pico": -3.0,
+   "pico": -3.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ve2_lento": {
    "ms_real": 939,
-   "pico": -3.9,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_je": {
-   "ms_real": 763,
-   "pico": -1.6,
+   "ms_real": 762,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
@@ -11852,20 +11852,20 @@
    "problemas": []
   },
   "silaba_viu": {
-   "ms_real": 907,
-   "pico": -3.8,
+   "ms_real": 789,
+   "pico": -4.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_viu_lento": {
-   "ms_real": 1084,
-   "pico": -4.4,
+   "ms_real": 928,
+   "pico": -5.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_sai": {
-   "ms_real": 858,
-   "pico": -1.7,
+   "ms_real": 859,
+   "pico": -2.1,
    "nucleos": 1,
    "problemas": []
   },
@@ -11876,37 +11876,37 @@
    "problemas": []
   },
   "silaba_da1": {
-   "ms_real": 714,
-   "pico": -2.8,
+   "ms_real": 717,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_da1_lento": {
-   "ms_real": 834,
-   "pico": -3.5,
+   "ms_real": 836,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ao": {
-   "ms_real": 753,
+   "ms_real": 703,
    "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ao_lento": {
-   "ms_real": 875,
-   "pico": -3.8,
+   "ms_real": 812,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_za": {
-   "ms_real": 761,
-   "pico": -2.4,
+   "ms_real": 759,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_za_lento": {
-   "ms_real": 889,
+   "ms_real": 887,
    "pico": -3.2,
    "nucleos": 1,
    "problemas": []
@@ -11919,91 +11919,91 @@
   },
   "silaba_al_lento": {
    "ms_real": 812,
-   "pico": -3.7,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fu": {
-   "ms_real": 706,
+   "ms_real": 704,
    "pico": -2.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fu_lento": {
    "ms_real": 816,
-   "pico": -3.1,
-   "nucleos": 1,
-   "problemas": []
-  },
-  "silaba_mas": {
-   "ms_real": 886,
    "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
+  "silaba_mas": {
+   "ms_real": 880,
+   "pico": -3.4,
+   "nucleos": 1,
+   "problemas": []
+  },
   "silaba_mas_lento": {
-   "ms_real": 1039,
-   "pico": -3.9,
+   "ms_real": 1038,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lin": {
-   "ms_real": 783,
-   "pico": -5.2,
+   "ms_real": 804,
+   "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lin_lento": {
-   "ms_real": 919,
-   "pico": -5.6,
+   "ms_real": 947,
+   "pico": -4.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ten": {
-   "ms_real": 645,
-   "pico": -1.3,
+   "ms_real": 608,
+   "pico": -0.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ten_lento": {
-   "ms_real": 740,
-   "pico": -1.6,
+   "ms_real": 686,
+   "pico": -0.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_he": {
    "ms_real": 643,
-   "pico": -3.3,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_he_lento": {
    "ms_real": 737,
-   "pico": -3.4,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nha3": {
    "ms_real": 709,
-   "pico": -4.6,
+   "pico": -4.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nha3_lento": {
    "ms_real": 823,
-   "pico": -5.3,
+   "pico": -5.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_deu": {
    "ms_real": 757,
-   "pico": -0.9,
+   "pico": -0.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_deu_lento": {
    "ms_real": 885,
-   "pico": -1.5,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
@@ -12014,50 +12014,50 @@
    "problemas": []
   },
   "silaba_quem_lento": {
-   "ms_real": 771,
-   "pico": -0.2,
+   "ms_real": 770,
+   "pico": -0.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gou": {
-   "ms_real": 756,
-   "pico": -3.2,
+   "ms_real": 667,
+   "pico": -4.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gou_lento": {
-   "ms_real": 881,
-   "pico": -4.0,
+   "ms_real": 766,
+   "pico": -5.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lhou": {
    "ms_real": 759,
-   "pico": -2.6,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lhou_lento": {
    "ms_real": 884,
-   "pico": -3.0,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pro": {
    "ms_real": 657,
-   "pico": -1.7,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pro_lento": {
    "ms_real": 756,
-   "pico": -3.7,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_rou": {
    "ms_real": 725,
-   "pico": -3.6,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
@@ -12069,43 +12069,43 @@
   },
   "silaba_jar": {
    "ms_real": 829,
-   "pico": -3.2,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_jar_lento": {
-   "ms_real": 980,
-   "pico": -3.8,
+   "ms_real": 979,
+   "pico": -3.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_chou": {
-   "ms_real": 829,
+   "ms_real": 830,
    "pico": -1.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_chou_lento": {
    "ms_real": 971,
-   "pico": -1.9,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cou": {
-   "ms_real": 679,
-   "pico": -1.2,
+   "ms_real": 675,
+   "pico": -1.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_cou_lento": {
    "ms_real": 780,
-   "pico": -2.6,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_mui": {
    "ms_real": 808,
-   "pico": -4.6,
+   "pico": -4.5,
    "nucleos": 1,
    "problemas": []
   },
@@ -12116,116 +12116,116 @@
    "problemas": []
   },
   "silaba_fe": {
-   "ms_real": 733,
-   "pico": -3.3,
+   "ms_real": 730,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fe_lento": {
-   "ms_real": 851,
-   "pico": -3.4,
+   "ms_real": 850,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_liz": {
-   "ms_real": 858,
+   "ms_real": 853,
    "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_liz_lento": {
    "ms_real": 1011,
-   "pico": -4.7,
+   "pico": -4.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fes": {
-   "ms_real": 826,
-   "pico": -3.0,
+   "ms_real": 812,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_fes_lento": {
-   "ms_real": 961,
-   "pico": -3.1,
+   "ms_real": 958,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nhou": {
    "ms_real": 743,
-   "pico": -2.8,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_nhou_lento": {
-   "ms_real": 866,
-   "pico": -3.3,
+   "ms_real": 867,
+   "pico": -3.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ha": {
-   "ms_real": 639,
-   "pico": -2.8,
+   "ms_real": 640,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ha_lento": {
    "ms_real": 726,
-   "pico": -2.9,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dan": {
    "ms_real": 802,
-   "pico": -2.3,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dan_lento": {
    "ms_real": 943,
-   "pico": -3.5,
+   "pico": -3.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_c1ar": {
-   "ms_real": 792,
-   "pico": -1.3,
+   "ms_real": 790,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_c1ar_lento": {
-   "ms_real": 933,
-   "pico": -2.4,
+   "ms_real": 937,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ssar": {
-   "ms_real": 792,
-   "pico": -1.3,
+   "ms_real": 790,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ssar_lento": {
-   "ms_real": 933,
-   "pico": -2.4,
+   "ms_real": 937,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_seu": {
-   "ms_real": 844,
-   "pico": -0.8,
+   "ms_real": 845,
+   "pico": -1.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_seu_lento": {
-   "ms_real": 1007,
+   "ms_real": 1005,
    "pico": -1.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_zi": {
-   "ms_real": 783,
-   "pico": -4.5,
+   "ms_real": 782,
+   "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
@@ -12237,169 +12237,169 @@
   },
   "silaba_lha3o": {
    "ms_real": 779,
-   "pico": -1.2,
+   "pico": -1.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lha3o_lento": {
    "ms_real": 913,
-   "pico": -1.7,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pas": {
-   "ms_real": 815,
+   "ms_real": 811,
    "pico": -2.3,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pas_lento": {
    "ms_real": 951,
-   "pico": -2.9,
+   "pico": -2.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_faz": {
-   "ms_real": 787,
-   "pico": -1.9,
+   "ms_real": 779,
+   "pico": -1.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_faz_lento": {
-   "ms_real": 900,
-   "pico": -2.1,
+   "ms_real": 898,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_c1ou": {
    "ms_real": 897,
-   "pico": -1.5,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_c1ou_lento": {
-   "ms_real": 1065,
+   "ms_real": 1066,
    "pico": -2.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lou": {
-   "ms_real": 750,
-   "pico": -2.8,
+   "ms_real": 743,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lou_lento": {
-   "ms_real": 881,
-   "pico": -4.2,
+   "ms_real": 868,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ji": {
    "ms_real": 773,
-   "pico": -3.6,
+   "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ji_lento": {
    "ms_real": 903,
-   "pico": -4.4,
+   "pico": -4.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dos": {
-   "ms_real": 878,
-   "pico": -3.8,
+   "ms_real": 875,
+   "pico": -4.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dos_lento": {
-   "ms_real": 1033,
-   "pico": -4.2,
+   "ms_real": 1028,
+   "pico": -4.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ram": {
-   "ms_real": 721,
-   "pico": -2.1,
+   "ms_real": 772,
+   "pico": -2.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ram_lento": {
-   "ms_real": 836,
-   "pico": -2.6,
+   "ms_real": 918,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dis": {
-   "ms_real": 880,
-   "pico": -2.7,
+   "ms_real": 881,
+   "pico": -3.1,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_dis_lento": {
    "ms_real": 1040,
-   "pico": -3.9,
+   "pico": -4.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_iu": {
-   "ms_real": 789,
+   "ms_real": 745,
    "pico": -4.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_iu_lento": {
-   "ms_real": 928,
-   "pico": -5.2,
+   "ms_real": 868,
+   "pico": -4.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bem": {
-   "ms_real": 697,
-   "pico": -1.1,
+   "ms_real": 698,
+   "pico": -1.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_bem_lento": {
    "ms_real": 813,
-   "pico": -1.9,
+   "pico": -1.7,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lio": {
-   "ms_real": 839,
-   "pico": -3.4,
+   "ms_real": 778,
+   "pico": -3.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_lio_lento": {
-   "ms_real": 989,
-   "pico": -2.4,
+   "ms_real": 910,
+   "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gun": {
-   "ms_real": 692,
-   "pico": -2.8,
+   "ms_real": 594,
+   "pico": 0.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_gun_lento": {
-   "ms_real": 802,
-   "pico": -3.5,
+   "ms_real": 667,
+   "pico": -0.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tou": {
-   "ms_real": 653,
-   "pico": -1.8,
+   "ms_real": 660,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tou_lento": {
-   "ms_real": 748,
-   "pico": -3.6,
+   "ms_real": 760,
+   "pico": -4.8,
    "nucleos": 1,
    "problemas": []
   },
@@ -12416,8 +12416,8 @@
    "problemas": []
   },
   "silaba_sem": {
-   "ms_real": 836,
-   "pico": -0.1,
+   "ms_real": 835,
+   "pico": -0.2,
    "nucleos": 1,
    "problemas": []
   },
@@ -12428,14 +12428,14 @@
    "problemas": []
   },
   "silaba_pres": {
-   "ms_real": 826,
+   "ms_real": 824,
    "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_pres_lento": {
    "ms_real": 970,
-   "pico": -2.6,
+   "pico": -3.0,
    "nucleos": 1,
    "problemas": []
   },
@@ -12447,703 +12447,596 @@
   },
   "silaba_dou_lento": {
    "ms_real": 848,
-   "pico": -5.5,
+   "pico": -5.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_quan": {
    "ms_real": 721,
-   "pico": -1.7,
+   "pico": -1.6,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_quan_lento": {
-   "ms_real": 839,
-   "pico": -2.4,
+   "ms_real": 837,
+   "pico": -2.2,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ja1": {
    "ms_real": 774,
-   "pico": -1.6,
+   "pico": -1.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ja1_lento": {
    "ms_real": 915,
-   "pico": -1.9,
+   "pico": -2.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_guar": {
-   "ms_real": 730,
+   "ms_real": 740,
    "pico": -3.8,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_guar_lento": {
-   "ms_real": 845,
-   "pico": -4.3,
+   "ms_real": 862,
+   "pico": -4.5,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ha1": {
-   "ms_real": 639,
-   "pico": -2.8,
+   "ms_real": 640,
+   "pico": -2.9,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_ha1_lento": {
    "ms_real": 726,
-   "pico": -2.9,
+   "pico": -3.4,
    "nucleos": 1,
    "problemas": []
   },
   "silaba_tre2s": {
-   "ms_real": 806,
-   "pico": -2.3,
+   "ms_real": 805,
+   "pico": -1.7,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_tre2s_lento": {
    "ms_real": 947,
-   "pico": -2.6,
+   "pico": -3.3,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_nhos": {
-   "ms_real": 880,
-   "pico": -3.1,
+   "ms_real": 871,
+   "pico": -3.0,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_nhos_lento": {
    "ms_real": 1018,
    "pico": -4.4,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_zuis": {
-   "ms_real": 969,
-   "pico": -3.5,
+   "ms_real": 968,
+   "pico": -3.6,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_zuis_lento": {
-   "ms_real": 1148,
+   "ms_real": 1147,
    "pico": -3.7,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_pa1s": {
-   "ms_real": 815,
+   "ms_real": 811,
    "pico": -2.3,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_pa1s_lento": {
    "ms_real": 951,
-   "pico": -2.9,
+   "pico": -2.8,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_vos": {
-   "ms_real": 882,
-   "pico": -2.4,
+   "ms_real": 876,
+   "pico": -2.6,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_vos_lento": {
    "ms_real": 1034,
-   "pico": -3.0,
+   "pico": -3.3,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_nas_lento": {
    "ms_real": 1060,
-   "pico": -2.9,
+   "pico": -3.5,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_nas": {
-   "ms_real": 903,
+   "ms_real": 902,
    "pico": -2.6,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_as": {
-   "ms_real": 814,
-   "pico": -2.5,
+   "ms_real": 832,
+   "pico": -1.3,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_as_lento": {
-   "ms_real": 946,
-   "pico": -1.8,
+   "ms_real": 977,
+   "pico": -1.1,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_cri": {
    "ms_real": 648,
-   "pico": -3.8,
+   "pico": -3.9,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_c1as": {
-   "ms_real": 950,
+   "ms_real": 940,
    "pico": -1.6,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_cri_lento": {
-   "ms_real": 738,
-   "pico": -4.0,
+   "ms_real": 737,
+   "pico": -4.2,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_c1as_lento": {
-   "ms_real": 1118,
+   "ms_real": 1117,
    "pico": -1.4,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ou": {
-   "ms_real": 663,
-   "pico": -3.7,
+   "ms_real": 667,
+   "pico": -4.3,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ou_lento": {
-   "ms_real": 760,
-   "pico": -5.5,
+   "ms_real": 766,
+   "pico": -5.9,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ler": {
    "ms_real": 755,
-   "pico": -3.3,
+   "pico": -3.8,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ler_lento": {
    "ms_real": 879,
    "pico": -4.4,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_bli": {
    "ms_real": 743,
-   "pico": -2.6,
+   "pico": -2.7,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_bli_lento": {
-   "ms_real": 870,
-   "pico": -2.2,
+   "ms_real": 871,
+   "pico": -2.6,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_vros": {
    "ms_real": 909,
-   "pico": -3.0,
+   "pico": -3.4,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_vros_lento": {
    "ms_real": 1067,
-   "pico": -3.5,
+   "pico": -3.8,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_lam": {
-   "ms_real": 739,
-   "pico": -3.0,
+   "ms_real": 783,
+   "pico": -2.1,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_lam_lento": {
-   "ms_real": 861,
-   "pico": -3.5,
+   "ms_real": 917,
+   "pico": -3.0,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_his": {
-   "ms_real": 759,
-   "pico": -3.1,
+   "ms_real": 755,
+   "pico": -3.2,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_his_lento": {
    "ms_real": 888,
-   "pico": -4.0,
+   "pico": -3.7,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_to1": {
    "ms_real": 603,
-   "pico": -2.3,
+   "pico": -2.5,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_to1_lento": {
    "ms_real": 684,
-   "pico": -2.8,
+   "pico": -3.0,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_mais": {
-   "ms_real": 969,
-   "pico": -2.2,
+   "ms_real": 965,
+   "pico": -2.4,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_mais_lento": {
-   "ms_real": 1150,
-   "pico": -2.6,
+   "ms_real": 1148,
+   "pico": -3.1,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_bre": {
-   "ms_real": 701,
+   "ms_real": 700,
    "pico": -2.0,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_bre_lento": {
-   "ms_real": 809,
+   "ms_real": 811,
    "pico": -2.6,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ma1": {
-   "ms_real": 717,
+   "ms_real": 716,
    "pico": -3.1,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ma1_lento": {
    "ms_real": 833,
-   "pico": -3.6,
+   "pico": -3.8,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_mil": {
-   "ms_real": 727,
-   "pico": -3.8,
+   "ms_real": 726,
+   "pico": -3.7,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_tra1s": {
-   "ms_real": 806,
-   "pico": -1.1,
+   "ms_real": 801,
+   "pico": -1.4,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_tra1s_lento": {
-   "ms_real": 936,
+   "ms_real": 934,
    "pico": -2.1,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_mil_lento": {
    "ms_real": 845,
    "pico": -4.4,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_vras_lento": {
-   "ms_real": 1128,
-   "pico": -3.5,
+   "ms_real": 1127,
+   "pico": -2.8,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_vras": {
-   "ms_real": 955,
-   "pico": -2.5,
+   "ms_real": 949,
+   "pico": -2.4,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_le2": {
    "ms_real": 731,
-   "pico": -2.7,
+   "pico": -2.5,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_le2_lento": {
    "ms_real": 851,
-   "pico": -2.8,
+   "pico": -2.7,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_das": {
    "ms_real": 886,
-   "pico": -2.2,
+   "pico": -2.6,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_das_lento": {
    "ms_real": 1046,
-   "pico": -3.0,
+   "pico": -3.1,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ce2": {
    "ms_real": 774,
-   "pico": -1.8,
+   "pico": -1.6,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ce2_lento": {
-   "ms_real": 908,
+   "ms_real": 906,
    "pico": -2.1,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_qual": {
    "ms_real": 693,
-   "pico": -1.9,
+   "pico": -2.2,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_qual_lento": {
    "ms_real": 794,
-   "pico": -3.3,
+   "pico": -3.6,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_vra": {
-   "ms_real": 745,
-   "pico": -2.3,
+   "ms_real": 746,
+   "pico": -2.7,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_vra_lento": {
-   "ms_real": 874,
-   "pico": -3.0,
+   "ms_real": 875,
+   "pico": -3.5,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ho_lento": {
-   "ms_real": 750,
-   "pico": -4.2,
+   "ms_real": 749,
+   "pico": -4.1,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ho": {
-   "ms_real": 653,
+   "ms_real": 652,
    "pico": -2.5,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ver": {
    "ms_real": 744,
-   "pico": -3.3,
+   "pico": -3.5,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ver_lento": {
    "ms_real": 874,
-   "pico": -3.3,
+   "pico": -3.2,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_nhas": {
    "ms_real": 905,
-   "pico": -2.5,
+   "pico": -2.8,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_nhas_lento": {
-   "ms_real": 1084,
-   "pico": -3.5,
+   "ms_real": 1075,
+   "pico": -3.4,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_vu_lento": {
    "ms_real": 903,
-   "pico": -3.4,
+   "pico": -3.6,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_zu": {
    "ms_real": 758,
    "pico": -3.7,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_zo_lento": {
    "ms_real": 905,
-   "pico": -3.7,
+   "pico": -3.6,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_vu": {
-   "ms_real": 767,
+   "ms_real": 766,
    "pico": -2.9,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_zo": {
    "ms_real": 772,
-   "pico": -3.3,
+   "pico": -3.2,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_zu_lento": {
-   "ms_real": 887,
+   "ms_real": 886,
    "pico": -4.5,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ju": {
-   "ms_real": 780,
-   "pico": -3.7,
+   "ms_real": 783,
+   "pico": -3.8,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_ju_lento": {
    "ms_real": 920,
-   "pico": -4.3,
+   "pico": -4.1,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_xu": {
    "ms_real": 756,
-   "pico": -2.0,
+   "pico": -1.9,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "silaba_xu_lento": {
-   "ms_real": 888,
+   "ms_real": 882,
    "pico": -2.4,
    "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "fonema_o": {
-   "ms_real": 780,
-   "pico": -5.1,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 749,
+   "pico": -4.1,
    "problemas": []
   },
   "fonema_a": {
-   "ms_real": 860,
-   "pico": -1.8,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 863,
+   "pico": -1.9,
    "problemas": []
   },
   "fonema_i": {
-   "ms_real": 862,
-   "pico": -2.7,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 880,
+   "pico": -3.9,
    "problemas": []
   },
   "fonema_u": {
-   "ms_real": 773,
+   "ms_real": 774,
    "pico": -3.6,
-   "nucleos": 1,
-   "legado": true,
    "problemas": []
   },
   "fonema_e": {
-   "ms_real": 753,
-   "pico": -4.2,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 737,
+   "pico": -3.7,
    "problemas": []
   },
   "fonema_v": {
    "ms_real": 1080,
-   "pico": -4.7,
-   "legado": true,
+   "pico": -4.4,
    "problemas": []
   },
   "fonema_f": {
    "ms_real": 1080,
-   "pico": -5.6,
-   "legado": true,
+   "pico": -6.1,
    "problemas": []
   },
   "fonema_p": {
-   "ms_real": 301,
-   "pico": -6.2,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 710,
+   "pico": -2.5,
    "problemas": []
   },
   "fonema_b": {
-   "ms_real": 408,
-   "pico": -2.9,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 856,
+   "pico": -4.0,
    "problemas": []
   },
   "fonema_n": {
-   "ms_real": 794,
-   "pico": -5.7,
-   "legado": true,
+   "ms_real": 1030,
+   "pico": -5.0,
    "problemas": []
   },
   "fonema_m": {
-   "ms_real": 1069,
-   "pico": -3.6,
-   "legado": true,
+   "ms_real": 1080,
+   "pico": -2.3,
    "problemas": []
   },
   "fonema_z": {
-   "ms_real": 849,
-   "pico": -5.4,
-   "legado": true,
+   "ms_real": 1080,
+   "pico": -5.6,
    "problemas": []
   },
   "fonema_s": {
-   "ms_real": 841,
-   "pico": -5.5,
-   "legado": true,
+   "ms_real": 1080,
+   "pico": -5.4,
    "problemas": []
   },
   "fonema_l": {
-   "ms_real": 794,
-   "pico": -3.1,
-   "legado": true,
+   "ms_real": 1030,
+   "pico": -3.8,
    "problemas": []
   },
   "fonema_r": {
-   "ms_real": 371,
-   "pico": -5.1,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 769,
+   "pico": -3.5,
    "problemas": []
   },
   "fonema_e1": {
-   "ms_real": 639,
-   "pico": -1.8,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 737,
+   "pico": -3.7,
    "problemas": []
   },
   "fonema_e2": {
-   "ms_real": 623,
-   "pico": -6.0,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 753,
+   "pico": -4.8,
    "problemas": []
   },
   "fonema_o1": {
-   "ms_real": 623,
-   "pico": -4.4,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 749,
+   "pico": -4.1,
    "problemas": []
   },
   "fonema_o2": {
-   "ms_real": 583,
-   "pico": -3.6,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 780,
+   "pico": -5.1,
    "problemas": []
   },
   "fonema_a3": {
-   "ms_real": 866,
-   "pico": -6.0,
-   "nucleos": 1,
-   "legado": true,
+   "ms_real": 983,
+   "pico": -0.4,
    "problemas": []
   },
   "fonema_j": {
-   "ms_real": 845,
-   "pico": -5.2,
-   "legado": true,
+   "ms_real": 1080,
+   "pico": -4.4,
    "problemas": []
   },
   "fonema_x": {
-   "ms_real": 838,
-   "pico": -4.9,
-   "legado": true,
+   "ms_real": 1080,
+   "pico": -1.7,
    "problemas": []
   },
   "fonema_nh": {
-   "ms_real": 846,
-   "pico": -3.1,
-   "legado": true,
+   "ms_real": 832,
+   "pico": -4.1,
    "problemas": []
   },
   "fonema_lh": {
-   "ms_real": 849,
-   "pico": -7.6,
-   "legado": true,
+   "ms_real": 861,
+   "pico": -3.7,
    "problemas": []
   },
   "hist_h2_0": {

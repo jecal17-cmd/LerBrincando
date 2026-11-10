@@ -510,7 +510,8 @@ def texto_fala(item, D, PRON):
         f = D['fonemas'].get(t)
         if f and f['tipo'] == 'vogal': return f['tts']
         if f and f['tipo'] == 'continua': return ALONGADO.get(t, pronunciavel(f['apoio']))
-        return pronunciavel(t) if len(t) > 1 else t.lower()
+        if f and f.get('apoio'): return pronunciavel(f['apoio'])  # oclusiva: sempre dentro da sílaba ("bá"), nunca "bê"
+        return pronunciavel(t + 'A' if len(t) == 1 else t)
     if tp in ('hist', 'frasejogo'):
         return ' '.join(tk['palavra'].lower() for tk in tokenizar(item['frase'])) + '.'
     return t
@@ -671,6 +672,12 @@ def principal():
             ipa = ipa_silaba(CONTINUAS[g])
             x, taxa, _ = motor.sintetizar([('x', 'ipa:' + ipa + '|' + pronunciavel(CONTINUAS[g]), vl)])['x']
             registrar(k, aparar_rel(x, taxa), taxa, 'azure-ipa', {'apoio': CONTINUAS[g]}, texto=ipa); continue
+        if a.motor == 'azure' and (not f or f['tipo'] not in ('vogal', 'continua')):
+            apoio = (f or {}).get('apoio') or (g + 'A' if len(g) == 1 else g)
+            ipa = ipa_silaba(apoio)
+            if ipa:
+                x, taxa, _ = motor.sintetizar([('x', 'ipa:' + ipa + '|' + pronunciavel(apoio), vl)])['x']
+                registrar(k, aparar_rel(x, taxa), taxa, 'azure-ipa', {'apoio': apoio}, texto=ipa); continue
         if a.motor == 'azure' and f and f['tipo'] == 'vogal':
             ipa = {'A': 'ˈa', 'E': 'ˈɛ', 'Ê': 'ˈe', 'É': 'ˈɛ', 'I': 'ˈi', 'O': 'ˈɔ', 'Ô': 'ˈo', 'Ó': 'ˈɔ', 'U': 'ˈu', 'Ã': 'ˈɐ̃'}.get(g)
             if ipa:
@@ -678,7 +685,7 @@ def principal():
                 if len(xs) < taxa * 0.5: xs = prolongar(xs, taxa, 650)
                 registrar(k, xs, taxa, 'azure-ipa', texto=ipa); continue
         if k in PRON or f is None or f['tipo'] != 'continua':
-            cands = [PRON[k]] if k in PRON else ([texto_fala(it, D, PRON)] + VOGAL_TTS_ALT.get(f['tts'].upper() if f else '', []) if f else candidatos_silaba(g))
+            cands = [PRON[k]] if k in PRON else ([texto_fala(it, D, PRON)] + VOGAL_TTS_ALT.get((f.get('tts') or '').upper() if f else '', []) if f else candidatos_silaba(g))
             ok = None
             for c in dict.fromkeys(cands):
                 x, taxa, _ = motor.sintetizar([('x', c, vl)])['x']; xs = aparar_rel(x, taxa)
