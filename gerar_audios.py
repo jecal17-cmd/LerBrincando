@@ -464,6 +464,7 @@ class MotorAzure:
             import unicodedata
             ipa, _, graf = texto[4:].partition('|')
             ipa = unicodedata.normalize('NFD', ipa)  # o Azure só aceita o til combinante (ĩ → i + ◌̃)
+            ipa = ipa.replace('ɡ', 'g')  # o Azure IGNORA o 'ɡ' fonético (U+0261): GA saía só 'a'. Usa o 'g' comum.
             corpo = f"<phoneme alphabet='ipa' ph='{escape(ipa)}'>{escape(graf or 'a')}</phoneme>"
         else:
             corpo = escape(texto)
