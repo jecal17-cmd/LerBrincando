@@ -8,6 +8,23 @@
   const S = Motor.S;
   const falar = (s, o) => Som.falar(s, o);
   const ICONES = { rima: '🎵', palmas: '👏', somInicial: '🔤', somFinal: '🔚', juntar: '🧩', tirar: '🪄', trocar: '🔄', memoria: '🃏', licao: '🔊', cacaSom: '👂', tracado: '✍️', abertoFechado: '😮', bingo: '🎱', historia: '📖', guardiao: '🛡️', nomeSom: '🔤', leiaEncontre: '👀', gemeos: '👯', letraPerdida: '❓', regra: '💡', fabrica: '🏭', trem: '🚂', fatiador: '✂️', freq: '✨', ditado: '✍️', trocaLetra: '🪄', frase: '📜', microfone: '🎤' };
+  // Etiqueta curta de cada tipo de atividade: aparece na tela junto com a fala da Lili (o adulto lê; a criança toca para ouvir de novo)
+  const DICA_CURTA = { rima: 'Qual figura rima?', palmas: 'Bata um toque por pedacinho', somInicialSilaba: 'Qual começa igual?', somInicialSom: 'Qual começa com esse som?', somFinal: 'Qual termina igual?', juntar: 'Junte os pedacinhos', tirar: 'Tire um pedacinho', trocar: 'Troque um pedacinho', memoria: 'Encontre os pares', memoriaRima: 'Encontre as rimas', cacaSomVogal: 'Qual letra faz esse som?', cacaSomSilaba: 'Qual sílaba você ouviu?', cacaSomLetra: 'Qual letra faz esse som?', abertoFechado: 'Boca aberta ou fechada?', tracado: 'Siga as setas com o dedo', bingo: 'Escute e marque', nomeSom: 'Nome ou som da letra?', leiaEncontre: 'Leia e ache a figura', gemeos: 'Qual palavra você ouviu?', letraPerdida: 'Qual letra falta?', letraPerdidaRegra: 'O que falta?', somS: 'Cobrinha ou abelha?', escrita: 'Qual é o jeito certo?', fabrica: 'Junte as sílabas', trem: 'Monte a palavra', fatiador: 'Corte em sílabas', freq: 'Toque na palavra mágica', ditado: 'Escreva a palavra', trocaLetra: 'Troque a letra', frase: 'Leia a frase', microfone: 'Leia em voz alta', historia: 'Vamos ler juntos' };
+  function etiquetaTarefa(item, tipoFase, aoTocar) {
+    const chave = item.instr || item.tipo; const txt = DICA_CURTA[chave] || DICA_CURTA[item.tipo]; if (!txt) return null;
+    const b = el('button', { class: 'dica-tarefa', type: 'button', 'aria-label': 'o que fazer: ' + txt + '. Toque para ouvir de novo' }, el('span', { class: 'ico' }, ICONES[item.tipo] || ICONES[tipoFase] || '👂'), el('span', null, txt), el('span', { class: 'ouv', 'aria-hidden': 'true' }, '🔊'));
+    b.onclick = aoTocar; return b;
+  }
+  // Passos da fase: uma bolinha por atividade (as de revisão, no fim, têm outra cor)
+  function passosFase() {
+    const cx = el('div', { class: 'passos', role: 'progressbar', 'aria-label': 'progresso da fase' });
+    return { el: cx, desenhar(itens, atual, fracao) {
+      cx.innerHTML = ''; cx.setAttribute('aria-valuetext', `atividade ${Math.min(atual + 1, itens.length)} de ${itens.length}`);
+      itens.forEach((it, k) => { const d = el('i', { class: (k < atual ? 'feito' : k === atual ? 'atual' : '') + (it.revisao ? ' rev' : '') }); if (k === atual && fracao) d.style.setProperty('--parte', Math.round(fracao * 100) + '%'); cx.append(d); });
+    } };
+  }
+  // Botão de adiantar: corta a fala em andamento (boas-vindas, elogios, explicações) para quem não quer esperar
+  function botaoAdiantar() { const b = el('button', { class: 'btn redondo adiantar', type: 'button', 'aria-label': 'adiantar a fala' }, '⏩'); b.onclick = () => { Som.parar(); Efeito.tocar('clique'); }; return b; }
   const hoje = () => Motor.hoje();
   // Rodando como app Android (Capacitor)?
   const APP = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
@@ -110,18 +127,24 @@
     const p = Store.perfil;
     const itens = Motor.itensAvaliacao();
     const ctrl = new AbortController();
-    const palco = el('div', { class: 'palco' }); const barra = el('div', { class: 'progresso' }, el('i'));
+    const palco = el('div', { class: 'palco' }); const passos = passosFase();
     const sair = el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'sair' }, '✖');
+    const ouvir = el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'ouvir de novo' }, '🔊');
     sair.onclick = () => { ctrl.abort(); Som.parar(); perfis(); };
-    tela(el('div', { class: 'jogo' }, el('div', { class: 'barra-jogo' }, sair, barra, mascote({ mini: true })), palco));
-    palco.append(mascote({ anim: 'pula' }), el('div', { class: 'bolha' }, D.falas.avaliacaoIntro));
+    tela(el('div', { class: 'jogo' }, el('div', { class: 'barra-jogo' }, sair, passos.el, ouvir, botaoAdiantar(), mascote({ mini: true })), palco));
+    passos.desenhar(itens, -1);
+    // a fala de abertura pode ser adiantada com um toque (antes eram uns 7 s parados)
+    const pularIntro = el('button', { class: 'btn pri', type: 'button' }, 'Vamos lá! ▶'); pularIntro.onclick = () => Som.parar();
+    palco.append(mascote({ anim: 'pula' }), el('div', { class: 'bolha' }, D.falas.avaliacaoIntro), pularIntro);
     await falar([S.fala('avaliacaoIntro')]);
     const resultados = [];
     try {
       for (let i = 0; i < itens.length; i++) {
-        const it = itens[i]; barra.firstChild.style.width = (i / itens.length * 100) + '%';
+        const it = itens[i]; passos.desenhar(itens, i);
         palco.innerHTML = '';
         const ctx = { palco, sinal: ctrl.signal, falarPedido: (l) => falar([S.f(D.instrucoes[it.instr] || '')].concat(it.pedido), { lento: l }), registrarParcial: () => {}, progresso: () => {} };
+        ouvir.onclick = () => ctx.falarPedido();
+        const etq = etiquetaTarefa(it, 'avaliacao', () => ctx.falarPedido()); if (etq) palco.append(etq);
         const r = await MJ[it.ui](it, ctx);
         resultados.push({ bloco: it.bloco, ok: r[0] && r[0].ok });
         Efeito.tocar('estrela'); await dormir(300);
@@ -147,15 +170,21 @@
         el('button', { class: 'btn', type: 'button', onclick: () => fechar(null) }, '✖')], { fecharFora: true });
       ({ loja, album, medalhas, tela: telaCheia, pais: portaoPais, perfis })[acao] && ({ loja, album, medalhas, tela: telaCheia, pais: portaoPais, perfis })[acao]();
     };
+    const comNome = (botao, nome) => el('span', { class: 'com-rotulo' }, botao, el('span', { class: 'rot', 'aria-hidden': 'true' }, nome));
     const h = el('div', { class: 'hud' },
       el('button', { class: 'pilula', type: 'button', 'aria-label': 'trocar de perfil: ' + p.nome, onclick: perfis }, el('span', { class: 'avatar' }, p.avatar), el('span', { class: 'nome-hud' }, p.nome)),
-      el('span', { class: 'pilula', title: 'Nível de leitor', 'aria-label': 'nível ' + D.niveis[nv].nome }, '🌱 ', el('span', { class: 'nome-hud' }, D.niveis[nv].nome)),
+      el('button', { class: 'pilula', type: 'button', title: 'Nível de leitor', 'aria-label': 'nível ' + D.niveis[nv].nome + '. Toque para saber mais', onclick: () => guiaMapa() }, D.niveis[nv].emoji || '🌱', ' ', el('span', { class: 'nome-nivel' }, D.niveis[nv].nome)),
       el('span', { class: 'pilula', 'aria-label': 'moedas' }, '🪙 ', String(p.moedas)),
       el('span', { class: 'esp' }),
-      bauDisp ? el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'baú diário', onclick: abrirBau }, '🎁') : null,
-      el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'menu: loja, álbum, medalhas, pais', onclick: menu }, '☰'),
-      DEBUG ? el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'depuração', onclick: () => painelPais('autoteste') }, '🐞') : null);
+      bauDisp ? comNome(el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'baú diário', onclick: abrirBau }, '🎁'), 'Baú') : null,
+      comNome(el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'menu: loja, álbum, medalhas, pais', onclick: menu }, '☰'), 'Menu'),
+      DEBUG ? el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'depuração', onclick: () => painelTecnico('autoteste') }, '🐞') : null);
     return h;
+  }
+  // Explica os botões do mapa (abre sozinha na primeira visita e ao tocar no nível)
+  function guiaMapa() {
+    const linhas = [[Store.perfil.avatar, 'Sua figura', 'toque para trocar de criança'], ['🌱', 'Seu nível de leitor', 'cresce a cada fase'], ['🪙', 'Moedas', 'ganhe jogando e use na Lojinha'], ['🎁', 'Baú', 'um presente por dia'], ['☰', 'Menu', 'Lojinha, Álbum, Medalhas e Pais'], ['🎵', 'Bolinhas do caminho', 'cada uma é uma fase; a Lili mostra a próxima']];
+    return modal((fechar) => [el('h2', null, '👋 Conheça o mapa'), el('div', { class: 'guia' }, ...linhas.map(([e, n, d]) => el('div', { class: 'guia-linha' }, el('span', { class: 'fig' }, e), el('div', null, el('b', null, n), el('br'), d)))), el('button', { class: 'btn pri', type: 'button', onclick: () => fechar() }, 'Entendi')], { fecharFora: true });
   }
   function proximaFase(p) { for (let i = 0; i < D.fases.length; i++) { const r = p.fases[D.fases[i].id]; if (Motor.faseLiberada(p, i) && !(r && r.dominada)) return i; } return D.fases.length - 1; }
   function mapa(mundoSel) {
@@ -204,6 +233,7 @@
     window.Visual.aplicarCenario(mundo, 'mapa');
     requestAnimationFrame(() => { if (alvoScroll) alvoScroll.scrollIntoView({ block: 'center', behavior: 'instant' }); else { const r = mp.querySelector('.rolagem-mapa'); r.scrollTop = r.scrollHeight; } });
     falar([S.f(m.nome), S.pausa(200), S.fala('mapa')]);
+    if (!p.guiaMapa) { p.guiaMapa = true; Store.salvar(); guiaMapa(); }
   }
 
   // ======================================================================
@@ -227,18 +257,30 @@
     Som.preCarregar(itens);
     if (idx + 1 < D.fases.length) setTimeout(() => { try { Som.preCarregar(Motor.gerarItens(idx + 1, p)); } catch (e) { /* */ } }, 3000);
     const ctrl = new AbortController();
-    const barra = el('div', { class: 'progresso', role: 'progressbar', 'aria-label': 'progresso da fase' }, el('i'));
+    const passos = passosFase();
     const sair = el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'sair da fase' }, '✖');
     const ouvir = el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'ouvir de novo' }, '🔊');
     const lento = el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'ouvir devagar' }, '🐢');
+    const ajuda = el('button', { class: 'btn redondo ajuda', type: 'button', 'aria-label': 'pedir ajuda' }, '🛟');
     const palco = el('div', { class: 'palco' });
-    tela(el('div', { class: 'jogo' }, el('div', { class: 'barra-jogo' }, sair, barra, ouvir, lento, mascote({ mini: true })), palco));
+    tela(el('div', { class: 'jogo' }, el('div', { class: 'barra-jogo' }, sair, passos.el, ouvir, lento, ajuda, botaoAdiantar(), mascote({ mini: true })), palco));
     sair.onclick = () => { ctrl.abort(); Som.parar(); Store.salvar(); mapa(); };
     let ok = 0, tot = 0; let instrFalada = new Set(); const repetidos = new Set();
     const demoPendente = !opc.revisao && !p.demos[f.tipo] && !['licao', 'regra', 'historia', 'guardiao', 'freq'].includes(f.tipo);
     let demoFeita = false;
     const nivelAntes = Motor.nivel(p);
-    const progresso = (x) => { barra.firstChild.style.width = Math.round(x * 100) + '%'; };
+    let passoAtual = 0; let dificeis = 0; const revisoes = [];   // itens errados voltam só no fim da fase
+    const MAX_REVISOES = 3;
+    const progresso = (x) => { if (itensRef) passos.desenhar(itensRef, passoAtual, x); };   // atividades longas (histórias) enchem a bolinha atual aos poucos
+    const itensRef = itens;
+    // Ajuda: repete o pedido devagar e, nas atividades de escolher, tira uma opção errada
+    const darAjuda = async (ctx) => {
+      ajuda.classList.remove('chama'); p.stats.ajudas = (p.stats.ajudas || 0) + 1;
+      const vivas = [...palco.querySelectorAll('.opcao:not(.errada)')];
+      const erradas = vivas.filter((b) => b.dataset.certa !== '1');
+      if (vivas.length > 2 && erradas.length && erradas.length < vivas.length) erradas[Math.floor(Math.random() * erradas.length)].classList.add('errada');
+      await ctx.falarPedido(true);
+    };
     const registrar = async (item, r, foco) => {
       if (r.jaRegistrado) return;
       const out = Motor.registrar(p, item, r);
@@ -273,29 +315,33 @@
       for (let i = 0; i < itens.length; i++) {
         const item = itens[i];
         estado.itemAtual = item; estado.esperado = null; estado.itemSeq = (estado.itemSeq || 0) + 1;
-        palco.innerHTML = ''; progresso(i / itens.length);
+        palco.innerHTML = ''; passoAtual = i; passos.desenhar(itens, i);
         const ctx = ctxBase(item);
         if (demoPendente && !demoFeita && item.contar !== false && !item.guiado && ['escolha', 'palmas', 'trem', 'fatiar', 'ditado'].includes(item.ui)) { ctx.demo = true; demoFeita = true; }
-        ouvir.onclick = () => ctx.falarPedido(); lento.onclick = () => ctx.falarPedido(true);
+        ouvir.onclick = () => ctx.falarPedido(); lento.onclick = () => ctx.falarPedido(true); ajuda.onclick = () => darAjuda(ctx);
+        if (item.revisao && !(i > 0 && itens[i - 1].revisao)) await falar([S.fala('treinarMais')]);
         if (item.revisao) palco.append(el('div', { class: 'rotulo-etapa' }, '🔁 Revisão'));
+        const etq = etiquetaTarefa(item, f.tipo, () => ctx.falarPedido()); if (etq) palco.append(etq);
         if (item.guiado && !palco.dataset.juntos) palco.append(el('div', { class: 'rotulo-etapa' }, '🤝 ', D.falas.fazemosJuntos));
         if (item.guiado && i > 0 && !itens[i - 1].guiado) await falar([S.fala('fazemosJuntos')]);
         const res = await MJ[item.ui](item, ctx);
         for (const r of res) { if (ctx.demo) r.demo = true; await registrar(item, r); }
         if (ctx.demo) { p.demos[f.tipo] = true; await falar([S.fala('demoAgora')]); }
-        // o item errado volta mais tarde na mesma fase
+        // o item errado volta só no fim da fase, como revisão (no máximo 3), para a fase não se alongar no meio
         const errou = res.some((r) => r.tent > 1);
-        if (errou && item.contar !== false && !item.guiado && !item.multi && !repetidos.has(item) && item.ui === 'escolha') {
+        if (errou && item.contar !== false && !item.guiado && !item.multi && !repetidos.has(item) && item.ui === 'escolha' && revisoes.length < MAX_REVISOES) {
           repetidos.add(item); const copia = Object.assign({}, item, { opcoes: Motor.embaralhar(item.opcoes), revisao: true, repetido: true });
-          repetidos.add(copia); itens.splice(Math.min(itens.length, i + 3), 0, copia);
+          repetidos.add(copia); revisoes.push(copia); itens.push(copia);
         }
+        // duas atividades seguidas com erro: a boia de ajuda chama a atenção
+        if (errou && !item.revisao) { dificeis++; if (dificeis >= 2) ajuda.classList.add('chama'); } else if (!errou) { dificeis = 0; ajuda.classList.remove('chama'); }
         await dormir(250);
       }
     } catch (e) {
       if (e && e.message === 'abortado') return;
       console.error(e); toast('Ops! Algo deu errado. Voltando ao mapa.'); Store.salvar(); return mapa();
     }
-    progresso(1);
+    passos.desenhar(itens, itens.length);
     if (opc.revisao) { Store.salvar(); toast('🔁 Revisão concluída!'); return mapa(); }
     const fim = Motor.concluirFase(p, idx, { ok, total: tot });
     const novas = Motor.verificarMedalhas(p);
@@ -324,7 +370,21 @@
     if (subiu) conquistas.append(el('div', { class: 'pilula' }, '⬆️ ', D.falas.novoNivel, ' ', D.niveis[Motor.nivel(p)].nome));
     novas.forEach((m) => conquistas.append(el('div', { class: 'pilula' }, m.emoji, ' ', m.nome)));
     if (fim.mundoConcluido) conquistas.append(el('button', { class: 'btn', type: 'button', onclick: () => certificado(f.mundo) }, '🎓 Certificado do Mundo ' + f.mundo));
-    tela(el('div', { class: 'resultado' }, el('h2', null, fim.dominada ? D.falas.faseFim : 'Você está quase lá!'), est, mascote({ humor: 'feliz', anim: 'danca' }), el('div', { class: 'acoes' }, ...msgs), conquistas, acoes));
+    // Quem pulou a avaliação e está indo muito bem: sugere o teste que pode liberar fases mais adiante
+    const ultimas = p.historicoFases.slice(-2);
+    const indoBem = p.avaliacao && p.avaliacao.pulada && ultimas.length >= 2 && ultimas.every((h) => h.prec >= 0.9);
+    const sugestao = indoBem ? el('div', { class: 'cartao-sugestao' }, el('b', null, '🚀 Está fácil?'), el('span', null, 'Faça o teste rápido: quem já sabe pode pular para fases mais adiante.'), el('button', { class: 'btn', type: 'button', onclick: () => avaliacaoInicial() }, '🚀 Fazer o teste')) : null;
+    // Fase ainda sem domínio depois de 2 tentativas: oferece caminhos de ajuda
+    const reg = p.fases[f.id] || {}; const tentativas = p.historicoFases.filter((h) => h.id === f.id).length;
+    let socorro = null;
+    if (!fim.dominada && tentativas >= 2) {
+      socorro = el('div', { class: 'cartao-sugestao ajuda' }, el('b', null, '🛟 Precisa de uma ajudinha?'), el('span', null, 'Tudo bem treinar mais. Escolha um jeito:'));
+      const bts = el('div', { class: 'acoes' });
+      bts.append(el('button', { class: 'btn', type: 'button', onclick: () => { const it = Motor.revisaoRapida(idx, p); jogarFase(idx, it.length ? { itens: it, revisao: true } : {}); } }, '🧠 Treinar só o que errei'));
+      if (idx > 0) bts.append(el('button', { class: 'btn', type: 'button', onclick: () => introFase(idx - 1) }, '⬅️ Voltar uma fase'));
+      socorro.append(bts, el('small', null, 'Dica para o adulto: joguem juntos, usando o 🐢 (devagar) e a 🛟 (ajuda) durante a fase.'));
+    }
+    tela(el('div', { class: 'resultado' }, el('h2', null, fim.dominada ? D.falas.faseFim : 'Você está quase lá!'), est, mascote({ humor: 'feliz', anim: 'danca' }), el('div', { class: 'acoes' }, ...msgs), conquistas, sugestao, socorro, acoes));
     Efeito.tocar('estrela'); setTimeout(() => Efeito.tocar(subiu ? 'nivel' : 'moeda'), 400);
     Confete.lancar(fim.estrelas * 40 + (subiu || fim.mundoConcluido ? 80 : 0));
     const segs = fim.dominada ? [S.fala('faseFim')] : [];
@@ -405,29 +465,50 @@
   // ======================================================================
   // ÁREA DOS PAIS (protegida por desafio para adultos)
   // ======================================================================
+  // Desafios para adultos, sorteados a cada entrada (antes era sempre uma multiplicação)
+  function desafioAdulto() {
+    const r = (a, b) => a + Math.floor(Math.random() * (b - a + 1));
+    const UN = ['', 'um', 'dois', 'três', 'quatro', 'cinco', 'seis', 'sete', 'oito', 'nove'], DZ = ['', '', 'vinte', 'trinta', 'quarenta', 'cinquenta', 'sessenta', 'setenta', 'oitenta', 'noventa'];
+    const tipos = [
+      () => { const a = r(6, 9), b = r(6, 9); return { p: `Quanto é ${a} × ${b}?`, r: a * b }; },
+      () => { const d = r(2, 9), u = r(1, 9); return { p: `Digite em algarismos: ${DZ[d]} e ${UN[u]}.`, r: d * 10 + u }; },
+      () => { const a = r(52, 98), b = r(13, 39); return { p: `Quanto é ${a} − ${b}?`, r: a - b }; },
+      () => { const ano = new Date().getFullYear(), id = r(25, 60); return { p: `Em que ano nasceu quem completa ${id} anos em ${ano}?`, r: ano - id }; },
+      () => { const a = r(3, 9), k = r(2, 5); return { p: `Qual é o próximo número? ${a}, ${a + k}, ${a + 2 * k}, ${a + 3 * k}, …`, r: a + 4 * k }; },
+      () => { const h = r(2, 9), m = r(1, 5) * 10; return { p: `Quantos minutos há em ${h} h ${m} min?`, r: h * 60 + m }; }
+    ];
+    return tipos[Math.floor(Math.random() * tipos.length)]();
+  }
   async function portaoPais() {
-    const a = 6 + Math.floor(Math.random() * 4), b = 6 + Math.floor(Math.random() * 4);
+    const d = desafioAdulto(); estado.respostaPortao = d.r; // gancho para testes automatizados
     const ok = await modal((fechar) => {
       const inp = el('input', { type: 'number', inputmode: 'numeric', 'aria-label': 'resposta' });
-      const confirmar = () => fechar(Number(inp.value) === a * b);
+      const confirmar = () => fechar(Number(inp.value) === d.r);
       inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') confirmar(); });
       setTimeout(() => inp.focus(), 50);
-      return [el('h2', null, '👪 Área dos Pais'), el('p', null, `Para adultos: quanto é ${a} × ${b}?`), inp, el('div', { class: 'acoes' }, el('button', { class: 'btn', type: 'button', onclick: () => fechar(false) }, 'Cancelar'), el('button', { class: 'btn pri', type: 'button', onclick: confirmar }, 'Entrar'))];
+      return [el('h2', null, '👪 Área dos Pais'), el('p', null, 'Para adultos: ', el('b', null, d.p)), inp, el('div', { class: 'acoes' }, el('button', { class: 'btn', type: 'button', onclick: () => fechar(false) }, 'Cancelar'), el('button', { class: 'btn pri', type: 'button', onclick: confirmar }, 'Entrar'))];
     });
-    if (ok) painelPais(); else if (ok === false) toast('Resposta incorreta.');
+    if (ok) painelPais(); else if (ok === false) toast('Resposta incorreta. Tente de novo: a pergunta muda a cada vez.');
   }
   function painelPais(abaInicial) {
+    if (abaInicial === 'audio' || abaInicial === 'autoteste') return painelTecnico(abaInicial);
+    painelAbas('👪 Área dos Pais', [['progresso', '📊 Progresso', abaProgresso], ['config', '⚙️ Configurações', abaConfig], ['dados', '👥 Perfis e dados', abaDados], ['sobre', 'ℹ️ Sobre', abaSobre]], abaInicial || 'progresso', () => (Store.perfil ? mapa() : perfis()), '✖ Sair');
+  }
+  // Área técnica: ferramentas de quem mantém o jogo (Banco de Áudio, autoteste, licenças). Fica fora do caminho dos pais.
+  function painelTecnico(abaInicial) {
+    painelAbas('🔧 Área técnica', [['audio', '🔊 Banco de Áudio', abaAudio], ['autoteste', '🧪 Autoteste', abaAutoteste], ['avancado', '🎚️ Voz e fases', abaAvancado], ['licencas', '📄 Licenças e versões', abaLicencas]], abaInicial || 'audio', () => painelPais('sobre'), '⬅ Área dos Pais');
+  }
+  function painelAbas(titulo, abas, inicial, aoSair, rotuloSair) {
     Som.parar(); estado.emJogo = false;
-    const abas = [['progresso', '📊 Progresso'], ['config', '⚙️ Configurações'], ['audio', '🔊 Banco de Áudio'], ['dados', '👥 Perfis e dados'], ['autoteste', '🧪 Autoteste'], ['sobre', 'ℹ️ Sobre']];
-    let atual = abaInicial || 'progresso';
+    let atual = abas.some((a) => a[0] === inicial) ? inicial : abas[0][0];
     const corpo = el('div');
     const barra = el('div', { class: 'abas', role: 'tablist' });
     const desenhar = () => {
       barra.innerHTML = ''; abas.forEach(([id, nome]) => { const b = el('button', { type: 'button', role: 'tab', 'aria-selected': String(id === atual) }, nome); b.onclick = () => { atual = id; desenhar(); }; barra.append(b); });
-      corpo.innerHTML = ''; ({ progresso: abaProgresso, config: abaConfig, audio: abaAudio, dados: abaDados, autoteste: abaAutoteste, sobre: abaSobre })[atual](corpo);
+      corpo.innerHTML = ''; abas.find((a) => a[0] === atual)[2](corpo);
     };
     desenhar();
-    tela(el('div', { class: 'painel' }, el('div', { class: 'hud cab-painel' }, el('h2', { style: { margin: 0 } }, '👪 Área dos Pais'), el('span', { class: 'esp' }), el('button', { class: 'btn mini', type: 'button', onclick: () => (Store.perfil ? mapa() : perfis()) }, '✖ Sair')), barra, corpo));
+    tela(el('div', { class: 'painel' }, el('div', { class: 'hud cab-painel' }, el('h2', { style: { margin: 0 } }, titulo), el('span', { class: 'esp' }), el('button', { class: 'btn mini', type: 'button', onclick: aoSair }, rotuloSair)), barra, corpo));
   }
   function abaProgresso(c) {
     const p = Store.perfil;
@@ -435,26 +516,51 @@
     const sel = el('select', { 'aria-label': 'perfil' }); Store.dados.perfis.forEach((x) => sel.append(el('option', { value: x.id, selected: x.id === p.id }, x.avatar + ' ' + x.nome)));
     sel.onchange = () => { Store.dados.atual = sel.value; Store.salvar(); c.innerHTML = ''; abaProgresso(c); };
     c.append(el('label', { class: 'linha' }, 'Criança: ', sel));
+    // ---- Resumo em linguagem comum ----
+    const NOME_SOM = { CODA_S: 'S no fim da sílaba (pasta)', CODA_Z: 'Z no fim (luz)', CODA_R: 'R no fim da sílaba (porta)', CODA_L: 'L no fim da sílaba (balde)', NASAL: 'M e N depois da vogal (campo, ponte)', CCV: 'duas consoantes juntas (prato, bloco)', R_FRACO: 'R fraco (arara)', R_FORTE: 'R forte (rato)', S_Z: 'S com som de Z (casa)', C_SUAVE: 'C com som de S (cebola)', G_SUAVE: 'G com som de J (gelo)', X_VARIOS: 'os sons do X', 'ÃO': 'ÃO (pão)' };
+    const nomeSom = (u) => NOME_SOM[u] || u.replace('_', ' ');
+    const calorTodos = Motor.mapaCalor(p);
+    const lista = (est) => calorTodos.filter((u) => u.estado === est).map((u) => nomeSom(u.u));
+    const dom = lista('domina'), trein = lista('progresso'), dif = lista('dificuldade');
+    let min7 = 0, dias7 = 0; for (let k = 6; k >= 0; k--) { const d = new Date(Motor.agora() - k * 864e5).toISOString().slice(0, 10); const v = Math.round((p.tempo[d] || 0) / 60); min7 += v; if (v > 0) dias7++; }
+    const concl = Object.values(p.fases).filter((x) => x.dominada).length;
+    const estr = Object.values(p.fases).reduce((a, x) => a + x.estrelas, 0);
+    const iprox = proximaFase(p); const fprox = D.fases[iprox]; const mprox = D.mundos[fprox.mundo - 1];
+    const juntar = (arr, max) => (arr.length > max ? arr.slice(0, max).join(', ') + ` e mais ${arr.length - max}` : arr.join(', '));
+    const cartao = (emoji, titulo, texto, classe) => el('div', { class: 'cartao-resumo ' + (classe || '') }, el('span', { class: 'fig' }, emoji), el('div', null, el('b', null, titulo), el('p', null, texto)));
+    let sugestao;
+    if (!min7) sugestao = `Que tal 10 minutos hoje? A próxima fase é "${fprox.nome}".`;
+    else if (dif.length) sugestao = `Joguem juntos a fase "${fprox.nome}", usando o 🐢 (devagar) e a 🛟 (ajuda). Vale reforçar: ${juntar(dif, 3)}.`;
+    else if (dias7 < 3) sugestao = `Sessões curtas e frequentes funcionam melhor: tente 10 minutos em 4 ou 5 dias da semana. Próxima fase: "${fprox.nome}".`;
+    else sugestao = `Está num bom ritmo. Próxima fase: "${fprox.nome}".`;
+    c.append(el('h3', null, `Como ${p.nome} está indo`), el('div', { class: 'resumo-pais' },
+      cartao('⏱️', 'Tempo de jogo', min7 ? `${min7} min nos últimos 7 dias, em ${dias7} ${dias7 === 1 ? 'dia' : 'dias'}.` : 'Ainda não jogou nos últimos 7 dias.'),
+      cartao('🗺️', 'Onde está', `Mundo ${mprox.id}, ${mprox.nome} (${mprox.conteudo}). ${concl} de ${D.fases.length} fases concluídas · ${estr} ⭐ · nível ${D.niveis[Motor.nivel(p)].nome}.`),
+      cartao('🟩', 'Já sabe bem', dom.length ? juntar(dom, 12) + '.' : 'Ainda juntando dados: os primeiros resultados aparecem depois de algumas fases com letras.', 'bom'),
+      cartao('🟨', 'Está treinando', trein.length ? juntar(trein, 12) + '.' : 'Nada em treino no momento.'),
+      dif.length ? cartao('🟥', 'Precisa de ajuda', juntar(dif, 12) + '.', 'atencao') : null,
+      cartao('💡', 'Sugestão para hoje', sugestao, 'dica')));
+    // ---- Detalhes (para quem quiser se aprofundar) ----
+    const det = el('details', { class: 'detalhes-pais' }, el('summary', null, '🔎 Ver detalhes (gráficos e números)'));
+    c.append(det); c = det;
     // tempo por dia (14 dias)
     const barras = el('div', { class: 'barras', 'aria-label': 'minutos por dia' });
     let max = 1; const dias = []; for (let k = 13; k >= 0; k--) { const d = new Date(Motor.agora() - k * 864e5).toISOString().slice(0, 10); const v = Math.round((p.tempo[d] || 0) / 60); dias.push([d, v]); max = Math.max(max, v); }
     dias.forEach(([d, v]) => barras.append(el('div', { style: { height: Math.max(2, v / max * 100) + '%' }, title: `${d}: ${v} min` }, el('span', null, d.slice(8)))));
-    const concl = Object.values(p.fases).filter((x) => x.dominada).length;
-    const estr = Object.values(p.fases).reduce((a, x) => a + x.estrelas, 0);
-    c.append(el('h3', null, '⏱️ Minutos por dia (últimos 14 dias)'), barras, el('p', { style: { marginTop: '1.6em' } }, `Fases concluídas com domínio: ${concl}/${D.fases.length} · Estrelas: ${estr} · Nível: ${D.niveis[Motor.nivel(p)].nome} (${p.xp} XP) · Moedas: ${p.moedas}`));
+    c.append(el('h3', null, '⏱️ Minutos por dia (últimos 14 dias)'), barras, el('p', { style: { marginTop: '1.6em' } }, `XP: ${p.xp} · Moedas: ${p.moedas} · Pedidos de ajuda (🛟): ${p.stats.ajudas || 0}`));
     // mapa de calor
     const calor = el('div', { class: 'calor' });
     Motor.mapaCalor(p).forEach((u) => calor.append(el('div', { class: 'c-' + u.estado, title: `${u.u}: ${u.p === null ? 'sem dados' : Math.round(u.p * 100) + '% nas últimas tentativas'} (${u.n})` }, u.u.replace('_', ' '), el('br'), u.p === null ? '—' : Math.round(u.p * 100) + '%')));
-    c.append(el('h3', null, '🔥 Mapa de calor dos sons e regras'), el('p', null, '🟩 domina (≥ 85% nas últimas 10) · 🟨 em progresso · 🟥 com dificuldade (< 60%) · ⬜ ainda não praticado'), calor);
+    c.append(el('h3', null, '🔥 Cada som e cada regra'), el('p', null, 'Percentual de acertos nas últimas tentativas. 🟩 sabe bem (85% ou mais) · 🟨 treinando · 🟥 com dificuldade (menos de 60%) · ⬜ ainda não praticou'), calor);
     // pares confundidos
     const conf = Object.entries(p.confDir || {}).sort((a, b) => b[1] - a[1]);
-    c.append(el('h3', null, '👯 Pares mínimos mais confundidos'), conf.length ? el('ul', null, ...conf.slice(0, 8).map(([k, v]) => el('li', null, `${k.replace('→', ' foi trocado por ')}: ${v}×`))) : el('p', null, 'Nenhuma confusão registrada.'));
+    c.append(el('h3', null, '👯 Sons parecidos que mais confunde (como F e V, P e B)'), conf.length ? el('ul', null, ...conf.slice(0, 8).map(([k, v]) => el('li', null, `${k.replace('→', ' foi trocado por ')}: ${v}×`))) : el('p', null, 'Nenhuma confusão registrada.'));
     // tempo médio de resposta (automatização)
     const tr = Object.entries(p.tr || {}).map(([t, arr]) => [t, arr.length ? Math.round(arr.reduce((a, b) => a + b, 0) / arr.length / 100) / 10 : 0]);
-    c.append(el('h3', null, '⚡ Tempo médio de resposta (acertos) — queda indica automatização'), tr.length ? el('ul', null, ...tr.map(([t, s]) => el('li', null, `${t}: ${s} s`))) : el('p', null, 'Sem dados ainda.'));
+    c.append(el('h3', null, '⚡ Tempo médio para responder (quando cai, a leitura está ficando automática)'), tr.length ? el('ul', null, ...tr.map(([t, s]) => el('li', null, `${t}: ${s} s`))) : el('p', null, 'Sem dados ainda.'));
     // revisão espaçada
     const cx = [0, 0, 0, 0, 0]; let venc = 0; Object.values(p.leit).forEach((e) => { cx[e.cx]++; if (e.prox <= Motor.agora()) venc++; });
-    c.append(el('h3', null, '🗂️ Revisão espaçada (caixas de Leitner: 1, 2, 4 e 7 dias)'), el('p', null, `Caixa 1: ${cx[1]} · Caixa 2: ${cx[2]} · Caixa 3: ${cx[3]} · Caixa 4: ${cx[4]} · Vencidos hoje: ${venc}`));
+    c.append(el('h3', null, '🗂️ Revisão programada'), el('p', null, `O jogo traz de volta o que a criança errou depois de 1, 2, 4 e 7 dias. Para rever hoje: ${venc} · amanhã: ${cx[1]} · em 2 dias: ${cx[2]} · em 4 dias: ${cx[3]} · em 7 dias: ${cx[4]}.`));
     // álbum
     const alb = Object.keys(p.album).filter((k) => p.album[k] >= 2);
     c.append(el('h3', null, `📒 Palavras do álbum (${alb.length})`), el('p', null, alb.join(', ') || '—'));
@@ -481,14 +587,11 @@
     Som.vozes.forEach((v, i) => sel.append(el('option', { value: v.name, selected: v.name === cfg.voz }, `${i === 0 ? '⭐ ' : ''}${v.name} (${v.lang})${/natural|neural|online|google/i.test(v.name) ? ' — natural' : ''}`)));
     sel.onchange = () => { cfg.voz = sel.value; salvar(); Som.carregarVozes(); };
     const testar = el('button', { class: 'btn mini', type: 'button' }, '▶ Testar'); testar.onclick = () => Som.falar([S.f('Oi! Eu sou a Lili. Vamos ler brincando?')]);
-    c.append(el('h3', null, '🗣️ Voz'), Som.avisoVoz ? el('p', { class: 'aviso' }, '⚠️ ', Som.avisoVoz) : null,
-      el('p', null, Som.manifest ? '✅ Banco de Áudio instalado: os sons principais vêm do banco. A voz abaixo só é usada para textos fora do banco.' : '⚠️ Banco de Áudio não encontrado: o jogo usa a voz do navegador e a síntese dos fonemas contínuos.'),
+    // o aviso de voz só aparece quando ela é realmente necessária (sem o Banco de Áudio)
+    c.append(el('h3', null, '🗣️ Voz'), !Som.manifest && Som.avisoVoz ? el('p', { class: 'aviso' }, '⚠️ ', Som.avisoVoz) : null,
+      el('p', null, Som.manifest ? '✅ As vozes do jogo já vêm instaladas. A voz do aparelho só é usada em poucos textos extras.' : '⚠️ As vozes gravadas não foram encontradas: o jogo está usando a voz do aparelho.'),
       el('label', { class: 'linha' }, 'Voz do navegador: ', sel, testar), faixa('taxa', 'Velocidade da voz do navegador (0,95 = calma)', 0.7, 1.15, 0.05), faixa('volVoz', 'Volume da voz', 0.2, 1, 0.1),
-      chk('karaokePalavraAPalavra', 'Karaokê palavra por palavra (mais pausado; desmarcado = frase inteira com entonação natural)'),
-      faixa('respiroMs', 'Intervalo entre um som e outro (ms)', 0, 400, 30),
-      (() => { const s = el('select', { 'aria-label': 'som dos fonemas' }, ...[['auto', 'Automático'], ['alongado', 'Som alongado (mmmm) — melhor com vozes naturais'], ['silaba', 'Sílaba de apoio (má)'], ['sintese', 'Som sintético (Web Audio)']].map(([v, t]) => el('option', { value: v, selected: (cfg.fonemaModo || 'auto') === v }, t)));
-        s.onchange = () => { cfg.fonemaModo = s.value; salvar(); }; const tb = el('button', { class: 'btn mini', type: 'button' }, '▶ M, S, VE'); tb.onclick = () => Som.falar([S.fon('M'), S.pausa(400), S.fon('S'), S.pausa(400), S.s('VE')]);
-        return el('label', { class: 'linha' }, 'Fonemas sem Banco de Áudio: ', s, tb); })());
+      chk('karaokePalavraAPalavra', 'Nas histórias, destacar palavra por palavra (mais pausado)'));
     c.append(el('h3', null, '🖼️ Figuras'), (() => { const s = el('select', { 'aria-label': 'nomes das figuras' }, ...[['auto', 'Automático: nome sempre visível, exceto quando revelaria a resposta (aparece depois de responder)'], ['sempre', 'Sempre mostrar o nome (ajuda o adulto; pode facilitar a leitura)'], ['nunca', 'Nunca mostrar (só a figura)']].map(([v, t]) => el('option', { value: v, selected: (cfg.nomesFiguras || 'auto') === v }, t)));
         s.onchange = () => { cfg.nomesFiguras = s.value; salvar(); }; return el('label', { class: 'linha' }, 'Nome embaixo das figuras: ', s); })());
     c.append(el('h3', null, '🔤 Letras'), el('label', { class: 'linha' }, 'Tipo de letra: ', (() => { const s = el('select', { 'aria-label': 'tipo de letra' }, el('option', { value: 'alta', selected: cfg.caixa === 'alta' }, 'LETRA BASTÃO (CAIXA ALTA)'), el('option', { value: 'baixa', selected: cfg.caixa === 'baixa' }, 'minúsculas')); s.onchange = () => { cfg.caixa = s.value; salvar(); }; return s; })()), el('p', null, 'A partir do Mundo 6, as duas formas aparecem lado a lado.'));
@@ -504,13 +607,20 @@
     c.append(el('h3', null, '🎤 Microfone (desligado por padrão)'), micBox);
     c.append(el('h3', null, '⏳ Tempo'), faixa('limiteSessaoMin', 'Sugerir pausa após (min)', 10, 40, 5), faixa('limiteDiaMin', 'Limite diário sugerido (min)', 10, 90, 5), chk('manterTela', 'Manter a tela ligada durante o jogo (Wake Lock)', () => manterTela()));
     c.append(el('h3', null, '♿ Acessibilidade'), chk('altoContraste', 'Modo de alto contraste'), chk('menosEstimulos', 'Menos estímulos visuais (sem animações, decorações e confete)'));
-    // liberar fases
+  }
+  // Ajustes finos de voz e liberação manual de fases (Área técnica)
+  function abaAvancado(c) {
+    const cfg = Store.cfg; const salvar = () => { Store.salvar(); aplicarModos(); };
+    const faixa = (campo, rotulo, min, max, passo) => { const i = el('input', { type: 'range', min, max, step: passo, value: cfg[campo], 'aria-label': rotulo }); const v = el('span', null, String(cfg[campo])); i.oninput = () => { cfg[campo] = Number(i.value); v.textContent = i.value; salvar(); }; return el('label', { class: 'linha' }, rotulo, i, v); };
+    const s = el('select', { 'aria-label': 'som dos fonemas' }, ...[['auto', 'Automático'], ['alongado', 'Som alongado (mmmm) — melhor com vozes naturais'], ['silaba', 'Sílaba de apoio (má)'], ['sintese', 'Som sintético (Web Audio)']].map(([v, t]) => el('option', { value: v, selected: (cfg.fonemaModo || 'auto') === v }, t)));
+    s.onchange = () => { cfg.fonemaModo = s.value; salvar(); }; const tb = el('button', { class: 'btn mini', type: 'button' }, '▶ M, S, VE'); tb.onclick = () => Som.falar([S.fon('M'), S.pausa(400), S.fon('S'), S.pausa(400), S.s('VE')]);
+    c.append(el('h3', null, '🎚️ Ajustes finos da voz'), Som.avisoVoz ? el('p', { class: 'aviso' }, '⚠️ ', Som.avisoVoz) : null, faixa('respiroMs', 'Intervalo entre um som e outro (ms)', 0, 400, 30), el('label', { class: 'linha' }, 'Fonemas sem Banco de Áudio: ', s, tb));
     const p = Store.perfil;
     if (p) {
-      const s = el('select', { 'aria-label': 'fase' }); D.fases.forEach((f) => s.append(el('option', { value: f.id }, `${f.id} — ${f.nome}`)));
+      const sf = el('select', { 'aria-label': 'fase' }); D.fases.forEach((f) => sf.append(el('option', { value: f.id }, `${f.id} — ${f.nome}`)));
       const lib = el('button', { class: 'btn mini', type: 'button' }, '🔓 Liberar até esta fase');
-      lib.onclick = () => { const alvo = D.fases.findIndex((f) => f.id === s.value); for (let i = 0; i <= alvo; i++) if (!p.liberadas.includes(D.fases[i].id)) p.liberadas.push(D.fases[i].id); Store.salvar(); toast('Fases liberadas.'); };
-      c.append(el('h3', null, '🔓 Liberar fases manualmente'), el('label', { class: 'linha' }, s, lib));
+      lib.onclick = () => { const alvo = D.fases.findIndex((f) => f.id === sf.value); for (let i = 0; i <= alvo; i++) if (!p.liberadas.includes(D.fases[i].id)) p.liberadas.push(D.fases[i].id); Store.salvar(); toast('Fases liberadas.'); };
+      c.append(el('h3', null, `🔓 Liberar fases manualmente (${p.nome})`), el('label', { class: 'linha' }, sf, lib));
     }
   }
   function abaAudio(c) {
@@ -578,9 +688,23 @@
     if (DEBUG) rodar.click();
   }
   function abaSobre(c) {
-    c.append(el('h3', null, 'Ler Brincando ' + D.versao), el('p', null, 'Jogo de alfabetização pelo método fônico sistemático e explícito, com consciência fonológica. Sem anúncios, sem compras, sem rastreadores. O progresso fica só neste aparelho.'),
-      el('h3', null, 'Créditos e licenças'), el('ul', null, ...D.creditos.map((x) => el('li', null, x))),
-      el('h3', null, 'Registro de alterações'), el('ul', null, ...D.changelog.map((x) => el('li', null, x))));
+    c.append(el('h3', null, 'Ler Brincando ' + D.versao),
+      el('p', null, 'Jogo para aprender a ler em português, do som para a letra (método fônico), feito para crianças de 5 a 7 anos.'),
+      el('h3', null, '🔒 Privacidade'), el('ul', null,
+        el('li', null, 'Não tem anúncios, compras nem rastreadores.'),
+        el('li', null, 'O progresso fica guardado só neste aparelho. Para não perder ao trocar de celular, use "Perfis e dados" → Exportar.'),
+        el('li', null, 'O microfone vem desligado. Só um adulto pode ligar, em Configurações.')),
+      el('h3', null, '💡 Como aproveitar melhor'), el('ul', null,
+        el('li', null, 'Sessões curtas, de 10 a 15 minutos, em vários dias da semana.'),
+        el('li', null, 'Fique por perto nas primeiras fases e deixe o som ligado: as instruções são faladas.'),
+        el('li', null, 'Na fase, 🔊 repete o pedido, 🐢 fala devagar, 🛟 dá uma ajuda e ⏩ adianta a fala.')),
+      el('h3', null, 'Créditos'), el('ul', null, ...D.creditos.map((x) => el('li', null, x))),
+      el('h3', null, 'O que mudou'), el('ul', null, ...D.changelog.slice(0, 3).map((x) => el('li', null, x))));
+    if (Store.dados && document.querySelector('.painel')) c.append(el('p', null, el('button', { class: 'btn mini', type: 'button', onclick: () => painelTecnico() }, '🔧 Área técnica (para quem mantém o jogo)')));
+  }
+  function abaLicencas(c) {
+    c.append(el('h3', null, '📄 Licenças e notas para publicação'), el('ul', null, ...(D.creditosTecnicos || []).map((x) => el('li', null, x))),
+      el('h3', null, 'Registro completo de alterações'), el('ul', null, ...D.changelog.map((x) => el('li', null, x))));
   }
   function sobreModal() { modal((fechar) => { const d = el('div', { style: { textAlign: 'left' } }); abaSobre(d); return [d, el('button', { class: 'btn pri', type: 'button', onclick: () => fechar() }, 'OK')]; }, { fecharFora: true }); }
 
@@ -629,6 +753,6 @@
   // (o zoom por toque duplo é impedido pelo CSS touch-action: manipulation; não descartar toques rápidos,
   //  senão palmas no tambor e o botão Pronto deixam de responder no celular)
 
-  window.Cenas = { inicio, perfis, mapa, jogarFase, introFase, painelPais, portaoPais, avaliacaoInicial };
+  window.Cenas = { inicio, perfis, mapa, jogarFase, introFase, painelPais, painelTecnico, portaoPais, avaliacaoInicial };
   inicio();
 })();

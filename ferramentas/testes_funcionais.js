@@ -36,7 +36,7 @@ const ok = (id, nome, cond, det) => r.push({ id, nome, status: cond ? 'APROVADO'
 // T09 — o progresso é registrado item a item (o jogo salva no localStorage após cada item)
 { const g = fs.readFileSync(__dirname + '/../cenas.js', 'utf8'); ok('T09', 'Fechar no meio da fase', /Motor\.registrar\(p, item, r\);[\s\S]{0,200}Store\.salvar\(\)/.test(g) && /pagehide/.test(g), 'Store.salvar() após cada item registrado + no pagehide/visibilitychange'); }
 // T18 — desafio para adultos
-{ const g = fs.readFileSync(__dirname + '/../cenas.js', 'utf8'); ok('T18', 'Acesso à Área dos Pais', /quanto é \$\{a\} × \$\{b\}/.test(g), 'Multiplicação de 6–9 × 6–9 exigida para abrir o painel'); }
+{ const g = fs.readFileSync(__dirname + '/../cenas.js', 'utf8'); const n = (g.match(/return \{ p: `/g) || []).length; ok('T18', 'Acesso à Área dos Pais', /function desafioAdulto/.test(g) && n >= 4 && /Number\(inp\.value\) === d\.r/.test(g), `Desafio para adultos sorteado entre ${n} tipos de pergunta para abrir o painel`); }
 // Adaptatividade: 3 erros seguidos reduzem as opções
 { const p = M.novoPerfil('d'); const f = D.fases.findIndex((x) => x.id === '5.5'); let it; for (let k = 0; k < 3; k++) { it = M.G.leiaEncontre(D.fases[f], { perfil: p }); M.registrar(p, it, { ok: false, tent: 2, final: true }); }
   const depois = M.G.leiaEncontre(D.fases[f], { perfil: p });

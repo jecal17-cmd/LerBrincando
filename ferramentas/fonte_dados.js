@@ -1,7 +1,7 @@
 /* Fonte de dados do Ler Brincando (editável). Rode:  node ferramentas/construir_dados.js
    para gerar data.js (JSON) com os campos derivados e verificados. */
 module.exports = {
-  versao: '1.2.6',
+  versao: '1.3.0',
 
   // ------------------------------------------------------------------ MUNDOS
   mundos: [
@@ -645,6 +645,14 @@ module.exports = {
 
   // ------------------------------------------------------------------ CRÉDITOS / LICENÇAS / CHANGELOG
   creditos: [
+    'Figuras: OpenMoji, o projeto de emojis de código aberto (openmoji.org), licença CC BY-SA 4.0.',
+    'Vozes: vozes neurais em português do Brasil (Francisca e Thalita, da Microsoft).',
+    'Letras: fontes Andika (SIL International) e Baloo 2, licença SIL Open Font 1.1.',
+    'Efeitos sonoros, música e confete: feitos pelo próprio jogo.',
+    'Personagens, histórias e textos: originais, criados para este jogo.'
+  ],
+  // Notas completas de licença e de publicação: aparecem só na Área técnica
+  creditosTecnicos: [
     'Imagens: OpenMoji — o projeto de emojis de código aberto (https://openmoji.org), licença CC BY-SA 4.0, incluídas no jogo (pasta imagens/). Emojis nativos do sistema são usados como alternativa.',
     'Vozes do Banco de Áudio: vozes neurais Microsoft (pt-BR Francisca; Thalita nas sílabas com NH) geradas com Azure Speech (sílabas e fonemas) e com a biblioteca livre edge-tts (palavras, frases e histórias), ou Kokoro-82M (Apache-2.0) offline. Para publicar o app numa loja, gere com Azure Speech (--motor azure) ou Kokoro.',
     'Imagens reserva: Twemoji (jdecked/twemoji), licença CC BY 4.0.',
@@ -655,6 +663,7 @@ module.exports = {
     'Personagens, histórias e textos: originais, criados para este jogo.'
   ],
   changelog: [
+    '1.3.0 — Mais fácil de acompanhar: cada atividade mostra na tela o que fazer; a fase tem bolinhas de progresso, botão de ajuda (🛟) e de adiantar a fala (⏩); as revisões ficam para o fim da fase. Área dos Pais com resumo em linguagem simples, entrada com perguntas variadas e Área técnica separada.',
     '1.2.6 — Sons: AN, AM, EN e o som do Ã estavam mudos e foram refeitos; as sílabas com NH (NHA, NHO, NHÃ, NHÃO...) e o som do NH agora usam a voz Thalita, que pronuncia o NH corretamente.',
     '1.2.5 — Sons do M, N, L, F, V, S, Z, J e X refeitos: agora a própria voz fala a consoante prolongada, sem o recorte esticado que deixava o som metálico.',
     '1.2.4 — Sons: as sílabas com G (GA, GO, GU, GUE, GUI, GUA, GRE, GLO...) saíam sem a consoante; foram refeitas.',
