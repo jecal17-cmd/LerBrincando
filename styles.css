@@ -455,3 +455,44 @@ body.menos-estimulos #cenario * { animation: none !important; }
 .tela-inicio .mascote.falando { animation: flutua 1.4s ease-in-out infinite; }
 @keyframes aparece { from { opacity: 0; transform: translateY(8px); } }
 @media (prefers-reduced-motion: reduce) { .tela-inicio .mascote.falando, .bolha-intro { animation: none; } }
+
+/* ===== v1.3.0: instruções visíveis, passos da fase, ajuda, resumo para os pais ===== */
+.dica-tarefa { display: inline-flex; align-items: center; gap: .45em; font-family: var(--fonte-ui); font-weight: 800; font-size: 1.05rem; color: var(--pri2); background: #fff; border: 2px solid #fff; border-radius: 999px; padding: .3em .9em; box-shadow: 0 4px 0 #d5dcef; cursor: pointer; max-width: 100%; }
+.dica-tarefa .ico { font-size: 1.3em; line-height: 1; }
+.dica-tarefa .ouv { opacity: .55; font-size: .9em; }
+.passos { flex: 1; min-width: 0; display: flex; align-items: center; gap: 4px; padding: 0 2px; }
+.passos > i { flex: 1 1 0; max-width: 22px; min-width: 5px; height: 14px; border-radius: 999px; background: #e6ebf7; border: 2px solid #fff; box-sizing: border-box; position: relative; overflow: hidden; }
+.passos > i.feito { background: #4cd07d; }
+.passos > i.atual { background: #ffe08a; border-color: #f2b33d; height: 20px; }
+.passos > i.rev { background: #dfe3ff; } .passos > i.rev.feito { background: #8f9bff; } .passos > i.rev.atual { background: #ffe08a; }
+.barra-jogo .btn.redondo { flex: 0 0 auto; }
+@media (max-width: 420px) { .barra-jogo { gap: .25rem; } .barra-jogo .btn.redondo { width: 46px; height: 46px; font-size: 1.15rem; } .barra-jogo .mascote { display: none; } }
+.btn.ajuda.chama { animation: chamaAjuda 1s ease-in-out infinite; box-shadow: 0 0 0 4px #ffd35c, 0 4px 0 #d5dcef; }
+@keyframes chamaAjuda { 50% { transform: scale(1.14); } }
+.com-rotulo { display: inline-flex; flex-direction: column; align-items: center; gap: 2px; }
+.com-rotulo .rot { font-family: var(--fonte-ui); font-weight: 800; font-size: .7rem; color: var(--pri2); background: rgba(255,255,255,.85); border-radius: 999px; padding: 0 .5em; line-height: 1.4; }
+button.pilula { cursor: pointer; font: inherit; font-weight: 800; }
+@media (max-width: 420px) { .nome-nivel { display: none; } }
+.guia { display: flex; flex-direction: column; gap: .5rem; text-align: left; width: 100%; }
+.guia-linha { display: flex; align-items: center; gap: .7rem; background: #f4f7ff; border-radius: 16px; padding: .45rem .7rem; }
+.guia-linha .fig { font-size: 1.7rem; width: 2.2rem; text-align: center; flex: 0 0 auto; }
+.cartao-sugestao { display: flex; flex-direction: column; align-items: center; gap: .4rem; background: #fff; border: 3px solid #ffd35c; border-radius: 20px; padding: .7rem 1rem; max-width: 460px; text-align: center; box-shadow: 0 4px 0 #d5dcef; }
+.cartao-sugestao.ajuda { border-color: #8fc7ff; }
+.cartao-sugestao small { color: #55607a; }
+.resumo-pais { display: grid; gap: .6rem; }
+.cartao-resumo { display: flex; gap: .7rem; align-items: flex-start; background: #fff; border-radius: 16px; padding: .7rem .9rem; box-shadow: var(--sombra); border-left: 6px solid #c9d3ee; }
+.cartao-resumo .fig { font-size: 1.6rem; line-height: 1.2; flex: 0 0 auto; }
+.cartao-resumo p { margin: .15em 0 0; }
+.cartao-resumo.bom { border-left-color: #4cd07d; } .cartao-resumo.atencao { border-left-color: #ef6a5b; } .cartao-resumo.dica { border-left-color: #f2b33d; background: #fffaf0; }
+.detalhes-pais { margin-top: 1rem; background: rgba(255,255,255,.6); border-radius: 16px; padding: .4rem .8rem; }
+.detalhes-pais > summary { cursor: pointer; font-weight: 800; padding: .5rem 0; }
+@media (prefers-reduced-motion: reduce) { .btn.ajuda.chama { animation: none; } }
+.passos > i.atual::after { content: ""; position: absolute; inset: 0 auto 0 0; width: var(--parte, 0%); background: #4cd07d; }
+.passos > i:only-child, .passos > i:first-child:nth-last-child(-n+4), .passos > i:first-child:nth-last-child(-n+4) ~ i { max-width: none; }
+/* barra da fase: botões em cima, bolinhas de progresso numa linha própria embaixo */
+.barra-jogo { flex-wrap: wrap; justify-content: space-between; }
+.barra-jogo .passos { order: 9; flex: 1 0 100%; padding: 2px 4px 0; }
+/* topo do mapa numa linha só, mesmo no celular */
+@media (max-width: 420px) { .hud:not(.cab-painel) { flex-wrap: nowrap; gap: .3rem; } .hud:not(.cab-painel) .pilula { padding: .3em .6em; } .hud .com-rotulo .btn.redondo { width: 52px; height: 52px; } }
+.guia-linha { font-size: .95rem; padding: .3rem .6rem; line-height: 1.25; }
+.guia { max-height: 58vh; overflow: auto; }

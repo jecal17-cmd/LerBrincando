@@ -1,4 +1,16 @@
-# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.2.2
+# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.3.0
+
+> **Novidades da v1.3.0** (a partir da avaliação de usuário novo)
+> - **Instrução na tela:** cada atividade mostra uma etiqueta curta com o que fazer (toque nela para ouvir de novo); a avaliação inicial ganhou botão de ouvir.
+> - **Topo do mapa com nomes** (Baú, Menu) e uma apresentação dos botões na primeira visita.
+> - **Teste para pular fases:** quem pulou a avaliação e acerta 90% ou mais em duas fases seguidas recebe o convite na tela de resultado.
+> - **Adiantar (⏩):** corta a fala em andamento; a abertura da avaliação tem "Vamos lá!".
+> - **Ritmo:** os itens errados voltam só no fim da fase, como revisão (no máximo 3).
+> - **Bolinhas de progresso:** uma por atividade, no lugar da barra.
+> - **Ajuda (🛟):** repete o pedido devagar e tira uma opção errada; chama a atenção depois de dois erros seguidos. Na tela de resultado, depois de duas tentativas sem domínio, aparecem "Treinar só o que errei" e "Voltar uma fase".
+> - **Área dos Pais:** resumo em linguagem simples ("Já sabe bem", "Está treinando", "Precisa de ajuda", "Sugestão para hoje"), detalhes recolhidos, Sobre revisado e entrada com perguntas sorteadas de vários tipos.
+> - **Área técnica** separada (Banco de Áudio, Autoteste, ajustes finos de voz, liberar fases, licenças), acessível pelo Sobre.
+>
 
 > **Novidades da v1.2.2**
 > - **Tela de perfis no celular:** os botões não saem mais da tela (2 colunas em pé, 4 deitado) e a fala de boas-vindas da Lili termina antes de "Toque na sua figura" começar.

@@ -182,6 +182,7 @@
     palco.append(visor, grade);
     const certoBtn = botoes.find((x) => x.o.id === item.certo).b;
     estado.esperado = item.certo; // gancho para testes automatizados
+    certoBtn.dataset.certa = '1'; // usado pelo botão de ajuda (🛟) para tirar uma opção errada, nunca a certa
     // apoio de áudio extra quando o nível de ajuste está alto
     const apoio = Motor.nivelApoio(Store.perfil, item.tipo);
     if (item.guiado || ctx.demo) {
