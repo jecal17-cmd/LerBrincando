@@ -1,7 +1,7 @@
 /* Ler Brincando — data.js (GERADO por ferramentas/construir_dados.js — edite a fonte e rode o script)
    Banco de palavras, fases, histórias, elogios, falas e regras. Formato JSON para o gerar_audios.py ler. */
 window.DADOS = {
- "versao": "1.3.0",
+ "versao": "1.3.1",
  "mundos": [
   {
    "id": 1,
@@ -3157,6 +3157,7 @@ window.DADOS = {
   "Personagens, histórias e textos: originais, criados para este jogo."
  ],
  "changelog": [
+  "1.3.1 — Ícone novo: a corujinha Lili dourada com letras coloridas, no app, na tela de abertura e na versão web.",
   "1.3.0 — Mais fácil de acompanhar: cada atividade mostra na tela o que fazer; a fase tem bolinhas de progresso, botão de ajuda (🛟) e de adiantar a fala (⏩); as revisões ficam para o fim da fase. Área dos Pais com resumo em linguagem simples, entrada com perguntas variadas e Área técnica separada.",
   "1.2.6 — Sons: AN, AM, EN e o som do Ã estavam mudos e foram refeitos; as sílabas com NH (NHA, NHO, NHÃ, NHÃO...) e o som do NH agora usam a voz Thalita, que pronuncia o NH corretamente.",
   "1.2.5 — Sons do M, N, L, F, V, S, Z, J e X refeitos: agora a própria voz fala a consoante prolongada, sem o recorte esticado que deixava o som metálico.",
@@ -3579,5 +3580,5 @@ window.DADOS = {
   "H": 77,
   "X_VARIOS": 77
  },
- "geradoEm": "2026-11-11T18:09:16.105Z"
+ "geradoEm": "2026-11-12T00:03:39.519Z"
 };
