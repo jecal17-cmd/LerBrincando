@@ -1,4 +1,6 @@
-# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.3.0
+# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.3.1
+
+> **Novidade da v1.3.1:** ícone novo (a Lili dourada com letras coloridas). A arte fica em `icones/arte-icone.png`; para gerar de novo todos os tamanhos do Android, a tela de abertura e os ícones da web, rode `python ferramentas/gerar_icones_arte.py icones/arte-icone.png android/app/src/main/res --cor '#7FD6F5' --web icones/icone-192.png icones/icone-512.png --loja loja/icone-512.png`.
 
 > **Novidades da v1.3.0** (a partir da avaliação de usuário novo)
 > - **Instrução na tela:** cada atividade mostra uma etiqueta curta com o que fazer (toque nela para ouvir de novo); a avaliação inicial ganhou botão de ouvir.

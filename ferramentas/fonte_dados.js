@@ -1,7 +1,7 @@
 /* Fonte de dados do Ler Brincando (editável). Rode:  node ferramentas/construir_dados.js
    para gerar data.js (JSON) com os campos derivados e verificados. */
 module.exports = {
-  versao: '1.3.0',
+  versao: '1.3.1',
 
   // ------------------------------------------------------------------ MUNDOS
   mundos: [
@@ -663,6 +663,7 @@ module.exports = {
     'Personagens, histórias e textos: originais, criados para este jogo.'
   ],
   changelog: [
+    '1.3.1 — Ícone novo: a corujinha Lili dourada com letras coloridas, no app, na tela de abertura e na versão web.',
     '1.3.0 — Mais fácil de acompanhar: cada atividade mostra na tela o que fazer; a fase tem bolinhas de progresso, botão de ajuda (🛟) e de adiantar a fala (⏩); as revisões ficam para o fim da fase. Área dos Pais com resumo em linguagem simples, entrada com perguntas variadas e Área técnica separada.',
     '1.2.6 — Sons: AN, AM, EN e o som do Ã estavam mudos e foram refeitos; as sílabas com NH (NHA, NHO, NHÃ, NHÃO...) e o som do NH agora usam a voz Thalita, que pronuncia o NH corretamente.',
     '1.2.5 — Sons do M, N, L, F, V, S, Z, J e X refeitos: agora a própria voz fala a consoante prolongada, sem o recorte esticado que deixava o som metálico.',
