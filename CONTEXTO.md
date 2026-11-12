@@ -26,6 +26,7 @@ Atualizado em 12/11/2026.
   python ferramentas/gerar_icones_arte.py icones/arte-icone.png android/app/src/main/res --cor '#7FD6F5' --web icones/icone-192.png icones/icone-512.png --loja loja/icone-512.png
   ```
 
+  A arte traz a própria moldura sobre um fundo escuro; o script apaga esse fundo e encaixa a coruja inteira em cada formato, sem cortes (no ícone adaptativo, dentro do círculo seguro de 66 dp).
   O antigo `gerar_icones_android.js` agora só gera a imagem de destaque da loja.
 - **APK:** aba **Actions → App Android → Run workflow** (não roda sozinho a cada push). O guia da Play Store está no `ANDROID.md`.
 - **Pendências:**

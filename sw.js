@@ -1,5 +1,5 @@
 /* Ler Brincando — Service Worker: funciona offline após o primeiro acesso (PWA) */
-const VERSAO = 'lb-v1.3.1';
+const VERSAO = 'lb-v1.3.1-icone2';
 const NUCLEO = ['./', 'index.html', 'styles.css', 'nucleo.js', 'data.js', 'motor.js', 'validadores.js', 'game.js', 'minijogos.js', 'cenas.js', 'visual.js',
   'manifest.webmanifest', 'icones/icone.svg', 'icones/icone-192.png', 'icones/icone-512.png',
   'fontes/fontes.css', 'fontes/andika-latin-400-normal.woff2', 'fontes/andika-latin-700-normal.woff2',
