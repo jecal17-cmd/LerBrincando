@@ -1,7 +1,7 @@
 /* Ler Brincando — data.js (GERADO por ferramentas/construir_dados.js — edite a fonte e rode o script)
    Banco de palavras, fases, histórias, elogios, falas e regras. Formato JSON para o gerar_audios.py ler. */
 window.DADOS = {
- "versao": "1.3.1",
+ "versao": "1.3.2",
  "mundos": [
   {
    "id": 1,
@@ -3580,5 +3580,5 @@ window.DADOS = {
   "H": 77,
   "X_VARIOS": 77
  },
- "geradoEm": "2026-11-12T00:03:39.519Z"
+ "geradoEm": "2026-11-13T19:34:13.824Z"
 };

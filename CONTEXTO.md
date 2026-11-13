@@ -17,6 +17,7 @@ Atualizado em 12/11/2026.
     - resumo do progresso para os pais;
     - portão dos pais com perguntas sorteadas.
   - **v1.3.1:** ícone novo (a Lili dourada com letras).
+  - **v1.3.2:** ícone sem cortes (coruja inteira com a moldura) e a Lili das telas redesenhada para lembrar o ícone: dourada e brilhante, orelhas pontudas, olhos grandes com íris castanha, bico em losango, barriga creme com penas em escamas e asas laterais. As cores da Lojinha continuam valendo (os tons claros e escuros saem da cor escolhida).
   - O relatório da avaliação está no repositório `feira-viva`, em `docs/avaliacoes/avaliacao-ler-brincando.docx`.
 - **Testes:** `node ferramentas/testar.js` (validadores V1–V12) e `node ferramentas/testes_funcionais.js`. Rode depois de qualquer mudança de conteúdo ou código.
 - **Dados:** edite `ferramentas/fonte_palavras.js` ou `ferramentas/fonte_dados.js` e rode `node ferramentas/construir_dados.js`. Ao publicar, aumente `versao` em `fonte_dados.js` e `VERSAO` em `sw.js`.
