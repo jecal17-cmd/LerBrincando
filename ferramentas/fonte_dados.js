@@ -1,7 +1,7 @@
 /* Fonte de dados do Ler Brincando (editável). Rode:  node ferramentas/construir_dados.js
    para gerar data.js (JSON) com os campos derivados e verificados. */
 module.exports = {
-  versao: '1.3.1',
+  versao: '1.3.2',
 
   // ------------------------------------------------------------------ MUNDOS
   mundos: [

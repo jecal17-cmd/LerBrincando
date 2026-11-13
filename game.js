@@ -400,12 +400,17 @@
     const nivel = opc.nivel !== undefined ? opc.nivel : (p ? Motor.nivel(p) : 0);
     const equip = (p && p.loja.equip) || {};
     const corItem = equip.cor && D.loja.find((x) => x.id === equip.cor);
-    const cor = opc.cor || (corItem ? corItem.valor : '#b98a5e');
+    const cor = opc.cor || (corItem ? corItem.valor : '#d99c26');   // dourado, como no ícone do app
+    // tons claros e escuros da cor (brilho, contorno e sombra), para o visual "brilhante" do ícone
+    const tom = (h, f) => { const n = parseInt(h.slice(1), 16), c = [n >> 16, (n >> 8) & 255, n & 255].map((v) => Math.round(f > 0 ? v + (255 - v) * f : v * (1 + f))); return '#' + c.map((v) => v.toString(16).padStart(2, '0')).join(''); };
+    const claro = tom(cor, 0.5), escuro = tom(cor, -0.45);
+    const uid = 'lili' + (mascote.n = (mascote.n || 0) + 1);
     const enfeite = D.niveis[nivel].enfeite;
     const ac = opc.acessorio !== undefined ? opc.acessorio : equip.acessorio;
     const feliz = opc.humor === 'feliz';
-    const olhos = feliz ? '<path d="M38 56 q8 -9 16 0" stroke="#2b2b2b" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M66 56 q8 -9 16 0" stroke="#2b2b2b" stroke-width="4" fill="none" stroke-linecap="round"/>'
-      : '<circle cx="46" cy="56" r="13" fill="#fff"/><circle cx="74" cy="56" r="13" fill="#fff"/><circle cx="47" cy="57" r="6.5" fill="#2b2b2b"/><circle cx="73" cy="57" r="6.5" fill="#2b2b2b"/><circle cx="49" cy="54" r="2.2" fill="#fff"/><circle cx="75" cy="54" r="2.2" fill="#fff"/>';
+    const olho = (x) => `<circle cx="${x}" cy="56" r="15.5" fill="#fff7e6" stroke="#ecd6a6" stroke-width="2.5"/><circle cx="${x + 1}" cy="57" r="9.5" fill="url(#${uid}i)"/><circle cx="${x + 1}" cy="57" r="4.6" fill="#3a2210"/><circle cx="${x + 3.5}" cy="53.5" r="2.6" fill="#fff"/><circle cx="${x - 1.5}" cy="60.5" r="1.2" fill="#fff" opacity=".8"/>`;
+    const olhos = feliz ? `<circle cx="46" cy="56" r="15.5" fill="#fff7e6" stroke="#ecd6a6" stroke-width="2.5"/><circle cx="74" cy="56" r="15.5" fill="#fff7e6" stroke="#ecd6a6" stroke-width="2.5"/><path d="M38 58 q8 -9 16 0" stroke="#5a3214" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M66 58 q8 -9 16 0" stroke="#5a3214" stroke-width="4" fill="none" stroke-linecap="round"/>`
+      : olho(46) + olho(74);
     const enf = {
       casca: '<path d="M26 100 l8 -10 l8 10 l8 -10 l8 10 l8 -10 l8 10 l8 -10 l8 10 l8 -10 v18 h-80 z" fill="#fffdf2" stroke="#d9cfae" stroke-width="2"/>',
       broto: '<path d="M60 26 v-12" stroke="#3c9a3c" stroke-width="4"/><ellipse cx="53" cy="13" rx="8" ry="4" fill="#5cc35c"/><ellipse cx="67" cy="13" rx="8" ry="4" fill="#5cc35c"/>',
@@ -425,13 +430,23 @@
     };
     const svg = `<svg viewBox="0 0 120 120" class="mascote ${opc.mini ? 'mini' : ''} ${opc.anim ? 'anim-' + opc.anim : ''}" role="img" aria-label="Lili, a corujinha">
       ${enfeite === 'capa' ? enf.capa : ''}
-      <path d="M30 42 L34 16 L50 32 Z" fill="${cor}"/><path d="M90 42 L86 16 L70 32 Z" fill="${cor}"/>
-      <ellipse cx="60" cy="72" rx="38" ry="40" fill="${cor}"/>
-      <ellipse cx="60" cy="84" rx="24" ry="24" fill="#fff3dc"/>
-      <path d="M48 80 q4 4 8 0 M56 88 q4 4 8 0 M64 80 q4 4 8 0" stroke="#e6cfa8" stroke-width="2" fill="none"/>
-      <ellipse cx="24" cy="76" rx="9" ry="20" fill="${cor}" transform="rotate(12 24 76)" opacity=".85"/><ellipse cx="96" cy="76" rx="9" ry="20" fill="${cor}" transform="rotate(-12 96 76)" opacity=".85"/>
-      ${olhos}<path d="M55 66 L65 66 L60 75 Z" fill="#f5a623"/>
-      <path d="M46 110 l4 -6 l4 6 M66 110 l4 -6 l4 6" stroke="#f5a623" stroke-width="3" fill="none"/>
+      <defs>
+        <radialGradient id="${uid}c" cx=".38" cy=".3" r=".75"><stop offset="0" stop-color="${claro}"/><stop offset=".55" stop-color="${cor}"/><stop offset="1" stop-color="${escuro}"/></radialGradient>
+        <radialGradient id="${uid}i" cx=".4" cy=".35" r=".7"><stop offset="0" stop-color="#d9893a"/><stop offset="1" stop-color="#7a4216"/></radialGradient>
+        <radialGradient id="${uid}g"><stop offset=".6" stop-color="#ffe680" stop-opacity=".55"/><stop offset="1" stop-color="#ffe680" stop-opacity="0"/></radialGradient>
+      </defs>
+      <ellipse cx="60" cy="70" rx="56" ry="52" fill="url(#${uid}g)"/>
+      <path d="M27 46 L30 10 L54 32 Z" fill="url(#${uid}c)" stroke="${escuro}" stroke-width="1.5" stroke-linejoin="round"/><path d="M93 46 L90 10 L66 32 Z" fill="url(#${uid}c)" stroke="${escuro}" stroke-width="1.5" stroke-linejoin="round"/>
+      <path d="M32 40 L32.5 18 L46 31 Z M88 40 L87.5 18 L74 31 Z" fill="${claro}" opacity=".45"/>
+      <ellipse cx="60" cy="71" rx="39" ry="41" fill="url(#${uid}c)" stroke="${escuro}" stroke-width="1.5"/>
+      <ellipse cx="60" cy="56" rx="33" ry="21" fill="${escuro}" opacity=".28"/>
+      <ellipse cx="60" cy="88" rx="25" ry="22" fill="#fff4dc" stroke="#ead6ac" stroke-width="1.5"/>
+      <path d="M44 82 q4 5 8 0 q4 5 8 0 q4 5 8 0 q4 5 8 0 M48 91 q4 5 8 0 q4 5 8 0 q4 5 8 0 M52 100 q4 5 8 0 q4 5 8 0" stroke="#e3caa0" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+      <path d="M26 64 q-12 6 -12 22 q10 4 20 -4 q4 -10 -8 -18z" fill="url(#${uid}c)" stroke="${escuro}" stroke-width="1.5"/><path d="M94 64 q12 6 12 22 q-10 4 -20 -4 q-4 -10 8 -18z" fill="url(#${uid}c)" stroke="${escuro}" stroke-width="1.5"/>
+      <path d="M18 80 q6 2 12 -2 M102 80 q-6 2 -12 -2" stroke="${escuro}" stroke-width="1.5" fill="none" opacity=".6"/>
+      <ellipse cx="46" cy="40" rx="10" ry="5" fill="#fff" opacity=".28" transform="rotate(-20 46 40)"/>
+      ${olhos}<path d="M60 64 L66 70 L60 79 L54 70 Z" fill="#f2b233" stroke="#b97a12" stroke-width="1.2" stroke-linejoin="round"/><path d="M60 64 L66 70 L60 72 Z" fill="#ffd77a"/>
+      <path d="M46 111 l4 -6 l4 6 M66 111 l4 -6 l4 6" stroke="#e39a1c" stroke-width="3" fill="none" stroke-linecap="round"/>
       ${enfeite !== 'capa' && enf[enfeite] ? enf[enfeite] : ''}${ac && aces[ac] ? aces[ac] : ''}</svg>`;
     const w = el('span', { html: svg }); return w.firstElementChild;
   }
