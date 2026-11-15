@@ -1,5 +1,6 @@
 """Gera os ícones do app Android, as telas de abertura e os ícones da web a partir da arte do ícone,
 sem cortar nenhum detalhe dela.
+No ícone adaptativo, a arte enche a máscara do celular (78 dp de 108) sobre uma versão desfocada dela mesma, sem anel de cor em volta.
 
 A arte pode vir com a própria moldura (o quadrado arredondado desenhado) sobre um fundo liso (branco,
 escuro etc.). O script apaga esse fundo de fora da moldura e encaixa a arte INTEIRA em cada formato:
@@ -68,6 +69,18 @@ def encaixe(rgba, tam, lado, fundo=None, forma=None, raio=None):
     lado = max(1, int(round(lado))); a = rgba.resize((lado, lado), Image.LANCZOS)
     tela.alpha_composite(a, ((tam - lado) // 2, (tam - lado) // 2)); return tela
 
+LADO_FRENTE = 78   # dp da arte no ícone adaptativo (camada de 108 dp; a máscara mostra ~72 dp): a máscara corta dentro da arte
+
+def fundo_arte(rgba, tam):
+    """Fundo do ícone adaptativo: a própria arte ampliada e desfocada, para nenhuma máscara mostrar uma cor sólida em volta."""
+    base = Image.new('RGB', rgba.size, cor_moldura(rgba)); base.paste(rgba, mask=rgba.getchannel('A'))
+    g = base.resize((tam, tam), Image.LANCZOS).filter(ImageFilter.GaussianBlur(tam / 18))
+    return g.convert('RGBA')
+
+def cheio(rgba, tam, lado_dp=LADO_FRENTE):
+    """Ícone em que a arte enche a máscara: arte grande sobre a versão desfocada dela mesma."""
+    t = fundo_arte(rgba, tam); t.alpha_composite(encaixe(rgba, tam, tam * lado_dp / 108)); return t
+
 def main():
     args = sys.argv[1:]; cor = None
     if '--cor' in args:
@@ -83,13 +96,21 @@ def main():
         for d, k in DENS.items():
             pasta = os.path.join(res, 'mipmap-' + d); os.makedirs(pasta, exist_ok=True)
             t = int(108 * k)   # adaptativo: a zona segura é o círculo de 66 dp no meio dos 108 dp
-            encaixe(tile, t, cabe(33 * k)).save(os.path.join(pasta, 'ic_launcher_foreground.png'))
+            encaixe(tile, t, t * LADO_FRENTE / 108).save(os.path.join(pasta, 'ic_launcher_foreground.png'))
+            fundo_arte(tile, t).convert('RGB').save(os.path.join(pasta, 'ic_launcher_background.png'))
             t = int(48 * k)    # ícones antigos (Android 7 ou anterior)
             encaixe(tile, t, t * .96).save(os.path.join(pasta, 'ic_launcher.png'))
-            encaixe(tile, t, cabe(t * .48), cor, 'circulo').save(os.path.join(pasta, 'ic_launcher_round.png'))
+            m = Image.new('L', (t * 4, t * 4), 0); ImageDraw.Draw(m).ellipse((0, 0, t * 4 - 1, t * 4 - 1), fill=255)
+            r_ = cheio(tile, t, 76); r_.putalpha(m.resize((t, t), Image.LANCZOS)); r_.save(os.path.join(pasta, 'ic_launcher_round.png'))
         os.makedirs(os.path.join(res, 'values'), exist_ok=True)
         with open(os.path.join(res, 'values', 'ic_launcher_background.xml'), 'w', encoding='utf-8') as f:
             f.write('<?xml version="1.0" encoding="utf-8"?>\n<resources>\n    <color name="ic_launcher_background">%s</color>\n</resources>\n' % hexa)
+        # ícone adaptativo: fundo = arte desfocada (bitmap), frente = arte grande
+        pasta = os.path.join(res, 'mipmap-anydpi-v26'); os.makedirs(pasta, exist_ok=True)
+        for nome in ('ic_launcher.xml', 'ic_launcher_round.xml'):
+            with open(os.path.join(pasta, nome), 'w', encoding='utf-8') as f:
+                f.write('<?xml version="1.0" encoding="utf-8"?>\n<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">\n'
+                        '    <background android:drawable="@mipmap/ic_launcher_background"/>\n    <foreground android:drawable="@mipmap/ic_launcher_foreground"/>\n</adaptive-icon>\n')
         # telas de abertura: a arte inteira no centro, sobre a cor de fundo
         for pasta in sorted(os.listdir(res)):
             arq = os.path.join(res, pasta, 'splash.png')
