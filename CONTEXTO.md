@@ -42,5 +42,4 @@ Atualizado em 20/11/2026.
   - Criar o perfil de pagamentos e os produtos na Play Console (`ANDROID.md` §8) e testar a compra com conta de teste de licença.
   - iOS: conta Apple Developer e Secrets para o TestFlight; cobrança no iOS ainda não existe (StoreKit), por isso `paywall.ios` é `false`.
   - As etiquetas de instrução e a tela "Conheça o mapa" são só visuais: para a Lili falar esses textos, inclua-os no Banco de Áudio e rode `gerar_audios`.
-  - Antes de publicar, refazer o Banco de Áudio com voz licenciada (`--motor azure` ou Kokoro), como avisa a Área técnica.
   - Nada foi testado com crianças nem em celular real nesta rodada.

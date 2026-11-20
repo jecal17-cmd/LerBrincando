@@ -2,11 +2,13 @@
 
 O app Android é o próprio jogo empacotado com o [Capacitor](https://capacitorjs.com). Ele já leva **tudo dentro**
 (sons, imagens e fontes), funciona **sem internet** e não pede nenhuma permissão especial (nem microfone).
+A internet só entra na compra da versão completa (seção 8) e, se a nuvem estiver configurada, na turma e nas estatísticas (`docs/NUVEM.md`).
+Para o iPhone e o iPad, veja [IOS.md](IOS.md).
 
 | Item | Valor |
 |---|---|
 | Nome do pacote (`applicationId`) | `com.lerbrincando.app` (em `capacitor.config.json` e `android/app/build.gradle`) |
-| Versão exibida (`versionName`) | a de `data.json` (hoje 1.2.2) |
+| Versão exibida (`versionName`) | a de `data.json` (hoje 1.4.0) |
 | Código da versão (`versionCode`) | número da execução do GitHub Actions (aumenta sozinho) |
 | Android mínimo / alvo | 7.0 (API 24) / API 36 |
 | Tamanho aproximado | 30 MB |
@@ -101,7 +103,11 @@ e rode `cd android && ./gradlew bundleRelease`.
 | `ferramentas/recursos_locais.js` | Copia as imagens OpenMoji e as fontes usadas para `imagens/` e `fontes/`. |
 | `ferramentas/gerar_icones_android.js` | Gera ícones, tela de abertura, ícone 512 e imagem de destaque a partir de `icones/icone.svg`. |
 | `ferramentas/capturas_loja.js` | Gera as capturas de tela da loja (celular 1080×1920 e tablet 1600×2560). |
-| `.github/workflows/app-android.yml` | Compila o APK de teste e, com a chave, o AAB da Play. |
+| `.github/workflows/app-android.yml` | Compila o APK de teste e, com a chave, o AAB da Play (conferindo a licença das vozes). |
+| `.github/workflows/banco-audio.yml` | Regera o Banco de Áudio com voz licenciada e abre um Pull Request. |
+| `android/app/src/main/java/com/lerbrincando/app/CobrancaPlugin.java` | Compra da versão completa pela Google Play (Play Billing Library 8). |
+| `config.js` | Mundos grátis, produtos e preços, link da Play e ligação com a nuvem. |
+| `ferramentas/checar_licenca_audio.js` | Conta os sons sem licença para publicação (edge-tts). |
 
 ## 7. Atenção: licença das vozes (obrigatório antes de vender)
 
