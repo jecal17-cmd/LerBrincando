@@ -1,0 +1,92 @@
+# Regera o Banco de Áudio com voz LICENCIADA para publicar o app (troca os sons do edge-tts).
+# - azure (recomendado): mesma voz Francisca que o jogo já usa nas sílabas. Precisa dos Secrets
+#   AZURE_SPEECH_KEY e AZURE_SPEECH_REGION (Settings → Secrets and variables → Actions). A camada gratuita (F0) basta.
+# - kokoro: grátis e offline (Apache-2.0), mas a voz é diferente da das sílabas.
+# Ao terminar, abre um Pull Request com os sons novos para você ouvir e aprovar.
+# Para rodar: aba Actions → "Banco de Áudio (voz licenciada)" → Run workflow.
+name: Banco de Áudio (voz licenciada)
+
+on:
+  workflow_dispatch:
+    inputs:
+      motor:
+        description: 'Motor de voz'
+        type: choice
+        options: [azure, kokoro]
+        default: azure
+      tipos:
+        description: 'Tipos de som a regerar'
+        default: 'palavra,nome,frase,hist,frasejogo'
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  audio:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Confere a chave do Azure
+        if: inputs.motor == 'azure'
+        env:
+          TEM: ${{ secrets.AZURE_SPEECH_KEY != '' }}
+        run: |
+          if [ "$TEM" != "true" ]; then
+            echo "::error::Falta o Secret AZURE_SPEECH_KEY (e AZURE_SPEECH_REGION). Crie um recurso 'Speech' no portal do Azure (camada F0, grátis), copie a chave e a região e cadastre em Settings → Secrets and variables → Actions. Ou rode com o motor kokoro."
+            exit 1
+          fi
+
+      - name: Dependências
+        env:
+          MOTOR: ${{ inputs.motor }}
+        run: |
+          sudo apt-get update -q && sudo apt-get install -y -q ffmpeg espeak-ng
+          python -m pip install -q --upgrade pip
+          python -m pip install -q numpy soundfile librosa pyloudnorm
+          if [ "$MOTOR" = "kokoro" ]; then python -m pip install -q kokoro; fi
+
+      - name: Gera os sons
+        env:
+          AZURE_SPEECH_KEY: ${{ secrets.AZURE_SPEECH_KEY }}
+          AZURE_SPEECH_REGION: ${{ secrets.AZURE_SPEECH_REGION }}
+          MOTOR: ${{ inputs.motor }}
+          TIPOS: ${{ inputs.tipos }}
+        run: python gerar_audios.py --motor "$MOTOR" --tipos "$TIPOS" --regerar
+
+      - name: Confere manifest e licenças
+        run: |
+          node ferramentas/sincronizar_manifest.js
+          node ferramentas/checar_licenca_audio.js
+          node ferramentas/testar.js
+
+      - name: Abre o Pull Request
+        env:
+          GH_TOKEN: ${{ github.token }}
+          MOTOR: ${{ inputs.motor }}
+          TIPOS: ${{ inputs.tipos }}
+          BASE: ${{ github.ref_name }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898315+github-actions[bot]@users.noreply.github.com"
+          RAMO="audio-licenciado-${{ github.run_number }}"
+          git checkout -b "$RAMO"
+          git add audio
+          if git diff --cached --quiet; then echo "Nada mudou."; exit 0; fi
+          git commit -q -m "Banco de Áudio com voz licenciada ($MOTOR: $TIPOS)"
+          git push -q origin "$RAMO"
+          # se o repositório não permitir que o Actions abra PRs, o ramo fica publicado e basta abrir o PR à mão
+          gh pr create --base "$BASE" --head "$RAMO" \
+            --title "Banco de Áudio com voz licenciada ($MOTOR)" \
+            --body "Sons regerados com o motor **$MOTOR** (tipos: $TIPOS). Ouça alguns em Área técnica → Banco de Áudio antes de aprovar e veja audio/revisar.txt." \
+            || echo "::warning::Ramo $RAMO publicado. Abra o Pull Request pela aba Pull requests (ou ative Settings → Actions → 'Allow GitHub Actions to create and approve pull requests')."

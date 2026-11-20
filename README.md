@@ -2,7 +2,9 @@
 
 Jogo de alfabetização em português do Brasil, pelo **método fônico**, para crianças de **5 a 7 anos**.
 São 8 mundos, 93 fases, 363 palavras ilustradas, 11 histórias e uma Área dos Pais.
-Funciona no navegador, no celular, offline (PWA) e como app Android. Não tem anúncios, compras nem rastreadores.
+Funciona no navegador, no celular, offline (PWA) e como app Android e iOS. Não tem anúncios nem rastreadores.
+Os Mundos 1 e 2 são grátis; a versão completa sai pela Google Play ou pela licença da escola. Há medidor de fluência leitora,
+código de turma e painel do professor (`professor.html`).
 
 ## Começar em 1 minuto
 
@@ -12,7 +14,7 @@ Funciona no navegador, no celular, offline (PWA) e como app Android. Não tem an
    python -m http.server 8000      # depois abra http://localhost:8000
    ```
 3. Toque em **"Toque para começar"**. Um adulto digita o nome da criança, ela escolhe uma figura e faz a avaliação inicial lúdica (cerca de 5 minutos), que sugere o mundo por onde começar.
-4. **Área dos Pais** (menu ☰ → 👪): progresso, mapa de calor dos sons, configurações de voz e tempo de tela, exportar e importar o progresso. Para entrar, é preciso resolver uma multiplicação.
+4. **Área dos Pais** (menu ☰ → 👪): progresso, 📈 fluência, ⭐ versão completa, 🏫 escola, configurações de voz e tempo de tela, exportar e importar o progresso. Para entrar, é preciso responder a uma pergunta para adultos.
 
 **Instalar no celular:** no Android (Chrome), use ⋮ → *Adicionar à tela inicial*. No iPhone (Safari), use *Compartilhar* → *Adicionar à Tela de Início*.
 
@@ -28,6 +30,11 @@ Funciona no navegador, no celular, offline (PWA) e como app Android. Não tem an
 | Robô que joga pela interface (Playwright para Python) | `python ferramentas/teste_navegador.py 1.1,3.1,4.11` |
 | Auditar o Banco de Áudio | `python ferramentas/auditar_audios.py` |
 | Gerar o app Android (APK de teste e AAB da Play) | GitHub → Actions → **App Android** → Run workflow (guia em [ANDROID.md](ANDROID.md)) |
+| Gerar o app iOS (Simulador; TestFlight com os Secrets da Apple) | GitHub → Actions → **App iOS** → Run workflow (guia em [IOS.md](IOS.md)) |
+| Regerar o Banco de Áudio com voz licenciada | GitHub → Actions → **Banco de Áudio (voz licenciada)** (guia em [ANDROID.md](ANDROID.md), seção 7) |
+| Conferir a licença das vozes | `node ferramentas/checar_licenca_audio.js` |
+| Preços, mundos grátis e ligação com a nuvem | edite `config.js` (guia da nuvem em [docs/NUVEM.md](docs/NUVEM.md)) |
+| Teste no navegador das funções da v1.4 | `python ferramentas/teste_monetizacao.py` |
 
 Depois de mudar o conteúdo ou o código, rode o autoteste. Se algum validador reprovar, corrija antes de publicar.
 Ao publicar uma versão nova, aumente `VERSAO` em `sw.js` para os aparelhos baixarem os arquivos novos.

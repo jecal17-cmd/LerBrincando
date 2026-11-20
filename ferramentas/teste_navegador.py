@@ -29,7 +29,7 @@ with sync_playwright() as p:
     def ev(js): return pg.evaluate(js)
     for fid in fases:
         pg.wait_for_timeout(200)
-        ev(f"""(() => {{ LB.Som.parar(); const P = LB.Store.perfil; const i = LB.D.fases.findIndex(f => f.id === '{fid}'); for (let k=0;k<=i;k++) if(!P.liberadas.includes(LB.D.fases[k].id)) P.liberadas.push(LB.D.fases[k].id); Cenas.jogarFase(i); }})()""")
+        ev(f"""(() => {{ LB.Som.parar(); LB.Store.dados.premium = {{ compra: {{ produto: 'teste-robo' }} }}; const P = LB.Store.perfil; const i = LB.D.fases.findIndex(f => f.id === '{fid}'); for (let k=0;k<=i;k++) if(!P.liberadas.includes(LB.D.fases[k].id)) P.liberadas.push(LB.D.fases[k].id); Cenas.jogarFase(i); }})()""")
         pg.wait_for_timeout(300)
         t0 = time.time(); ultimo = None; repet = 0; shot = False; t_acao = 0
         while time.time() - t0 < 120:

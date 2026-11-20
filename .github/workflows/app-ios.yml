@@ -1,0 +1,128 @@
+# Gera o app iOS (iPhone e iPad) do Ler Brincando com o Capacitor, num Mac do GitHub.
+# - Sempre: cria o projeto Xcode, aplica nome, ícone e permissões e compila para o Simulador
+#   (prova que o app compila; o .app vai nos artefatos).
+# - Com os Secrets da Apple (veja IOS.md): gera o .ipa assinado e envia ao TestFlight.
+# Para rodar: aba Actions → "App iOS" → Run workflow. Também roda ao criar uma tag v1.2.3.
+name: App iOS
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+  pull_request:
+    paths: ['.github/workflows/app-ios.yml', 'package.json', 'package-lock.json', 'capacitor.config.json', 'ferramentas/preparar_app.js', 'ferramentas/gerar_icones_arte.py']
+
+permissions:
+  contents: read
+
+jobs:
+  ios:
+    runs-on: macos-15
+    timeout-minutes: 60
+    env:
+      BUILD_NUMBER: ${{ github.run_number }}
+      TEM_APPLE: ${{ secrets.IOS_CERT_P12_BASE64 != '' && secrets.IOS_PROFILE_BASE64 != '' && secrets.APPSTORE_API_KEY_BASE64 != '' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Dependências (o pacote iOS do Capacitor na mesma versão do core)
+        run: |
+          npm ci
+          VER=$(node -p "require('./package.json').devDependencies['@capacitor/core']")
+          npm install --no-save "@capacitor/ios@$VER"
+
+      - name: Autoteste do conteúdo
+        run: node ferramentas/testar.js && node ferramentas/testes_funcionais.js
+
+      - name: Cria o projeto iOS (www/ → ios/)
+        run: |
+          node ferramentas/preparar_app.js
+          npx cap add ios
+          npx cap sync ios
+
+      - name: Nome, versão, permissões e ícone
+        run: |
+          PLIST=ios/App/App/Info.plist
+          VERSAO=$(node -p "require('./data.json').versao")
+          /usr/libexec/PlistBuddy -c "Set :CFBundleDisplayName Ler Brincando" "$PLIST"
+          /usr/libexec/PlistBuddy -c "Add :ITSAppUsesNonExemptEncryption bool false" "$PLIST" || true
+          /usr/libexec/PlistBuddy -c "Add :NSMicrophoneUsageDescription string 'O microfone só é usado quando um adulto autoriza, para a criança ouvir a própria leitura.'" "$PLIST" || true
+          /usr/libexec/PlistBuddy -c "Add :NSSpeechRecognitionUsageDescription string 'Usado só nas atividades de leitura em voz alta, com autorização do adulto.'" "$PLIST" || true
+          sed -i '' "s/MARKETING_VERSION = [^;]*;/MARKETING_VERSION = $VERSAO;/g; s/CURRENT_PROJECT_VERSION = [^;]*;/CURRENT_PROJECT_VERSION = $BUILD_NUMBER;/g" ios/App/App.xcodeproj/project.pbxproj
+          python3 -m pip install -q --break-system-packages pillow || python3 -m pip install -q pillow
+          ICONE=$(ls ios/App/App/Assets.xcassets/AppIcon.appiconset/*.png | head -1)
+          python3 ferramentas/gerar_icones_arte.py icones/arte-icone.png - --cor '#7FD6F5' --ios "$ICONE"
+
+      - name: Compila para o Simulador (sem assinatura)
+        run: |
+          xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Debug \
+            -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
+            -derivedDataPath build CODE_SIGNING_ALLOWED=NO build | tail -n 30
+          mkdir -p saida
+          (cd build/Build/Products/Debug-iphonesimulator && zip -qr "$GITHUB_WORKSPACE/saida/ler-brincando-simulador-${BUILD_NUMBER}.zip" App.app)
+
+      - name: Assinatura (certificado e perfil de distribuição)
+        if: env.TEM_APPLE == 'true'
+        env:
+          CERT: ${{ secrets.IOS_CERT_P12_BASE64 }}
+          CERT_SENHA: ${{ secrets.IOS_CERT_PASSWORD }}
+          PERFIL: ${{ secrets.IOS_PROFILE_BASE64 }}
+        run: |
+          KC="$RUNNER_TEMP/assinatura.keychain-db"; SENHA_KC=$(uuidgen)
+          echo "$CERT" | base64 --decode > "$RUNNER_TEMP/cert.p12"
+          security create-keychain -p "$SENHA_KC" "$KC"
+          security set-keychain-settings -lut 21600 "$KC"
+          security unlock-keychain -p "$SENHA_KC" "$KC"
+          security import "$RUNNER_TEMP/cert.p12" -P "$CERT_SENHA" -A -t cert -f pkcs12 -k "$KC"
+          security set-key-partition-list -S apple-tool:,apple: -k "$SENHA_KC" "$KC"
+          security list-keychain -d user -s "$KC" $(security list-keychains -d user | tr -d '"')
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          echo "$PERFIL" | base64 --decode > "$RUNNER_TEMP/perfil.mobileprovision"
+          UUID=$(security cms -D -i "$RUNNER_TEMP/perfil.mobileprovision" | plutil -extract UUID raw -)
+          NOME=$(security cms -D -i "$RUNNER_TEMP/perfil.mobileprovision" | plutil -extract Name raw -)
+          TIME=$(security cms -D -i "$RUNNER_TEMP/perfil.mobileprovision" | plutil -extract TeamIdentifier.0 raw -)
+          cp "$RUNNER_TEMP/perfil.mobileprovision" ~/Library/MobileDevice/Provisioning\ Profiles/"$UUID".mobileprovision
+          echo "PERFIL_NOME=$NOME" >> "$GITHUB_ENV"; echo "TIME_APPLE=$TIME" >> "$GITHUB_ENV"
+
+      - name: Gera o .ipa e envia ao TestFlight
+        if: env.TEM_APPLE == 'true'
+        env:
+          API_KEY: ${{ secrets.APPSTORE_API_KEY_BASE64 }}
+          API_KEY_ID: ${{ secrets.APPSTORE_API_KEY_ID }}
+          API_ISSUER: ${{ secrets.APPSTORE_API_ISSUER_ID }}
+        run: |
+          xcodebuild -project ios/App/App.xcodeproj -scheme App -configuration Release \
+            -destination 'generic/platform=iOS' -archivePath "$RUNNER_TEMP/App.xcarchive" archive \
+            CODE_SIGN_STYLE=Manual DEVELOPMENT_TEAM="$TIME_APPLE" CODE_SIGN_IDENTITY="Apple Distribution" \
+            PROVISIONING_PROFILE_SPECIFIER="$PERFIL_NOME" | tail -n 30
+          cat > "$RUNNER_TEMP/Export.plist" <<EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0"><dict>
+            <key>method</key><string>app-store-connect</string>
+            <key>teamID</key><string>${TIME_APPLE}</string>
+            <key>signingStyle</key><string>manual</string>
+            <key>provisioningProfiles</key><dict><key>com.lerbrincando.app</key><string>${PERFIL_NOME}</string></dict>
+          </dict></plist>
+          EOF
+          xcodebuild -exportArchive -archivePath "$RUNNER_TEMP/App.xcarchive" -exportOptionsPlist "$RUNNER_TEMP/Export.plist" -exportPath "$RUNNER_TEMP/ipa"
+          cp "$RUNNER_TEMP"/ipa/*.ipa "saida/ler-brincando-${BUILD_NUMBER}.ipa"
+          mkdir -p ~/.appstoreconnect/private_keys
+          echo "$API_KEY" | base64 --decode > ~/.appstoreconnect/private_keys/AuthKey_"$API_KEY_ID".p8
+          xcrun altool --upload-app -t ios -f "saida/ler-brincando-${BUILD_NUMBER}.ipa" --apiKey "$API_KEY_ID" --apiIssuer "$API_ISSUER"
+
+      - name: Aviso
+        if: env.TEM_APPLE != 'true'
+        run: |
+          echo "::notice::Sem os Secrets da Apple, só a versão do Simulador foi gerada. Veja IOS.md para gerar o .ipa e enviar ao TestFlight."
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ler-brincando-ios-${{ github.run_number }}
+          path: saida/
+          retention-days: 30

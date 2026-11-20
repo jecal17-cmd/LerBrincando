@@ -1,4 +1,13 @@
-# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.3.1
+# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.4.0
+
+> **Novidades da v1.4.0** (monetização e escolas)
+> - **Versão completa:** Mundos 1 e 2 grátis; do 3 ao 8, compra pela Google Play (compra única ou assinatura anual com 7 dias grátis), sempre depois do desafio para adultos. No iOS, tudo aberto até existir a compra pela App Store. Ajustes em `config.js`; guia da Play Console em [ANDROID.md](ANDROID.md), seção 8.
+> - **Medidor de fluência leitora:** Área dos Pais → 📈 Fluência. Teste de 1 minuto mediado pelo adulto, com palavras corretas por minuto (PCPM), precisão, histórico e gravação opcional.
+> - **Turma da escola e painel do professor:** código de turma no jogo (Área dos Pais → 🏫 Escola) e `professor.html` para o professor acompanhar cada aluno. A licença da escola libera a versão completa. Guia em [docs/NUVEM.md](docs/NUVEM.md).
+> - **Estatísticas anônimas** de uso, só com autorização do adulto, e consultas de funil e retenção em `supabase/consultas.sql`.
+> - **Voz licenciada pelo GitHub:** fluxo **Banco de Áudio (voz licenciada)** e trava que impede publicar na Play com sons do edge-tts.
+> - **App iOS:** fluxo **App iOS** que gera e compila o projeto no GitHub; envio ao TestFlight com os Secrets da Apple. Guia em [IOS.md](IOS.md).
+> - **Testes:** `python ferramentas/teste_monetizacao.py` cobre paywall, compra simulada, turma, estatísticas e fluência (loja e nuvem simuladas no navegador).
 
 > **Novidade da v1.3.1:** ícone novo (a Lili dourada com letras coloridas). A arte fica em `icones/arte-icone.png`; para gerar de novo todos os tamanhos do Android, a tela de abertura e os ícones da web, rode `python ferramentas/gerar_icones_arte.py icones/arte-icone.png android/app/src/main/res --cor '#7FD6F5' --web icones/icone-192.png icones/icone-512.png --loja loja/icone-512.png`.
 
@@ -454,6 +463,8 @@ Abra `docs/fichas_pedagogicas.html` e imprima. O arquivo contém:
 - critérios de sucesso, sinais de alerta e tabela de cálculo do ganho e da retenção.
 
 ## 11. Privacidade e licenças
-- Sem anúncios, compras ou rastreadores. O progresso fica no `localStorage` do aparelho; exportação e importação são manuais.
+- Sem anúncios nem rastreadores. O progresso fica no `localStorage` do aparelho; exportação e importação são manuais.
+- v1.4: com a nuvem configurada, só saem do aparelho (1) estatísticas anônimas, se o adulto autorizar, e (2) o resumo do progresso para o professor, se a criança entrar numa turma. Detalhes em `docs/privacidade.html` e `docs/NUVEM.md`.
+- v1.4: a versão completa é comprada pela Google Play, só depois do desafio para adultos.
 - O microfone vem desligado e exige consentimento do adulto. O aviso de privacidade fica na Área dos Pais.
 - Créditos (OpenMoji CC BY-SA 4.0, Andika e Baloo 2 OFL, vozes edge-tts/Kokoro/Piper, Wikimedia por arquivo) e registro de alterações ficam na tela **Sobre**.

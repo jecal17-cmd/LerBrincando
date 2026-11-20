@@ -6,7 +6,7 @@ A arte pode vir com a própria moldura (o quadrado arredondado desenhado) sobre 
 escuro etc.). O script apaga esse fundo de fora da moldura e encaixa a arte INTEIRA em cada formato:
 nenhum pedaço da moldura, das letras ou das frutas que saem dela fica de fora.
 
-Uso:  python gerar_icones_arte.py ARTE.png PASTA_RES [--cor #RRGGBB] [--web SAIDA_192.png ...] [--loja SAIDA_512.png ...]
+Uso:  python gerar_icones_arte.py ARTE.png PASTA_RES [--cor #RRGGBB] [--web SAIDA_192.png ...] [--loja SAIDA_512.png ...] [--ios SAIDA_1024.png]
   ARTE.png   arte quadrada (de preferência 1024 x 1024 ou maior)
   PASTA_RES  android/app/src/main/res do projeto Capacitor (use "-" para só gerar --web e --loja)
   --cor      cor de fundo do ícone adaptativo, da loja e da tela de abertura (sem ela, usa a cor da borda da moldura)
@@ -120,9 +120,12 @@ def main():
             tela.convert('RGB').save(arq)
     modo = None
     for x in args[2:]:
-        if x in ('--web', '--loja'): modo = x; continue
+        if x in ('--web', '--loja', '--ios'): modo = x; continue
         os.makedirs(os.path.dirname(x) or '.', exist_ok=True)
         n = 512 if '512' in os.path.basename(x) else 192
+        if modo == '--ios':
+            # App Store: 1024 × 1024, sem transparência; o iOS arredonda os cantos sozinho
+            encaixe(tile, 1024, 1024 * .9, cor).convert('RGB').save(x); continue
         if modo == '--loja':
             # a Play Store pede quadrado cheio e arredonda os cantos (raio de 20%): a arte fica num quadrado
             # arredondado de 20% de raio e sobra margem para a máscara não cortar nada

@@ -37,7 +37,7 @@ PARA PAIS E PROFESSORES
 • Modos de alto contraste e de menos estímulos.
 
 SEGURO E SEM DISTRAÇÕES
-• Sem anúncios, sem compras e sem rastreadores.
+• Sem anúncios e sem rastreadores. Mundos 1 e 2 grátis; a versão completa é liberada por um adulto (compra única ou assinatura anual com 7 dias grátis) ou pela licença da escola.
 • Funciona sem internet: tudo já vem no app.
 • O progresso fica só no aparelho.
 ```
@@ -65,20 +65,21 @@ SEGURO E SEM DISTRAÇÕES
 | Recursos de COVID-19 | Não |
 | Ações de jogo de azar / compras | Não |
 
-**Segurança dos dados**
-- O app coleta ou compartilha dados do usuário? **Não.**
-  (O nome/apelido e o progresso ficam só no aparelho e nunca são transmitidos; a Play não considera isso "coleta".)
-- Os dados são criptografados em trânsito? (não se aplica: não há transmissão)
-- O usuário pode pedir a exclusão? Sim: "Zerar todos os dados" na Área dos Pais ou desinstalar o app.
+**Segurança dos dados** (v1.4; respostas detalhadas em `ANDROID.md`, seção 3)
+- Sem a nuvem configurada em `config.js`: **não coleta** (o progresso fica só no aparelho).
+- Com a nuvem: coleta **opcional** de interações no app (estatísticas anônimas, para análise) e de nome do perfil e progresso
+  (só quando a criança entra numa turma, para o professor). Nada é compartilhado com terceiros.
+- Os dados são criptografados em trânsito? **Sim** (HTTPS).
+- O usuário pode pedir a exclusão? **Sim**: "Sair da turma", desligar as estatísticas, "Zerar todos os dados" ou desinstalar o app.
 
 **Classificação de conteúdo (IARC)**: categoria "Todos os outros tipos de app" ou "Jogo" → responder **não** para violência, medo,
-sexo, linguagem imprópria, drogas, jogos de azar, interação entre usuários, compartilhamento de localização e compras digitais.
+sexo, linguagem imprópria, drogas, jogos de azar, interação entre usuários e compartilhamento de localização; **sim** para compras digitais (versão completa).
 Resultado esperado: **Livre**.
 
-**Permissões**: o app só declara `INTERNET` (imagem de reserva opcional). Não pede microfone, câmera, contatos nem localização.
+**Permissões**: `INTERNET` (imagem de reserva, turma e estatísticas opcionais) e `com.android.vending.BILLING` (compra da versão completa, adicionada pela biblioteca da Play). Não pede microfone, câmera, contatos nem localização.
 
 ## Notas da versão (até 500)
 
 ```
-Primeira versão do Ler Brincando para Android: 8 mundos, 93 fases, 363 palavras ilustradas e 11 histórias. Funciona sem internet, sem anúncios e sem compras.
+1.4: Mundos 1 e 2 grátis e versão completa (compra única ou assinatura anual com 7 dias grátis). Novo medidor de fluência leitora para os pais. Turma da escola: com o código do professor, o progresso aparece no painel do professor. Continua sem anúncios.
 ```

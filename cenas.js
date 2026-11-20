@@ -26,6 +26,9 @@
   // Botão de adiantar: corta a fala em andamento (boas-vindas, elogios, explicações) para quem não quer esperar
   function botaoAdiantar() { const b = el('button', { class: 'btn redondo adiantar', type: 'button', 'aria-label': 'adiantar a fala' }, '⏩'); b.onclick = () => { Som.parar(); Efeito.tocar('clique'); }; return b; }
   const hoje = () => Motor.hoje();
+  // Módulos opcionais (premium.js, nuvem.js, fluencia.js): o jogo funciona mesmo se faltarem
+  const PREMIUM = () => window.Premium || null;
+  const evento = (nome, dados) => { if (window.Analitica) window.Analitica.registrar(nome, dados); };
   // Rodando como app Android (Capacitor)?
   const APP = !!(window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform());
   // No app, o download de arquivos do navegador não funciona: mostra o JSON para copiar e guardar
@@ -111,13 +114,25 @@
     avs.firstChild.classList.add('pri');
     const ok = el('button', { class: 'btn pri grande', type: 'button' }, '✔ Criar');
     const pularAv = el('label', { class: 'linha' }, el('input', { type: 'checkbox', id: 'pularAv' }), el('span', null, 'Pular a avaliação inicial (começar do Mundo 1)'));
-    ok.onclick = () => {
+    ok.onclick = async () => {
       if (Store.dados.perfis.length >= 4) { toast('Limite de 4 perfis.'); return; }
       const p = Motor.novoPerfil(nome.value.trim() || 'Leitor', avatar);
       Store.dados.perfis.push(p); Store.dados.atual = p.id; Store.salvar();
+      if (window.Analitica && window.Analitica.perguntar) await perguntarEstatisticas();
+      evento('perfil_criado', { perfis: Store.dados.perfis.length });
       if (pularAv.querySelector('input').checked) { p.avaliacao = { data: Motor.agora(), blocos: [], mundoInicial: 1, pulada: true }; Store.salvar(); mapa(); } else avaliacaoInicial();
     };
     tela(el('div', { class: 'painel' }, el('h2', null, '👋 Nova criança'), el('p', null, 'Um adulto digita o nome. A criança escolhe a figura.'), nome, el('h3', null, 'Figura'), avs, pularAv, el('div', { class: 'acoes' }, ok, Store.dados.perfis.length ? el('button', { class: 'btn', type: 'button', onclick: perfis }, 'Voltar') : null)));
+  }
+
+  // Pergunta única ao adulto (que está digitando o nome): pode enviar estatísticas anônimas de uso?
+  function perguntarEstatisticas() {
+    return modal((fechar) => [el('h2', null, '📊 Ajude a melhorar o jogo'),
+      el('p', null, 'Podemos enviar estatísticas anônimas de uso (quais fases são jogadas, acertos, tempo)? Não enviamos nomes, voz, fotos nem localização, e não há anúncios.'),
+      el('p', null, el('small', null, 'Você pode mudar isso quando quiser em Área dos Pais → Configurações.')),
+      el('div', { class: 'acoes' },
+        el('button', { class: 'btn', type: 'button', onclick: () => { window.Analitica.definir(false); fechar(); } }, 'Não, obrigado'),
+        el('button', { class: 'btn pri', type: 'button', onclick: () => { window.Analitica.definir(true); fechar(); } }, 'Sim, pode enviar'))]);
   }
 
   // ======================================================================
@@ -151,6 +166,7 @@
       }
     } catch (e) { return; }
     const av = Motor.posicionar(p, resultados); Store.salvar();
+    evento('avaliacao_fim', { mundo: av.mundoInicial });
     palco.innerHTML = '';
     palco.append(mascote({ humor: 'feliz', anim: 'danca' }), el('div', { class: 'bolha' }, D.falas.avaliacaoFim), el('button', { class: 'btn pri grande', type: 'button', onclick: () => mapa() }, '🗺️ ', 'Mapa'));
     Confete.lancar(60); await falar([S.fala('avaliacaoFim')]);
@@ -201,7 +217,8 @@
     D.mundos.forEach((mm) => {
       const primeira = D.fases.findIndex((f) => f.mundo === mm.id);
       const lib = Motor.faseLiberada(p, primeira);
-      const b = el('button', { class: 'aba-mundo', role: 'tab', type: 'button', 'aria-selected': String(mm.id === mundo), 'aria-label': 'mundo ' + mm.nome }, (lib ? N.separarEmojis(mm.deco)[0] : '🔒') + ' ' + mm.id);
+      const pago = !!(PREMIUM() && PREMIUM().faseBloqueada(primeira));
+      const b = el('button', { class: 'aba-mundo' + (pago ? ' pago' : ''), role: 'tab', type: 'button', 'aria-selected': String(mm.id === mundo), 'aria-label': 'mundo ' + mm.nome + (pago ? ' (versão completa)' : '') }, (pago ? '⭐' : lib ? N.separarEmojis(mm.deco)[0] : '🔒') + ' ' + mm.id);
       b.onclick = () => { if (!lib) { falar([S.fala('trancada')]); return; } mapa(mm.id); };
       abas.append(b);
     });
@@ -215,10 +232,11 @@
     let alvoScroll = null;
     fasesM.forEach(({ f, i }, k) => {
       const lib = Motor.faseLiberada(p, i); const reg = p.fases[f.id]; const pt = T.pts[k];
+      const pago = !!(PREMIUM() && PREMIUM().faseBloqueada(i));
       const estrelas = el('span', { class: 'est', 'aria-hidden': 'true' }, ...[1, 2, 3].map((n) => el('i', { class: reg && reg.estrelas >= n ? 'on' : '' }, '★')));
       const tipo = f.tipo === 'guardiao' ? 'guardiao' : f.tipo === 'historia' ? 'historia' : '';
       const b = el('button', { class: `no-fase ${lib ? '' : 'trancada'} ${i === prox ? 'proxima' : ''} ${reg && reg.dominada ? 'feita' : ''} ${tipo}`, type: 'button', style: { left: pt.x + 'px', top: pt.y + 'px' }, 'aria-label': `fase ${f.id}: ${f.nome}${lib ? '' : ' (trancada)'}`, title: f.nome },
-        el('span', { class: 'ico' }, lib ? ICONES[f.tipo] || '⭐' : '🔒'), el('span', { class: 'num' }, f.id.split('.')[1]), reg ? estrelas : null,
+        el('span', { class: 'ico' }, pago && lib ? '⭐' : lib ? ICONES[f.tipo] || '⭐' : '🔒'), el('span', { class: 'num' }, f.id.split('.')[1]), reg ? estrelas : null,
         i === prox ? el('span', { class: 'lili-aqui', 'aria-hidden': 'true' }, mascote({ mini: true })) : null);
       b.onclick = () => { if (!lib) { falar([S.fala('trancada')]); return; } Efeito.tocar('clique'); introFase(i); };
       if (i === prox) alvoScroll = b;
@@ -240,6 +258,7 @@
   // INTRODUÇÃO DA FASE + EXECUTOR
   // ======================================================================
   async function introFase(idx) {
+    if (PREMIUM() && PREMIUM().faseBloqueada(idx)) return PREMIUM().avisoCrianca(idx);
     const f = D.fases[idx]; window.Visual.aplicarCenario(f.mundo, 'jogo');
     const comecar = el('button', { class: 'btn pri grande', type: 'button' }, '▶ Começar');
     const voltar = el('button', { class: 'btn', type: 'button', onclick: () => mapa() }, '🗺️');
@@ -251,7 +270,9 @@
   function instrucaoDoItem(it) { return D.instrucoes[it.instr] || D.instrucoes[it.tipo] || ''; }
 
   async function jogarFase(idx, opc = {}) {
+    if (PREMIUM() && PREMIUM().faseBloqueada(idx)) return PREMIUM().avisoCrianca(idx);
     const f = D.fases[idx]; const p = Store.perfil;
+    evento('fase_inicio', { fase: f.id, mundo: f.mundo, revisao: !!opc.revisao });
     estado.mundoAtual = f.mundo; estado.emJogo = true; window.Visual.aplicarCenario(f.mundo, 'jogo');
     let itens = opc.itens || Motor.gerarItens(idx, p);
     Som.preCarregar(itens);
@@ -346,6 +367,8 @@
     const fim = Motor.concluirFase(p, idx, { ok, total: tot });
     const novas = Motor.verificarMedalhas(p);
     Store.salvar();
+    evento('fase_fim', { fase: f.id, mundo: f.mundo, prec: Math.round(fim.prec * 100) / 100, estrelas: fim.estrelas, dominada: !!fim.dominada });
+    if (window.Turma && window.Turma.dados) window.Turma.sincronizar();
     resultadoFase(idx, fim, novas, Motor.nivel(p) > nivelAntes);
   }
 
@@ -356,7 +379,7 @@
     // ação principal em destaque (Próxima, ou Jogar de novo quando ainda falta domínio); as demais ficam abaixo, menores
     const temProxima = idx + 1 < D.fases.length && Motor.faseLiberada(p, idx + 1);
     const principal = temProxima
-      ? el('button', { class: 'btn pri grande', type: 'button', onclick: () => introFase(idx + 1) }, '▶ Próxima')
+      ? el('button', { class: 'btn pri grande', type: 'button', onclick: () => introFase(idx + 1) }, PREMIUM() && PREMIUM().faseBloqueada(idx + 1) ? '⭐ Próxima' : '▶ Próxima')
       : el('button', { class: 'btn pri grande', type: 'button', onclick: () => jogarFase(idx) }, '🔁 Jogar de novo');
     const secundarias = el('div', { class: 'acoes' }, el('button', { class: 'btn mini', type: 'button', onclick: () => mapa() }, '🗺️ Mapa'));
     if (temProxima) secundarias.append(el('button', { class: 'btn mini', type: 'button', onclick: () => jogarFase(idx) }, '🔁 Jogar de novo'));
@@ -479,20 +502,27 @@
     ];
     return tipos[Math.floor(Math.random() * tipos.length)]();
   }
-  async function portaoPais() {
+  /** Portão para adultos (Área dos Pais, compras e turma): devolve true se a resposta estiver certa */
+  async function pedirAdulto(titulo) {
     const d = desafioAdulto(); estado.respostaPortao = d.r; // gancho para testes automatizados
     const ok = await modal((fechar) => {
       const inp = el('input', { type: 'number', inputmode: 'numeric', 'aria-label': 'resposta' });
       const confirmar = () => fechar(Number(inp.value) === d.r);
       inp.addEventListener('keydown', (e) => { if (e.key === 'Enter') confirmar(); });
       setTimeout(() => inp.focus(), 50);
-      return [el('h2', null, '👪 Área dos Pais'), el('p', null, 'Para adultos: ', el('b', null, d.p)), inp, el('div', { class: 'acoes' }, el('button', { class: 'btn', type: 'button', onclick: () => fechar(false) }, 'Cancelar'), el('button', { class: 'btn pri', type: 'button', onclick: confirmar }, 'Entrar'))];
+      return [el('h2', null, titulo || '👪 Área dos Pais'), el('p', null, 'Para adultos: ', el('b', null, d.p)), inp, el('div', { class: 'acoes' }, el('button', { class: 'btn', type: 'button', onclick: () => fechar(false) }, 'Cancelar'), el('button', { class: 'btn pri', type: 'button', onclick: confirmar }, 'Entrar'))];
     });
-    if (ok) painelPais(); else if (ok === false) toast('Resposta incorreta. Tente de novo: a pergunta muda a cada vez.');
+    if (ok === false) toast('Resposta incorreta. Tente de novo: a pergunta muda a cada vez.');
+    return !!ok;
   }
+  async function portaoPais() { if (await pedirAdulto('👪 Área dos Pais')) painelPais(); }
   function painelPais(abaInicial) {
     if (abaInicial === 'audio' || abaInicial === 'autoteste') return painelTecnico(abaInicial);
-    painelAbas('👪 Área dos Pais', [['progresso', '📊 Progresso', abaProgresso], ['config', '⚙️ Configurações', abaConfig], ['dados', '👥 Perfis e dados', abaDados], ['sobre', 'ℹ️ Sobre', abaSobre]], abaInicial || 'progresso', () => (Store.perfil ? mapa() : perfis()), '✖ Sair');
+    const abas = [['progresso', '📊 Progresso', abaProgresso]];
+    if (window.Fluencia && window.Fluencia.aba) abas.push(['fluencia', '📈 Fluência', window.Fluencia.aba]);
+    if (PREMIUM() && PREMIUM().cobraAqui()) abas.push(['premium', '⭐ Versão completa', abaPremium]);
+    abas.push(['escola', '🏫 Escola', abaEscola], ['config', '⚙️ Configurações', abaConfig], ['dados', '👥 Perfis e dados', abaDados], ['sobre', 'ℹ️ Sobre', abaSobre]);
+    painelAbas('👪 Área dos Pais', abas, abaInicial || 'progresso', () => (Store.perfil ? mapa() : perfis()), '✖ Sair');
   }
   // Área técnica: ferramentas de quem mantém o jogo (Banco de Áudio, autoteste, licenças). Fica fora do caminho dos pais.
   function painelTecnico(abaInicial) {
@@ -607,6 +637,59 @@
     c.append(el('h3', null, '🎤 Microfone (desligado por padrão)'), micBox);
     c.append(el('h3', null, '⏳ Tempo'), faixa('limiteSessaoMin', 'Sugerir pausa após (min)', 10, 40, 5), faixa('limiteDiaMin', 'Limite diário sugerido (min)', 10, 90, 5), chk('manterTela', 'Manter a tela ligada durante o jogo (Wake Lock)', () => manterTela()));
     c.append(el('h3', null, '♿ Acessibilidade'), chk('altoContraste', 'Modo de alto contraste'), chk('menosEstimulos', 'Menos estímulos visuais (sem animações, decorações e confete)'));
+    if (window.Nuvem && window.Nuvem.ativa) {
+      const est = el('input', { type: 'checkbox' }); est.checked = cfg.estatisticas === true; est.onchange = () => window.Analitica.definir(est.checked);
+      c.append(el('h3', null, '📊 Estatísticas anônimas'), el('label', { class: 'linha' }, est, 'Enviar estatísticas anônimas de uso para melhorar o jogo (sem nomes, voz, fotos ou localização)'));
+    }
+  }
+  // Versão completa: situação e atalho para os planos
+  function abaPremium(c) {
+    const P = PREMIUM(); const o = P.origem();
+    c.append(el('h3', null, '⭐ Versão completa'),
+      P.ativo() ? el('p', null, o === 'compra' ? '✅ Liberada pela compra na Google Play.' : o === 'escola' ? '✅ Liberada pela licença da escola (código de turma).' : '✅ Todos os mundos estão abertos.')
+        : el('p', null, `A versão grátis traz os Mundos 1 e 2. A versão completa abre os Mundos 3 a ${D.mundos.length}.`),
+      el('button', { class: 'btn pri', type: 'button', onclick: () => P.tela({ voltar: () => painelPais('premium'), origem: 'pais' }) }, P.ativo() ? 'Ver detalhes' : '⭐ Ver planos'));
+  }
+  // Escola: código de turma (o professor acompanha o progresso; a licença da escola libera a versão completa)
+  function abaEscola(c) {
+    const T = window.Turma; const Nv = window.Nuvem;
+    c.append(el('h3', null, '🏫 Turma da escola'));
+    if (!T || !Nv || !Nv.ativa) { c.append(el('p', null, 'A ligação com a escola não está configurada nesta versão do jogo.')); return; }
+    const ref = () => { c.innerHTML = ''; abaEscola(c); };
+    const t = T.dados; const perfis = Store.dados.perfis;
+    const lgpd = el('p', { class: 'dica-pequena' }, 'O professor vê: o nome do perfil, as fases concluídas, o tempo de jogo, os sons com dificuldade e os testes de fluência. Não enviamos voz, fotos, localização nem dados de contato. Ao sair da turma, os dados do aluno são apagados do servidor.');
+    if (t) {
+      const ate = T.licencaAte;
+      c.append(el('p', null, `Turma ${t.nome || t.codigo} (código ${t.codigo})${t.escola ? ' · ' + t.escola : ''}.`),
+        el('p', null, ate ? (ate >= new Date().toISOString().slice(0, 10) ? `⭐ Licença da escola ativa até ${new Date(ate + 'T12:00').toLocaleDateString('pt-BR')}: versão completa liberada.` : '⚠️ A licença da escola venceu.') : 'Esta turma ainda não tem licença da escola (o acompanhamento funciona mesmo assim).'),
+        el('p', null, t.ultimaSync ? `Último envio: ${new Date(t.ultimaSync).toLocaleString('pt-BR')}.` : 'Ainda não enviou o progresso.'));
+      const lista = el('div', { class: 'grade' });
+      perfis.forEach((p) => {
+        const v = T.vinculo(p.id);
+        lista.append(el('div', { class: 'figurinha' }, el('div', { class: 'fig' }, p.avatar), p.nome, el('div', null, v ? '✅ na turma' : '—'),
+          v ? el('button', { class: 'btn mini', type: 'button', onclick: async () => { if (confirm(`Tirar ${p.nome} da turma? Os dados dele(a) serão apagados do servidor.`)) { await T.sair(p.id); ref(); } } }, 'Sair')
+            : el('button', { class: 'btn mini', type: 'button', onclick: async () => { try { await T.entrar(t.codigo, [p]); toast('✅ ' + p.nome + ' entrou na turma.'); } catch (e) { toast('⚠️ ' + e.message); } ref(); } }, 'Entrar')));
+      });
+      c.append(lista, el('div', { class: 'acoes', style: { justifyContent: 'flex-start' } },
+        el('button', { class: 'btn', type: 'button', onclick: async () => { const ok = await T.sincronizar(true); toast(ok ? '✅ Progresso enviado.' : 'Sem internet agora: o jogo tenta de novo sozinho.'); ref(); } }, '🔁 Enviar progresso agora')), lgpd);
+      return;
+    }
+    const cod = el('input', { type: 'text', maxlength: '8', placeholder: 'Ex.: K7M3QX', 'aria-label': 'código da turma', style: { textTransform: 'uppercase', maxWidth: '12em' } });
+    const marcas = perfis.map((p) => { const i = el('input', { type: 'checkbox' }); i.checked = p.id === Store.dados.atual || perfis.length === 1; return [p, i]; });
+    const aut = el('input', { type: 'checkbox' });
+    const entrar = el('button', { class: 'btn pri', type: 'button' }, '🔑 Entrar na turma');
+    entrar.onclick = async () => {
+      const sel = marcas.filter(([, i]) => i.checked).map(([p]) => p);
+      if (!sel.length) { toast('Escolha pelo menos uma criança.'); return; }
+      if (!aut.checked) { toast('Marque a autorização do responsável.'); return; }
+      entrar.disabled = true;
+      try { const tt = await T.entrar(cod.value, sel); toast('✅ Entrou na turma ' + (tt.nome || '')); if (PREMIUM() && PREMIUM().escolaAtiva()) Confete.lancar(100); } catch (e) { toast('⚠️ ' + (/fetch|network|abort/i.test(e.message) ? 'Sem internet. Tente de novo.' : e.message), 4000); }
+      entrar.disabled = false; ref();
+    };
+    c.append(el('p', null, 'Se a escola usa o Ler Brincando, digite o código da turma que o professor passou. Com a licença da escola, a versão completa é liberada.'),
+      el('label', { class: 'linha' }, 'Código: ', cod),
+      perfis.length ? el('div', null, el('b', null, 'Quais crianças são da turma?'), ...marcas.map(([p, i]) => el('label', { class: 'linha' }, i, `${p.avatar} ${p.nome}`))) : el('p', { class: 'aviso' }, 'Crie o perfil da criança primeiro.'),
+      lgpd, el('label', { class: 'linha' }, aut, 'Sou o responsável (ou a escola tem a autorização dos responsáveis) e concordo com o envio desses dados ao professor.'), entrar);
   }
   // Ajustes finos de voz e liberação manual de fases (Área técnica)
   function abaAvancado(c) {
@@ -691,8 +774,10 @@
     c.append(el('h3', null, 'Ler Brincando ' + D.versao),
       el('p', null, 'Jogo para aprender a ler em português, do som para a letra (método fônico), feito para crianças de 5 a 7 anos.'),
       el('h3', null, '🔒 Privacidade'), el('ul', null,
-        el('li', null, 'Não tem anúncios, compras nem rastreadores.'),
-        el('li', null, 'O progresso fica guardado só neste aparelho. Para não perder ao trocar de celular, use "Perfis e dados" → Exportar.'),
+        el('li', null, 'Não tem anúncios nem rastreadores. A versão completa só pode ser comprada por um adulto, depois de uma pergunta para adultos.'),
+        el('li', null, 'O progresso fica guardado neste aparelho. Para não perder ao trocar de celular, use "Perfis e dados" → Exportar.'),
+        el('li', null, 'Estatísticas anônimas de uso só são enviadas com a autorização do adulto, sem nomes, voz ou localização.'),
+        el('li', null, 'Se a criança entrar numa turma da escola, o professor vê um resumo do progresso dela. Ao sair da turma, os dados são apagados do servidor.'),
         el('li', null, 'O microfone vem desligado. Só um adulto pode ligar, em Configurações.')),
       el('h3', null, '💡 Como aproveitar melhor'), el('ul', null,
         el('li', null, 'Sessões curtas, de 10 a 15 minutos, em vários dias da semana.'),
@@ -753,6 +838,6 @@
   // (o zoom por toque duplo é impedido pelo CSS touch-action: manipulation; não descartar toques rápidos,
   //  senão palmas no tambor e o botão Pronto deixam de responder no celular)
 
-  window.Cenas = { inicio, perfis, mapa, jogarFase, introFase, painelPais, painelTecnico, portaoPais, avaliacaoInicial };
+  window.Cenas = { inicio, perfis, mapa, jogarFase, introFase, painelPais, painelTecnico, portaoPais, pedirAdulto, avaliacaoInicial };
   inicio();
 })();

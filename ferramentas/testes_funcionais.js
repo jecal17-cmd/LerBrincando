@@ -41,5 +41,19 @@ const ok = (id, nome, cond, det) => r.push({ id, nome, status: cond ? 'APROVADO'
 { const p = M.novoPerfil('d'); const f = D.fases.findIndex((x) => x.id === '5.5'); let it; for (let k = 0; k < 3; k++) { it = M.G.leiaEncontre(D.fases[f], { perfil: p }); M.registrar(p, it, { ok: false, tent: 2, final: true }); }
   const depois = M.G.leiaEncontre(D.fases[f], { perfil: p });
   ok('B4', 'Adaptatividade (3 erros → menos opções)', depois.opcoes.length < it.opcoes.length || depois.opcoes.length === 3, `antes ${4} opções → depois ${depois.opcoes.length}`); }
+// F1 — Medidor de fluência: cálculo de palavras corretas por minuto (PCPM) e textos disponíveis
+{ const F = require('../fluencia.js');
+  const a = F.calcular({ lidas: 50, erros: 5, seg: 60 }), b = F.calcular({ lidas: 54, erros: 2, seg: 40 }), c = F.calcular({ lidas: 10, erros: 30, seg: 0 });
+  const textos = D.historias.filter((h) => !h.oral && h.mundo >= 3).map((h) => F.palavrasDoTexto(h.frases.map((x) => x.t), N.fraseLimpa));
+  const okCalc = a.pcpm === 45 && a.precisao === 90 && b.pcpm === 78 && b.precisao === 96 && c.erros === 10 && c.pcpm === 0;
+  const okTextos = textos.length >= 8 && textos.every((t) => t.length >= 40 && t.every((w) => !w.includes('-')));
+  ok('F1', 'Medidor de fluência (PCPM)', okCalc && okTextos, `50 lidas/5 erros/60 s → ${a.pcpm} PCPM ${a.precisao}%; 54/2/40 s → ${b.pcpm} PCPM; ${textos.length} textos de ${Math.min(...textos.map((t) => t.length))} a ${Math.max(...textos.map((t) => t.length))} palavras`); }
+// P1 — Versão completa: Mundos 1 e 2 grátis, portão para adultos antes da compra, bloqueio central na entrada da fase
+{ const g = fs.readFileSync(__dirname + '/../cenas.js', 'utf8'); const pr = fs.readFileSync(__dirname + '/../premium.js', 'utf8'); const cfg = fs.readFileSync(__dirname + '/../config.js', 'utf8');
+  const gratis = Number((cfg.match(/mundosGratis:\s*(\d+)/) || [])[1]);
+  const nGratis = D.fases.filter((f) => f.mundo <= gratis).length;
+  const bloqueia = /async function introFase\(idx\) \{\s*if \(PREMIUM\(\) && PREMIUM\(\)\.faseBloqueada\(idx\)\)/.test(g) && /async function jogarFase\(idx, opc = \{\}\) \{\s*if \(PREMIUM\(\) && PREMIUM\(\)\.faseBloqueada\(idx\)\)/.test(g);
+  const portao = /pedirAdulto\('⭐ Versão completa'\)/.test(pr) && /function pedirAdulto/.test(g);
+  ok('P1', 'Versão completa (paywall)', gratis === 2 && bloqueia && portao, `${nGratis} fases grátis (Mundos 1–${gratis}); bloqueio em introFase/jogarFase = ${bloqueia}; compra atrás do desafio para adultos = ${portao}`); }
 r.forEach((x) => console.log(`[${x.status}] ${x.id} ${x.nome}: ${x.det}`));
 fs.writeFileSync(__dirname + '/relatorio_funcionais.json', JSON.stringify(r, null, 1));
