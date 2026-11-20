@@ -43,6 +43,14 @@ jobs:
       - name: Autoteste do conteúdo (V1–V12) e testes funcionais
         run: node ferramentas/testar.js && node ferramentas/testes_funcionais.js
 
+      # Para a versão da Play (com chave), o Banco de Áudio precisa ter licença para publicar.
+      # Exceção temporária: variável do repositório PERMITIR_AUDIO_SEM_LICENCA = sim (só para testes internos).
+      - name: Licença das vozes
+        env:
+          PERMITIR: ${{ vars.PERMITIR_AUDIO_SEM_LICENCA }}
+        run: |
+          if [ "$TEM_CHAVE" = "true" ] && [ "$PERMITIR" != "sim" ]; then node ferramentas/checar_licenca_audio.js --estrito; else node ferramentas/checar_licenca_audio.js; fi
+
       - name: Monta o app (www/ → android/)
         run: npm run app:sync
 

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#7fd6f5">
+  <meta name="robots" content="noindex">
+  <title>Ler Brincando — Painel do professor</title>
+  <link rel="icon" href="icones/icone-192.png" type="image/png">
+  <link rel="stylesheet" href="fontes/fontes.css">
+  <style>
+    :root { --pri: #3a6df0; --pri2: #2147b8; --tinta: #24304f; --tinta2: #56627f; --fundo: #f4f8ff; --ok: #17804a; --aviso: #b26a00; --ruim: #b3261e; --linha: #dfe6f5; }
+    * { box-sizing: border-box; } [hidden] { display: none !important; }
+    body { margin: 0; font-family: 'Andika', system-ui, sans-serif; color: var(--tinta); background: var(--fundo); font-size: 16px; line-height: 1.45; }
+    header { background: linear-gradient(180deg, #7fd6f5, #5bb8ea); padding: .8rem 1rem; display: flex; align-items: center; gap: .8rem; flex-wrap: wrap; }
+    header img { width: 44px; height: 44px; }
+    header h1 { font-family: 'Baloo 2', system-ui, sans-serif; margin: 0; font-size: 1.4rem; flex: 1; }
+    main { max-width: 1100px; margin: 0 auto; padding: 1rem; }
+    .cartao { background: #fff; border-radius: 16px; padding: 1rem 1.2rem; box-shadow: 0 4px 14px rgba(36,48,79,.08); margin-bottom: 1rem; }
+    h2 { font-family: 'Baloo 2', system-ui, sans-serif; margin: .2rem 0 .6rem; }
+    label { display: block; margin: .5rem 0 .2rem; font-weight: 700; }
+    input, select { font: inherit; padding: .55rem .7rem; border: 2px solid var(--linha); border-radius: 10px; width: 100%; max-width: 420px; }
+    button, .botao { font: inherit; font-weight: 700; border: 0; border-radius: 10px; padding: .55rem 1rem; background: #e8eefc; color: var(--tinta); cursor: pointer; text-decoration: none; display: inline-block; }
+    button.pri { background: var(--pri); color: #fff; } button.perigo { background: #fde8e7; color: var(--ruim); }
+    button:disabled { opacity: .5; }
+    .linha { display: flex; gap: .5rem; flex-wrap: wrap; align-items: center; margin-top: .6rem; }
+    .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: .8rem; }
+    .turma { cursor: pointer; border: 2px solid transparent; }
+    .turma:hover { border-color: var(--pri); }
+    .codigo { font-family: 'Baloo 2', monospace; font-size: 1.8rem; letter-spacing: .15em; color: var(--pri2); }
+    .selo { display: inline-block; border-radius: 999px; padding: .05rem .6rem; font-size: .85rem; font-weight: 700; background: #eef2fb; }
+    .selo.ok { background: #d8f5e3; color: var(--ok); } .selo.aviso { background: #fff3cd; color: var(--aviso); }
+    table { width: 100%; border-collapse: collapse; font-size: .95rem; }
+    th, td { text-align: left; padding: .45rem .5rem; border-bottom: 1px solid var(--linha); vertical-align: top; }
+    th { font-size: .85rem; color: var(--tinta2); }
+    tr.aluno { cursor: pointer; } tr.aluno:hover { background: #f6f9ff; }
+    .detalhe td { background: #fbfcff; }
+    .ruim { color: var(--ruim); font-weight: 700; } .bom { color: var(--ok); font-weight: 700; }
+    .mini-barras { display: inline-flex; gap: 2px; align-items: flex-end; height: 28px; vertical-align: middle; }
+    .mini-barras i { width: 6px; background: var(--pri); border-radius: 2px 2px 0 0; min-height: 2px; }
+    .msg { padding: .6rem .8rem; border-radius: 10px; background: #fff3cd; margin: .6rem 0; }
+    .msg.ok { background: #d8f5e3; }
+    .resumo-turma { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: .6rem; margin: .6rem 0 1rem; }
+    .resumo-turma div { background: #f6f9ff; border-radius: 12px; padding: .6rem .8rem; }
+    .resumo-turma b { display: block; font-size: 1.5rem; font-family: 'Baloo 2', sans-serif; }
+    .pequeno { font-size: .85rem; color: var(--tinta2); }
+    @media print { header button, .nao-imprimir { display: none !important; } body { background: #fff; } .cartao { box-shadow: none; } }
+  </style>
+</head>
+<body>
+  <header><img src="icones/icone-192.png" alt=""><h1>Ler Brincando · Painel do professor</h1><span id="quem" class="pequeno"></span><button id="sair" hidden>Sair</button></header>
+  <main id="app"><p>Carregando…</p></main>
+  <script src="config.js"></script>
+  <script src="nucleo.js"></script>
+  <script src="data.js"></script>
+  <script src="professor.js"></script>
+</body>
+</html>

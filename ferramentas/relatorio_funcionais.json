@@ -40,5 +40,17 @@
   "nome": "Adaptatividade (3 erros → menos opções)",
   "status": "APROVADO",
   "det": "antes 4 opções → depois 3"
+ },
+ {
+  "id": "F1",
+  "nome": "Medidor de fluência (PCPM)",
+  "status": "APROVADO",
+  "det": "50 lidas/5 erros/60 s → 45 PCPM 90%; 54/2/40 s → 78 PCPM; 9 textos de 47 a 66 palavras"
+ },
+ {
+  "id": "P1",
+  "nome": "Versão completa (paywall)",
+  "status": "APROVADO",
+  "det": "23 fases grátis (Mundos 1–2); bloqueio em introFase/jogarFase = true; compra atrás do desafio para adultos = true"
  }
 ]

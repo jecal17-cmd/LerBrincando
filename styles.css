@@ -496,3 +496,28 @@ button.pilula { cursor: pointer; font: inherit; font-weight: 800; }
 @media (max-width: 420px) { .hud:not(.cab-painel) { flex-wrap: nowrap; gap: .3rem; } .hud:not(.cab-painel) .pilula { padding: .3em .6em; } .hud .com-rotulo .btn.redondo { width: 52px; height: 52px; } }
 .guia-linha { font-size: .95rem; padding: .3rem .6rem; line-height: 1.25; }
 .guia { max-height: 58vh; overflow: auto; }
+
+/* ===== v1.4: versão completa, escola e fluência ===== */
+.aba-mundo.pago { background: linear-gradient(180deg, #fff6d6, #ffe7a0); }
+.paywall .lista-premium { padding-left: 1.2em; line-height: 1.5; }
+.planos { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: .8rem; margin: .8rem 0; }
+.plano { display: grid; gap: .3em; justify-items: center; text-align: center; padding: 1em; border-radius: 22px; border: 3px solid #ffd54a;
+  background: linear-gradient(180deg, #fffdf3, #fff3c4); font: inherit; color: var(--tinta); box-shadow: var(--sombra); cursor: pointer; }
+.plano b { font-family: var(--fonte-ui); font-size: 1.2em; }
+.plano .preco { font-family: var(--fonte-ui); font-weight: 800; font-size: 1.5em; color: var(--pri2); }
+.plano .selo { background: var(--ok); color: #fff; border-radius: 999px; padding: .1em .7em; font-weight: 700; font-size: .85em; }
+.plano small { color: var(--tinta2); }
+.plano[disabled] { opacity: .6; }
+.plano.estatico { cursor: default; }
+.dica-pequena { font-size: .85em; color: var(--tinta2); }
+.teste-fluencia .relogio { font-size: 1.2em; min-width: 5.5em; justify-content: center; }
+.aviso-fluencia { margin: .6rem 0; font-weight: 700; }
+.aviso-fluencia.destaque { background: #ffe1e1; }
+.texto-fluencia { font-family: var(--fonte-ler); font-size: clamp(1.4rem, 4.6vw, 2.4rem); line-height: 1.9; text-align: left; }
+.texto-fluencia .pal { font: inherit; color: inherit; background: none; border: 0; border-radius: 10px; padding: 0 .12em; margin: 0; cursor: pointer; }
+.texto-fluencia:not(.ativo) .pal { cursor: default; }
+.texto-fluencia .pal.erro { background: #ffcdd2; color: #a31515; text-decoration: line-through; }
+.texto-fluencia .pal.depois { opacity: .3; }
+.barras-fluencia > div { background: var(--pri); }
+.num-grande { font-family: var(--fonte-ui); font-weight: 800; font-size: 4rem; line-height: 1; color: var(--pri2); }
+.titulo-fluencia { margin: .4rem 0 0; }

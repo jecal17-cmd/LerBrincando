@@ -1,7 +1,7 @@
 /* Fonte de dados do Ler Brincando (editável). Rode:  node ferramentas/construir_dados.js
    para gerar data.js (JSON) com os campos derivados e verificados. */
 module.exports = {
-  versao: '1.3.2',
+  versao: '1.4.0',
 
   // ------------------------------------------------------------------ MUNDOS
   mundos: [
@@ -660,9 +660,11 @@ module.exports = {
     'Voz alternativa: Piper TTS (Rhasspy/Open Home Foundation, licença MIT) com o modelo pt_BR-faber-medium. Confira a licença do modelo baixado no arquivo .onnx.json/MODEL_CARD e registre aqui.',
     'Fonemas alternativos (opcional): gravações do Alfabeto Fonético Internacional no Wikimedia Commons — a atribuição de cada arquivo usado aparece no painel do Banco de Áudio (licenças variam por arquivo).',
     'Efeitos sonoros, música e confete: gerados pelo próprio jogo (Web Audio API e canvas), sem arquivos externos.',
+    'Compras: Google Play Billing Library (plugin próprio CobrancaPlugin.java). Nuvem opcional (turma e estatísticas anônimas): Supabase, configurada em config.js; esquema e regras de acesso em supabase/esquema.sql.',
     'Personagens, histórias e textos: originais, criados para este jogo.'
   ],
   changelog: [
+    '1.4.0 — Versão completa: os Mundos 1 e 2 continuam grátis; do 3 ao 8, compra pela Google Play (feita por um adulto) ou licença da escola. Novo medidor de fluência leitora (palavras corretas por minuto) na Área dos Pais. Turma da escola: com o código do professor, o progresso aparece no painel do professor. Estatísticas anônimas de uso, só com autorização do adulto.',
     '1.3.1 — Ícone novo: a corujinha Lili dourada com letras coloridas, no app, na tela de abertura e na versão web.',
     '1.3.0 — Mais fácil de acompanhar: cada atividade mostra na tela o que fazer; a fase tem bolinhas de progresso, botão de ajuda (🛟) e de adiantar a fala (⏩); as revisões ficam para o fim da fase. Área dos Pais com resumo em linguagem simples, entrada com perguntas variadas e Área técnica separada.',
     '1.2.6 — Sons: AN, AM, EN e o som do Ã estavam mudos e foram refeitos; as sílabas com NH (NHA, NHO, NHÃ, NHÃO...) e o som do NH agora usam a voz Thalita, que pronuncia o NH corretamente.',

@@ -19,7 +19,7 @@
     <noscript>Este jogo precisa de JavaScript ativado.</noscript>
   </main>
   <canvas id="confete" aria-hidden="true"></canvas>
-  <!-- Ordem: núcleo → dados → banco de áudio (opcional) → motor → validadores → interface -->
+  <!-- Ordem: núcleo → dados → banco de áudio (opcional) → motor → validadores → interface → módulos de negócio → cenas -->
   <script src="nucleo.js"></script>
   <script src="data.js"></script>
   <script>window.AUDIO_MANIFEST = null;</script>
@@ -29,6 +29,11 @@
   <script src="visual.js"></script>
   <script src="game.js"></script>
   <script src="minijogos.js"></script>
+  <!-- Ajustes de negócio e módulos opcionais: nuvem (turma e estatísticas), versão completa e fluência -->
+  <script src="config.js"></script>
+  <script src="nuvem.js"></script>
+  <script src="premium.js"></script>
+  <script src="fluencia.js"></script>
   <script src="cenas.js"></script>
 </body>
 </html>
