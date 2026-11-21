@@ -1,7 +1,7 @@
 /* Ler Brincando — Service Worker: funciona offline após o primeiro acesso (PWA) */
-const VERSAO = 'lb-v1.4.1';
+const VERSAO = 'lb-v1.4.2';
 const NUCLEO = ['./', 'index.html', 'styles.css', 'nucleo.js', 'data.js', 'motor.js', 'validadores.js', 'game.js', 'minijogos.js', 'cenas.js', 'visual.js',
-  'config.js', 'nuvem.js', 'premium.js', 'fluencia.js',
+  'config.js', 'nuvem.js', 'premium.js', 'fluencia.js', 'ilustracoes/lista.js',
   'manifest.webmanifest', 'icones/icone.svg', 'icones/icone-192.png', 'icones/icone-512.png',
   'fontes/fontes.css', 'fontes/andika-latin-400-normal.woff2', 'fontes/andika-latin-700-normal.woff2',
   'fontes/baloo-2-latin-500-normal.woff2', 'fontes/baloo-2-latin-700-normal.woff2', 'fontes/baloo-2-latin-800-normal.woff2'];
@@ -14,6 +14,11 @@ self.addEventListener('install', (e) => {
       const r = await fetch('imagens/lista.json', { cache: 'no-cache' });
       if (r.ok) { const lista = await r.json(); await Promise.all(lista.map((f) => c.add('imagens/' + f).catch(() => {}))); }
     } catch (err) { /* sem imagens locais: usa o CDN */ }
+    // Ilustrações próprias das palavras (ilustracoes/lista.js define window.ILUSTRACOES)
+    try {
+      const r = await fetch('ilustracoes/lista.js', { cache: 'no-cache' });
+      if (r.ok) { const nomes = [...new Set(((await r.text()).match(/"[0-9A-F-]+": "([a-z0-9-]+)"/g) || []).map((x) => x.split('"')[3]))]; await Promise.all(nomes.map((n) => c.add('ilustracoes/' + n + '.webp').catch(() => {}))); }
+    } catch (err) { /* sem ilustrações: usa o OpenMoji */ }
     // Banco de Áudio: se existir, guarda o manifest e todos os arquivos
     try {
       const r = await fetch('audio/manifest.json', { cache: 'no-cache' });
