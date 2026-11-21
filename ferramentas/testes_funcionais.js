@@ -55,5 +55,13 @@ const ok = (id, nome, cond, det) => r.push({ id, nome, status: cond ? 'APROVADO'
   const bloqueia = /async function introFase\(idx\) \{\s*if \(PREMIUM\(\) && PREMIUM\(\)\.faseBloqueada\(idx\)\)/.test(g) && /async function jogarFase\(idx, opc = \{\}\) \{\s*if \(PREMIUM\(\) && PREMIUM\(\)\.faseBloqueada\(idx\)\)/.test(g);
   const portao = /pedirAdulto\('⭐ Versão completa'\)/.test(pr) && /function pedirAdulto/.test(g);
   ok('P1', 'Versão completa (paywall)', gratis === 2 && bloqueia && portao, `${nGratis} fases grátis (Mundos 1–${gratis}); bloqueio em introFase/jogarFase = ${bloqueia}; compra atrás do desafio para adultos = ${portao}`); }
+// J1 — Junta-Junta: sem a palavra silabada no banco, nada de PERA/CASA (sílaba isolada soaria errada); com ela, toca a gravação da palavra
+{ const p = M.novoPerfil('j'); const f = D.fases[D.fases.findIndex((x) => x.id === '1.5')]; const ctx = { perfil: p };
+  const sem = []; for (let k = 0; k < 150; k++) sem.push(M.G.juntar(f, ctx));
+  const ambiguasSem = sem.filter((it) => M.silabaAmbigua(M.W ? M.W[it.certo] : D.palavras.find((w) => w.p === it.certo))).length;
+  M.temSilabado = () => true; const com = []; for (let k = 0; k < 150; k++) com.push(M.G.juntar(f, ctx)); M.temSilabado = () => false;
+  const pedSilabado = com.every((it) => it.pedido.length === 1 && it.pedido[0].k === 'silabado' && it.pedido[0].s.length >= 2);
+  const total = D.palavras.filter((w) => w.s.length >= 2 && w.s.length <= 4).length, amb = D.palavras.filter((w) => w.s.length >= 2 && w.s.length <= 4 && M.silabaAmbigua(w)).length;
+  ok('J1', 'Junta-Junta com sílabas da própria palavra', ambiguasSem === 0 && pedSilabado, `sem gravação: 0 de 150 itens com sílaba ambígua (${amb} de ${total} palavras ficam de fora até o banco novo); com gravação: pedido = palavra silabada em 150/150`); }
 r.forEach((x) => console.log(`[${x.status}] ${x.id} ${x.nome}: ${x.det}`));
 fs.writeFileSync(__dirname + '/relatorio_funcionais.json', JSON.stringify(r, null, 1));

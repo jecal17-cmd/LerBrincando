@@ -54,9 +54,17 @@
     const S = {
       f: (t) => ({ k: 'frase', t }), fala: (k) => ({ k: 'frase', t: D.falas[k] || k }),
       p: (t) => ({ k: 'palavra', t }), s: (t) => ({ k: 'silaba', t }), fon: (t) => ({ k: 'fonema', t }),
-      nome: (t) => ({ k: 'nome', t }), pausa: (ms) => ({ k: 'pausa', ms })
+      nome: (t) => ({ k: 'nome', t }), pausa: (ms) => ({ k: 'pausa', ms }),
+      // sílaba DENTRO de uma palavra: o jogo toca o som que ela tem naquela palavra (PE-RA: R fraco), se o banco tiver
+      sp: (t, w, i) => ({ k: 'silaba', t, w, i }),
+      // palavra silabada ("pê … ra"): uma gravação só, com as sílabas como soam na palavra
+      sb: (w, s) => ({ k: 'silabado', t: w, s })
     };
     M.S = S;
+    /** O jogo informa se o banco tem a palavra silabada (definido em game.js; no Node, nunca tem) */
+    M.temSilabado = () => false;
+    /** Sílaba que, tocada sozinha, soa diferente do que soa na palavra: R fraco (PE-RA) ou S com som de Z (CA-SA) */
+    M.silabaAmbigua = (w) => w.s.some((s, i) => i > 0 && /[AEIOUÃÕÁÉÍÓÚÂÊÔ]$/.test(w.s[i - 1]) && /^[RS][AEIOUÃÕÁÉÍÓÚÂÊÔ]/.test(s));
 
     // ------------------------------------------------------------ adaptatividade
     function nOpc(perfil, tipo, padrao) {
@@ -169,8 +177,12 @@
       return base(f, 'somFinal', { ui: 'escolha', instr: 'somFinal', chave: 'fi:' + T.p, pedido: [S.fala('terminaComo'), S.p(T.p)], visor: { img: T.e, fala: T.p }, opcoes: opc, certo: C.p, oral: true });
     };
     G.juntar = (f, ctx, o = {}) => {
-      const T = o.foco && W[o.foco] ? W[o.foco] : escolher(D.palavras.filter((w) => w.s.length >= 2 && w.s.length <= 4));
-      const ped = []; T.s.forEach((s, i) => { if (i) ped.push(S.pausa(500)); ped.push(S.s(s)); });
+      // Junta-Junta: a criança ouve "pê … ra" e escolhe a figura. Com o banco novo, as sílabas vêm da própria palavra
+      // (palavra silabada). Sem ele, ficam de fora as palavras cuja sílaba isolada soaria errada (PERA, CASA).
+      const pool = D.palavras.filter((w) => w.s.length >= 2 && w.s.length <= 4);
+      const boas = pool.filter((w) => M.temSilabado(w.p) || !M.silabaAmbigua(w));
+      const T = o.foco && W[o.foco] && (M.temSilabado(o.foco) || !M.silabaAmbigua(W[o.foco])) ? W[o.foco] : escolher(boas.length ? boas : pool);
+      const ped = [S.sb(T.p, T.s)];
       const opc = opcoesImagem(T, D.palavras, nOpc(ctx.perfil, 'juntar', 3), (w) => w.p !== T.p);
       return base(f, 'juntar', { ui: 'escolha', instr: 'juntar', chave: 'p:' + T.p, pedido: ped, visor: { pecasSom: T.s.length }, opcoes: opc, certo: T.p, oral: true, elogio: { tipo: 'juntar', palavra: T.p } });
     };
@@ -179,7 +191,7 @@
       const fica = W[m.fica];
       const de = m.de.replace(/-/g, '');
       const opc = opcoesImagem(fica, D.palavras, nOpc(ctx.perfil, 'tirar', 3), (w) => w.p !== de);
-      const ped = [S.fala('fale'), S.p(de), m.modo === 'som' ? S.fala('semSom') : S.fala('sem'), m.modo === 'som' ? S.fon(m.tira) : S.s(m.tira)];
+      const ped = [S.fala('fale'), S.p(de), m.modo === 'som' ? S.fala('semSom') : S.fala('sem'), m.modo === 'som' ? S.fon(m.tira) : S.sp(m.tira, de, m.de.split('-').indexOf(m.tira))];
       return base(f, 'tirar', { ui: 'escolha', instr: 'tirar', chave: 'm:' + m.de, pedido: ped, visor: { img: W[de] ? W[de].e : '🪄', fala: de }, opcoes: opc, certo: fica.p, oral: true });
     };
     G.trocar = (f, ctx, o = {}) => {
@@ -187,7 +199,7 @@
       const fica = W[m.fica]; const de = m.de.replace(/-/g, '');
       const opc = opcoesImagem(fica, D.palavras, nOpc(ctx.perfil, 'trocar', 3), (w) => w.p !== de);
       if (W[de] && !opc.find((x) => x.id === de) && opc.length > 2) { const k = opc.findIndex((x) => x.id !== fica.p); opc[k] = { id: de, img: W[de].e, falar: S.p(de) }; }
-      const ped = [S.fala('troque'), S.s(m.troca), S.fala('por'), S.s(m.por), S.fala('em'), S.p(de)];
+      const ped = [S.fala('troque'), S.sp(m.troca, de, m.de.split('-').indexOf(m.troca)), S.fala('por'), S.s(m.por), S.fala('em'), S.p(de)];
       return base(f, 'trocar', { ui: 'escolha', instr: 'trocar', chave: 'm:' + m.de, pedido: ped, visor: { img: W[de] ? W[de].e : '🔄', fala: de }, opcoes: opc, certo: fica.p, oral: true });
     };
     G.memoria = (f, ctx) => {
@@ -402,17 +414,17 @@
       const pool = palavrasFoco(f.idx, (w) => w.s.length >= 2 && w.s.length <= 3);
       const T = o.foco && W[o.foco] ? W[o.foco] : escolher(pool);
       const opc = opcoesImagem(T, D.palavras, nOpc(ctx.perfil, 'fabrica', 3), (w) => w.p !== T.p);
-      return base(f, 'fabrica', { ui: 'escolha', instr: 'fabrica', chave: 'p:' + T.p, graf: T.g.slice(), pedido: [], visor: { blocos: T.s }, opcoes: opc, certo: T.p, texto: [T.p], elogio: { tipo: 'juntar', palavra: T.p }, leitura: true });
+      return base(f, 'fabrica', { ui: 'escolha', instr: 'fabrica', chave: 'p:' + T.p, graf: T.g.slice(), pedido: [], visor: { blocos: T.s, blocosDe: T.p }, opcoes: opc, certo: T.p, texto: [T.p], elogio: { tipo: 'juntar', palavra: T.p }, leitura: true });
     };
     G.trem = (f, ctx, o = {}) => {
       const complexa = f.mundo >= 6;
       let pool = palavrasFoco(f.idx, (w) => w.s.length >= 2 && w.s.length <= 4 && (!complexa || w.padrao.some((p) => p !== 'CV')));
       if (!pool.length) pool = M.dec(f.idx).filter((w) => w.s.length >= 2);
       const T = o.foco && W[o.foco] ? W[o.foco] : escolher(pool);
-      const pecas = T.s.map((s, i) => ({ id: 'p' + i, s }));
+      const pecas = T.s.map((s, i) => ({ id: 'p' + i, s, w: T.p, i }));
       if (M.nivelApoio(ctx.perfil, 'trem') === 0 && f.mundo >= 6) {
         const outra = escolher(M.dec(f.idx).filter((w) => w.p !== T.p)); const s = escolher(outra.s);
-        if (!T.s.includes(s)) pecas.push({ id: 'x', s, distrator: true });
+        if (!T.s.includes(s)) pecas.push({ id: 'x', s, w: outra.p, i: outra.s.indexOf(s), distrator: true });
       }
       return base(f, 'trem', { ui: 'trem', instr: 'trem', chave: 'p:' + T.p, graf: T.g.slice(), pedido: [S.p(T.p)], visor: { img: T.e }, palavra: T.p, silabas: T.s, pecas: embaralhar(pecas), texto: [T.p], elogio: { tipo: 'juntar', palavra: T.p } });
     };

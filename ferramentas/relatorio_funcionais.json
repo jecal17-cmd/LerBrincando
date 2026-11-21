@@ -52,5 +52,11 @@
   "nome": "Versão completa (paywall)",
   "status": "APROVADO",
   "det": "23 fases grátis (Mundos 1–2); bloqueio em introFase/jogarFase = true; compra atrás do desafio para adultos = true"
+ },
+ {
+  "id": "J1",
+  "nome": "Junta-Junta com sílabas da própria palavra",
+  "status": "APROVADO",
+  "det": "sem gravação: 0 de 150 itens com sílaba ambígua (44 de 347 palavras ficam de fora até o banco novo); com gravação: pedido = palavra silabada em 150/150"
  }
 ]

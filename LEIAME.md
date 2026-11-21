@@ -1,4 +1,10 @@
-# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.4.0
+# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.4.1
+
+> **Novidades da v1.4.1** (som das sílabas e das letras)
+> - **Sílaba com o som da própria palavra:** antes, a sílaba "RA" era sempre a mesma gravação (R forte e tônica), inclusive em PE-RA. Agora cada palavra tem uma **palavra silabada** ("pê … ra") gravada com a pronúncia exata de cada sílaba naquela palavra (R fraco, S com som de Z, E/O abertos ou fechados, átona final "tu"), recortada nas pausas. Usada no Junta-Junta, Bate-Palmas, Trem, Fábrica, Tira-sílaba, Troca-sílaba e na leitura sílaba a sílaba das histórias. Pronúncias em [docs/pronuncia_silabada.md](docs/pronuncia_silabada.md) (para revisão por alfabetizador/a); ajustes em `ferramentas/pronuncia_palavras.json`.
+> - **Junta-Junta:** toca a palavra silabada gravada inteira. Sem ela no banco, o jogo evita as palavras cuja sílaba isolada soaria errada (PERA, CASA).
+> - **Som das letras F, V, M, N, L, S, Z, J, X:** a consoante pedida sozinha ao sintetizador saía como chiado (o J não tinha voz e o Z soava como S). Agora ela é recortada de fala natural e sustentada sem artefato, com conferência automática de voz e chiado (`ferramentas/consoantes.py`).
+> - **Vozes com licença:** todo o Banco de Áudio foi regerado com o Azure; as frases das histórias são faladas de uma vez, com os tempos do karaokê estimados (erro medido de cerca de 80 ms).
 
 > **Novidades da v1.4.0** (monetização e escolas)
 > - **Versão completa:** Mundos 1 e 2 grátis; do 3 ao 8, compra pela Google Play (compra única ou assinatura anual com 7 dias grátis), sempre depois do desafio para adultos. No iOS, tudo aberto até existir a compra pela App Store. Ajustes em `config.js`; guia da Play Console em [ANDROID.md](ANDROID.md), seção 8.
