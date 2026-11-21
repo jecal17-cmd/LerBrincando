@@ -6,6 +6,7 @@
   const LB = window.LB; const MJ = window.MJ;
   const { Store, Som, Efeito, Musica, Micro, Motor, D, N, el, tela, fmt, fig, toast, modal, mascote, animarMascote, Confete, estado, aplicarModos, dormir, DEBUG } = LB;
   const S = Motor.S;
+  const FIG = window.Figuras && window.Figuras.ativo ? window.Figuras : null; // figuras próprias (figuras.js)
   const falar = (s, o) => Som.falar(s, o);
   const ICONES = { rima: '🎵', palmas: '👏', somInicial: '🔤', somFinal: '🔚', juntar: '🧩', tirar: '🪄', trocar: '🔄', memoria: '🃏', licao: '🔊', cacaSom: '👂', tracado: '✍️', abertoFechado: '😮', bingo: '🎱', historia: '📖', guardiao: '🛡️', nomeSom: '🔤', leiaEncontre: '👀', gemeos: '👯', letraPerdida: '❓', regra: '💡', fabrica: '🏭', trem: '🚂', fatiador: '✂️', freq: '✨', ditado: '✍️', trocaLetra: '🪄', frase: '📜', microfone: '🎤' };
   // Etiqueta curta de cada tipo de atividade: aparece na tela junto com a fala da Lili (o adulto lê; a criança toca para ouvir de novo)
@@ -189,7 +190,7 @@
     const comNome = (botao, nome) => el('span', { class: 'com-rotulo' }, botao, el('span', { class: 'rot', 'aria-hidden': 'true' }, nome));
     const h = el('div', { class: 'hud' },
       el('button', { class: 'pilula', type: 'button', 'aria-label': 'trocar de perfil: ' + p.nome, onclick: perfis }, el('span', { class: 'avatar' }, p.avatar), el('span', { class: 'nome-hud' }, p.nome)),
-      el('button', { class: 'pilula', type: 'button', title: 'Nível de leitor', 'aria-label': 'nível ' + D.niveis[nv].nome + '. Toque para saber mais', onclick: () => guiaMapa() }, D.niveis[nv].emoji || '🌱', ' ', el('span', { class: 'nome-nivel' }, D.niveis[nv].nome)),
+      el('button', { class: 'pilula', type: 'button', title: 'Nível de leitor', 'aria-label': 'nível ' + D.niveis[nv].nome + '. Toque para saber mais', onclick: () => guiaMapa() }, FIG ? FIG.img(FIG.enfeite(D.niveis[nv].enfeite)) : (D.niveis[nv].emoji || '🌱'), ' ', el('span', { class: 'nome-nivel' }, D.niveis[nv].nome)),
       el('span', { class: 'pilula', 'aria-label': 'moedas' }, '🪙 ', String(p.moedas)),
       el('span', { class: 'esp' }),
       bauDisp ? comNome(el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'baú diário', onclick: abrirBau }, '🎁'), 'Baú') : null,
@@ -218,7 +219,7 @@
       const primeira = D.fases.findIndex((f) => f.mundo === mm.id);
       const lib = Motor.faseLiberada(p, primeira);
       const pago = !!(PREMIUM() && PREMIUM().faseBloqueada(primeira));
-      const b = el('button', { class: 'aba-mundo' + (pago ? ' pago' : ''), role: 'tab', type: 'button', 'aria-selected': String(mm.id === mundo), 'aria-label': 'mundo ' + mm.nome + (pago ? ' (versão completa)' : '') }, (pago ? '⭐' : lib ? N.separarEmojis(mm.deco)[0] : '🔒') + ' ' + mm.id);
+      const b = el('button', { class: 'aba-mundo' + (pago ? ' pago' : ''), role: 'tab', type: 'button', 'aria-selected': String(mm.id === mundo), 'aria-label': 'mundo ' + mm.nome + (pago ? ' (versão completa)' : '') }, (pago ? '⭐' : lib ? (FIG ? FIG.img(FIG.mundo(mm.id), 'ico-mundo') : N.separarEmojis(mm.deco)[0]) : '🔒'), ' ' + mm.id);
       b.onclick = () => { if (!lib) { falar([S.fala('trancada')]); return; } mapa(mm.id); };
       abas.append(b);
     });
@@ -245,7 +246,7 @@
     const mp = el('div', { class: 'mapa' });
     if (equipMapa) mp.style.background = equipMapa.valor;
     const progM = fasesM.filter((x) => p.fases[x.f.id] && p.fases[x.f.id].dominada).length;
-    mp.append(abas, el('div', { class: 'cab-mundo' }, el('div', { class: 'placa' }, el('span', { class: 'placa-num' }, String(m.id)), el('div', null, el('h2', null, m.nome), el('div', { class: 'placa-sub' }, m.conteudo)),
+    mp.append(abas, el('div', { class: 'cab-mundo' }, el('div', { class: 'placa' }, FIG ? el('span', { class: 'placa-ilha' }, FIG.img(FIG.mundo(m.id)), el('b', null, String(m.id))) : el('span', { class: 'placa-num' }, String(m.id)), el('div', null, el('h2', null, m.nome), el('div', { class: 'placa-sub' }, m.conteudo)),
       el('div', { class: 'placa-prog', 'aria-label': `${progM} de ${fasesM.length} fases` }, el('i', { style: { width: (progM / fasesM.length * 100) + '%' } }), el('span', null, `${progM}/${fasesM.length}`)))), el('div', { class: 'rolagem-mapa' }, trilha));
     tela(hud(), mp);
     window.Visual.aplicarCenario(mundo, 'mapa');
@@ -429,7 +430,7 @@
     if (m === null) { falar([S.fala('bauJaAberto')]); return; }
     Efeito.tocar('bau'); Confete.lancar(80);
     falar([S.fala('bau')]);
-    await modal((fechar) => [el('div', { style: { fontSize: '5rem' } }, '🎁'), el('h2', null, `+${m} 🪙`), el('p', null, D.falas.bau), el('button', { class: 'btn pri', type: 'button', onclick: () => fechar() }, 'OK')]);
+    await modal((fechar) => [FIG ? el('div', { class: 'bau-grande' }, FIG.img(FIG.bau)) : el('div', { style: { fontSize: '5rem' } }, '🎁'), el('h2', null, `+${m} 🪙`), el('p', null, D.falas.bau), el('button', { class: 'btn pri', type: 'button', onclick: () => fechar() }, 'OK')]);
     mapa();
   }
   function loja() {
@@ -440,7 +441,7 @@
       grade.innerHTML = ''; prev.innerHTML = ''; prev.append(mascote({}));
       D.loja.forEach((it) => {
         const tem = p.loja.itens.includes(it.id); const equip = p.loja.equip[it.tipo === 'acessorio' ? 'acessorio' : it.tipo] === it.id;
-        const b = el('button', { class: 'figurinha', type: 'button', 'aria-label': it.nome }, el('div', { class: 'fig' }, it.emoji), it.nome, el('div', null, tem ? (equip ? '✅ usando' : 'usar') : `🪙 ${it.preco}`));
+        const b = el('button', { class: 'figurinha', type: 'button', 'aria-label': it.nome }, el('div', { class: 'fig' }, FIG && FIG.loja(it.id) ? FIG.img(FIG.loja(it.id)) : FIG && it.tipo === 'cor' ? mascote({ cor: it.valor, acessorio: null, nivel: 0, pose: 'feliz', mini: true }) : it.emoji), it.nome, el('div', null, tem ? (equip ? '✅ usando' : 'usar') : `🪙 ${it.preco}`));
         b.onclick = () => {
           const campo = it.tipo === 'acessorio' ? 'acessorio' : it.tipo;
           if (!tem) { if (p.moedas < it.preco) { toast('Faltam moedas! Jogue mais fases. 🪙'); return; } p.moedas -= it.preco; p.loja.itens.push(it.id); Efeito.tocar('moeda'); }
@@ -468,7 +469,7 @@
     const lista = el('div', { class: 'grade' });
     D.medalhas.forEach((m) => {
       const v = p.stats[m.stat] || 0; const tem = !!p.medalhas[m.id];
-      lista.append(el('div', { class: 'figurinha' + (tem ? '' : ' vazia') }, el('div', { class: 'fig' }, tem ? m.emoji : '🔒'), m.nome, el('div', { style: { fontSize: '.8em', fontWeight: 400 } }, m.desc), el('progress', { max: m.meta, value: Math.min(v, m.meta), 'aria-label': 'progresso' })));
+      lista.append(el('div', { class: 'figurinha' + (tem ? '' : ' vazia') }, el('div', { class: 'fig' }, FIG ? FIG.img(FIG.medalha(m.id), tem ? 'ico-fig' : 'ico-fig apagada') : tem ? m.emoji : '🔒'), m.nome, el('div', { style: { fontSize: '.8em', fontWeight: 400 } }, m.desc), el('progress', { max: m.meta, value: Math.min(v, m.meta), 'aria-label': 'progresso' })));
     });
     const certs = el('div', { class: 'acoes' });
     (p.certificados || []).forEach((c) => certs.append(el('button', { class: 'btn', type: 'button', onclick: () => certificado(c.mundo) }, `🎓 Mundo ${c.mundo}`)));
@@ -838,6 +839,7 @@
   // (o zoom por toque duplo é impedido pelo CSS touch-action: manipulation; não descartar toques rápidos,
   //  senão palmas no tambor e o botão Pronto deixam de responder no celular)
 
+  if (FIG) FIG.observar();
   window.Cenas = { inicio, perfis, mapa, jogarFase, introFase, painelPais, painelTecnico, portaoPais, pedirAdulto, avaliacaoInicial };
   inicio();
 })();
