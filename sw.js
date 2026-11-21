@@ -1,6 +1,6 @@
 /* Ler Brincando — Service Worker: funciona offline após o primeiro acesso (PWA) */
 const VERSAO = 'lb-v1.4.1';
-const NUCLEO = ['./', 'index.html', 'styles.css', 'nucleo.js', 'data.js', 'motor.js', 'validadores.js', 'game.js', 'minijogos.js', 'cenas.js', 'visual.js',
+const NUCLEO = ['./', 'index.html', 'styles.css', 'nucleo.js', 'data.js', 'motor.js', 'validadores.js', 'game.js', 'minijogos.js', 'cenas.js', 'visual.js', 'figuras.js',
   'config.js', 'nuvem.js', 'premium.js', 'fluencia.js',
   'manifest.webmanifest', 'icones/icone.svg', 'icones/icone-192.png', 'icones/icone-512.png',
   'fontes/fontes.css', 'fontes/andika-latin-400-normal.woff2', 'fontes/andika-latin-700-normal.woff2',
@@ -11,6 +11,8 @@ self.addEventListener('install', (e) => {
     await c.addAll(NUCLEO);
     // Imagens locais (OpenMoji): a lista é gerada por ferramentas/recursos_locais.js
     try {
+      const rf = await fetch('figuras/lista.json', { cache: 'no-cache' });
+      if (rf.ok) { const lf = await rf.json(); await Promise.all(lf.map((f) => c.add('figuras/' + f).catch(() => {}))); }
       const r = await fetch('imagens/lista.json', { cache: 'no-cache' });
       if (r.ok) { const lista = await r.json(); await Promise.all(lista.map((f) => c.add('imagens/' + f).catch(() => {}))); }
     } catch (err) { /* sem imagens locais: usa o CDN */ }

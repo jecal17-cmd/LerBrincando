@@ -69,8 +69,9 @@
     const span = el('span', { class: cls || 'fig', 'aria-hidden': 'true' });
     N.separarEmojis(emoji).forEach((pt) => {
       const code = N.codigoOpenMoji(pt);
-      let k = 0;
-      const img = el('img', { src: CDN_IMG[0](code), alt: '', draggable: 'false', loading: 'lazy', decoding: 'async' });
+      const propria = window.Figuras && window.Figuras.palavra(code);
+      let k = propria ? -1 : 0;
+      const img = el('img', { src: propria || CDN_IMG[0](code), class: propria ? 'fig-propria' : null, alt: '', draggable: 'false', loading: 'lazy', decoding: 'async' });
       img.addEventListener('error', () => { k++; if (k < CDN_IMG.length) img.src = CDN_IMG[k](code); else img.replaceWith(el('span', { class: 'emoji-nativo' }, pt)); });
       span.append(img);
     });
@@ -415,6 +416,18 @@
     const uid = 'lili' + (mascote.n = (mascote.n || 0) + 1);
     const enfeite = D.niveis[nivel].enfeite;
     const ac = opc.acessorio !== undefined ? opc.acessorio : equip.acessorio;
+    if (window.Figuras && window.Figuras.ativo) {
+      // Lili desenhada (figuras/lili): pose pelo humor, cor da Lojinha por giro de matiz, enfeite do nível e acessório por cima
+      const F = window.Figuras;
+      const caixa = el('span', { class: `mascote lili-fig ${opc.mini ? 'mini' : ''} ${opc.anim ? 'anim-' + opc.anim : ''}`, role: 'img', 'aria-label': 'Lili, a corujinha' });
+      const giro = corItem || opc.cor ? F.giroCor(cor) : 0;
+      if (enfeite === 'capa') caixa.append(F.img(F.enfeite('capa'), 'lili-enf enf-capa'));
+      const corpo = F.img(F.lili(F.poseLili(opc)), 'lili-corpo'); if (giro) corpo.style.filter = `hue-rotate(${giro}deg) saturate(1.1)`;
+      caixa.append(corpo);
+      if (!opc.mini && enfeite !== 'capa') caixa.append(F.img(F.enfeite(enfeite), 'lili-enf enf-' + enfeite));
+      if (ac) caixa.append(F.img(F.loja(ac), 'lili-enf ac-' + ac));
+      return caixa;
+    }
     const feliz = opc.humor === 'feliz';
     const olho = (x) => `<circle cx="${x}" cy="56" r="15.5" fill="#fff7e6" stroke="#ecd6a6" stroke-width="2.5"/><circle cx="${x + 1}" cy="57" r="9.5" fill="url(#${uid}i)"/><circle cx="${x + 1}" cy="57" r="4.6" fill="#3a2210"/><circle cx="${x + 3.5}" cy="53.5" r="2.6" fill="#fff"/><circle cx="${x - 1.5}" cy="60.5" r="1.2" fill="#fff" opacity=".8"/>`;
     const olhos = feliz ? `<circle cx="46" cy="56" r="15.5" fill="#fff7e6" stroke="#ecd6a6" stroke-width="2.5"/><circle cx="74" cy="56" r="15.5" fill="#fff7e6" stroke="#ecd6a6" stroke-width="2.5"/><path d="M38 58 q8 -9 16 0" stroke="#5a3214" stroke-width="4" fill="none" stroke-linecap="round"/><path d="M66 58 q8 -9 16 0" stroke="#5a3214" stroke-width="4" fill="none" stroke-linecap="round"/>`

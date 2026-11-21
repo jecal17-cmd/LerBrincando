@@ -1,6 +1,6 @@
 {
  "geral": "APROVADO",
- "data": "2026-11-21T12:22:57.980Z",
+ "data": "2026-11-21T23:22:21.395Z",
  "relatorio": [
   {
    "id": "V1",
@@ -171,7 +171,7 @@
    "nome": "Cobertura do Banco de Áudio",
    "status": "APROVADO",
    "detalhes": [],
-   "resumo": "1623 necessários · 2655 no manifest"
+   "resumo": "1623 necessários · 4348 no manifest"
   },
   {
    "id": "V12",
