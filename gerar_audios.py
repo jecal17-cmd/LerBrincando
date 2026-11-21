@@ -28,7 +28,8 @@ Uso:
 import argparse, asyncio, io, json, os, re, shutil, subprocess, sys, time, urllib.request, urllib.parse, wave
 
 VERSAO_GERADOR = 3   # (a palavra silabada e o novo recorte das consoantes não exigem refazer o banco)
-VOZ_NH = 'pt-BR-ThalitaMultilingualNeural'   # voz usada só nas sílabas com NH (motor azure)
+VOZ_PADRAO = 'pt-BR-ThalitaMultilingualNeural'   # v1.4.3: a Thalita é a voz de TODO o banco (antes só nas sílabas com NH)
+VOZ_NH = VOZ_PADRAO
 RAIZ = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, os.path.join(RAIZ, 'ferramentas'))
 import silabado as SIL                     # pronúncia de cada sílaba dentro da palavra (palavra silabada)
@@ -383,7 +384,7 @@ class MotorEdge:
             import edge_tts  # noqa
         except ImportError:
             sys.exit('Instale:  python -m pip install edge-tts')
-        self.voz = voz or 'pt-BR-FranciscaNeural'
+        self.voz = voz or VOZ_PADRAO
     async def _um(self, texto, rate):
         import edge_tts
         try:
@@ -465,7 +466,7 @@ class MotorAzure:
     def __init__(self, voz):
         self.chave = os.environ.get('AZURE_SPEECH_KEY'); self.regiao = os.environ.get('AZURE_SPEECH_REGION', 'brazilsouth')
         if not self.chave: sys.exit('Defina AZURE_SPEECH_KEY (e AZURE_SPEECH_REGION) com os dados do recurso Speech no portal do Azure.')
-        self.voz = voz or 'pt-BR-FranciscaNeural'
+        self.voz = voz or VOZ_PADRAO
         self.url = f'https://{self.regiao}.tts.speech.microsoft.com/cognitiveservices/v1'
     def _um(self, texto, rate):
         from xml.sax.saxutils import escape
@@ -683,7 +684,7 @@ def principal():
         k = it['chave']
         cands = [PRON[k]] if k in PRON else candidatos_silaba(it['texto'])
         if a.motor == 'azure' and k not in PRON and it['texto'].upper().startswith('NH'):
-            # a Francisca não pronuncia bem o NH em início de sílaba (soa "na"/"uó"); a Thalita pronuncia (escolha por escuta)
+            # NH em início de sílaba: texto comum ("nhá") soa melhor que o IPA (escolha por escuta)
             cands = ['voz:' + VOZ_NH + '|' + pronunciavel(it['texto'])] + cands
         elif a.motor == 'azure' and k not in PRON and ipa_silaba(it['texto']):
             cands = ['ipa:' + ipa_silaba(it['texto']) + '|' + pronunciavel(it['texto'])] + cands
@@ -735,14 +736,19 @@ def principal():
                 nome_f, y, tf, vz, hf, ok = melhor
                 registrar(k, y, tf, 'azure-recorte', dict(apoio=CONTINUAS[g], fonte=nome_f, vozeado=round(vz, 2), chiado=round(hf, 2)), texto=CONS.IPA_VCV[g])
                 continue
-            # nenhuma fonte passou na conferência: guarda o candidato em <chave>_candidato para escuta e mantém o som atual
+            # nenhuma fonte passou na conferência: guarda o candidato em <chave>_candidato para escuta e,
+            # nas soantes (M N L), usa a sílaba falada devagar (como no NH) em vez de manter um som de outra voz
+            if CONS and g in CONS.SOANTES:
+                x, taxa, _ = motor.sintetizar([('x', pronunciavel(CONTINUAS[g]), vl)])['x']
+                registrar(k, aparar_rel(x, taxa), taxa, 'azure', {'apoio': CONTINUAS[g]}, texto=pronunciavel(CONTINUAS[g]))
+                revisar.append(f'{k}  (consoante /{g}/: recorte reprovado; ficou a sílaba "{pronunciavel(CONTINUAS[g])}")')
             if melhor:
                 nome_f, y, tf, vz, hf, ok = melhor
                 registrar(k + '_candidato', y, tf, 'azure-recorte', dict(apoio=CONTINUAS[g], fonte=nome_f, vozeado=round(vz, 2), chiado=round(hf, 2), suspeito=True), texto=CONS.IPA_VCV[g])
                 revisar.append(f'{k}  (consoante /{g}/ fora do esperado: vozeado {vz:.2f}, chiado {hf:.2f}; o novo som ficou em {k}_candidato)')
             else:
                 revisar.append(f'{k}  (consoante /{g}/: recorte falhou)')
-            if k in man['itens']: man['itens'][k].pop('legado', None)
+            if k in man['itens'] and not (CONS and g in CONS.SOANTES): man['itens'][k].pop('legado', None)
             continue
         if a.motor == 'azure' and (not f or f['tipo'] not in ('vogal', 'continua')):
             apoio = (f or {}).get('apoio') or (g + 'A' if len(g) == 1 else g)

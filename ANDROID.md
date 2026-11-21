@@ -118,8 +118,8 @@ e rode `cd android && ./gradlew bundleRelease`.
 **não autorizam** usar o áudio num app publicado. Antes da produção na Play, gere esses tipos com uma fonte que permita a publicação:
 
 - **Pelo GitHub (recomendado):** cadastre os Secrets `AZURE_SPEECH_KEY` e `AZURE_SPEECH_REGION` (recurso "Speech" no portal do Azure, camada F0 grátis)
-  e rode **Actions → Banco de Áudio (voz licenciada) → Run workflow** com o motor `azure`. O fluxo gera os sons com a mesma voz Francisca
-  das sílabas, roda os testes e abre um Pull Request com o Banco de Áudio novo para você ouvir e aprovar. Sem conta no Azure, escolha o motor `kokoro`;
+  e rode **Actions → Banco de Áudio (voz licenciada) → Run workflow** com o motor `azure`. O fluxo gera os sons com a voz Thalita
+  (todo o banco), roda os testes e abre um Pull Request com o Banco de Áudio novo para você ouvir e aprovar. Sem conta no Azure, escolha o motor `kokoro`;
 - **Azure Speech no computador**: `python gerar_audios.py --motor azure --tipos palavra,nome,frase,hist,frasejogo --regerar` com `AZURE_SPEECH_KEY` e `AZURE_SPEECH_REGION` definidas (a camada gratuita cobre o banco inteiro), ou
 - **Kokoro** (`python gerar_audios.py --motor kokoro --refazer`, licença Apache-2.0, 100% offline), ou
 - gravação humana.

@@ -106,7 +106,7 @@
     let n = 0;
     if (/pt[-_]BR/i.test(v.lang)) n += 100; else if (/^pt/i.test(v.lang)) n += 10;
     if (/natural|neural|online/i.test(v.name)) n += 60;
-    if (/thalita|francisca/i.test(v.name)) n += 15;
+    if (/thalita/i.test(v.name)) n += 18; else if (/francisca/i.test(v.name)) n += 15;
     if (/google/i.test(v.name)) n += 40;
     if (/luciana.*(premium|enhanced|aprimorad)/i.test(v.name)) n += 45;
     else if (/luciana|fernanda|felipe/i.test(v.name)) n += 20;

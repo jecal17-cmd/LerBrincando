@@ -1,5 +1,5 @@
 # Regera o Banco de Áudio com voz LICENCIADA para publicar o app (troca os sons do edge-tts).
-# - azure (recomendado): mesma voz Francisca que o jogo já usa nas sílabas. Precisa dos Secrets
+# - azure (recomendado): voz Thalita (pt-BR-ThalitaMultilingualNeural) em todo o banco. Precisa dos Secrets
 #   AZURE_SPEECH_KEY e AZURE_SPEECH_REGION (Settings → Secrets and variables → Actions). A camada gratuita (F0) basta.
 # - kokoro: grátis e offline (Apache-2.0), mas a voz é diferente da das sílabas.
 # Ao terminar, abre um Pull Request com os sons novos para você ouvir e aprovar.

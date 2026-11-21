@@ -6,12 +6,19 @@ Aqui a consoante é RECORTADA de uma fala natural (a voz diz "aˈʒːa" ou a sí
 - vozeadas (M N L NH LH V Z J): grãos de 2 períodos alinhados ao período da voz (PSOLA simples) → som estável, sem o
   timbre metálico do esticamento por vocoder.
 O resultado passa por uma conferência automática (voz/sem voz e faixa de frequência esperadas para cada som).
+v1.4.3 — soantes (M N NH L LH): o murmúrio nasal é periódico e forte, por isso era confundido com vogal e o recorte
+pegava a transição (o M saía como ruído). Agora o trecho escolhido é o de energia concentrada no grave (abaixo de
+500 Hz), sustentado pela repetição de um único grão de 2 períodos (zumbido limpo, sem aspereza), e a conferência
+exige essa concentração no grave.
 Só usa numpy e scipy."""
 import numpy as np
 from scipy.signal import butter, sosfilt
 
 SURDAS = {'F', 'S', 'X'}
 VOZEADAS = {'V', 'Z', 'J', 'M', 'N', 'L', 'NH', 'LH'}
+SOANTES = {'M', 'N', 'NH', 'L', 'LH'}
+# fração mínima de energia abaixo de 500 Hz (murmúrio nasal ~0,8; vogal /a/ ~0,3–0,5)
+GRAVE_MIN = {'M': .65, 'N': .65, 'NH': .55, 'L': .50, 'LH': .45}
 # conferência: (vozeado mínimo, vozeado máximo, alta frequência mínima, alta frequência máxima)
 ESPERADO = {'F': (0, .25, .30, 1), 'S': (0, .25, .80, 1), 'X': (0, .25, .60, 1),
             'V': (.45, 1, 0, .60), 'Z': (.45, 1, .25, 1), 'J': (.45, 1, .20, 1),
@@ -35,6 +42,39 @@ def _periodo(q, taxa):
 def _alta_freq(q, taxa):
     s = np.abs(np.fft.rfft(q * np.hanning(len(q)))) ** 2; f = np.fft.rfftfreq(len(q), 1 / taxa)
     return float(s[f > 3000].sum() / (s.sum() + 1e-12))
+
+def _grave(q, taxa):
+    s = np.abs(np.fft.rfft(q * np.hanning(len(q)))) ** 2; f = np.fft.rfftfreq(len(q), 1 / taxa)
+    return float(s[f < 500].sum() / (s.sum() + 1e-12))
+
+def recortar_soante(x, taxa, g):
+    """Murmúrio do M/N/NH/L/LH: maior bloco periódico com energia concentrada no grave (acima do limiar do som)."""
+    rn, per, h, hop = curvas(x, taxa); fr = int(.02 * taxa)
+    gr = np.array([_grave(x[i * hop:i * hop + fr], taxa) if len(x[i * hop:i * hop + fr]) == fr else 0 for i in range(len(rn))])
+    cand = (rn > 0.04) & (per > 0.5) & (gr >= GRAVE_MIN[g])
+    melhor = (0, 0, 0); i = 0
+    while i < len(cand):
+        if cand[i]:
+            j = i
+            while j < len(cand) and cand[j]: j += 1
+            if j - i > melhor[0]: melhor = (j - i, i, j)
+            i = j
+        else: i += 1
+    n, a, b = melhor
+    if n < 6: return None   # menos de ~45 ms
+    return x[a * hop + int(.01 * taxa): b * hop + int(.01 * taxa)]
+
+def sustentar_periodico(seg, taxa, alvo):
+    """Repete um grão de 2 períodos do centro do murmúrio (sobreposição a cada período): zumbido estável e limpo."""
+    meio = seg[int(len(seg) * .25):int(len(seg) * .75)]
+    if len(meio) < int(.02 * taxa): meio = seg
+    lp = butter(6, 900, 'low', fs=taxa, output='sos')
+    _, T = _periodo(sosfilt(lp, meio)[:int(.05 * taxa)], taxa)
+    if T <= 0 or len(meio) < 2 * T + 2: return None
+    c = len(meio) // 2; grao = meio[c - T:c + T] * np.hanning(2 * T)
+    out = np.zeros(alvo + 2 * T)
+    for p in range(0, alvo, T): out[p:p + 2 * T] += grao
+    return out[:alvo]
 
 def curvas(x, taxa):
     """Energia (0–1), periodicidade abaixo de 900 Hz e fração de energia acima de 3 kHz, em quadros de 20 ms."""
@@ -96,7 +136,8 @@ def sustentar(seg, g, taxa, alvo_ms=650):
     """Prolonga a consoante recortada até alvo_ms, com entrada suave e saída mais longa."""
     n = len(seg); miolo = seg[int(n * .2):int(n * .85)] if n > int(.06 * taxa) else seg
     alvo = int(alvo_ms * taxa / 1000)
-    y = _sustentar_voz(miolo, taxa, alvo) if g in VOZEADAS else _sustentar_ruido(miolo, taxa, alvo)
+    y = sustentar_periodico(seg, taxa, alvo) if g in SOANTES else None
+    if y is None: y = _sustentar_voz(miolo, taxa, alvo) if g in VOZEADAS else _sustentar_ruido(miolo, taxa, alvo)
     a = int(.05 * taxa); b = int(.14 * taxa)
     y[:a] *= np.linspace(0, 1, a) ** 1.5; y[-b:] *= np.linspace(1, 0, b) ** 1.5
     return (y / (np.abs(y).max() + 1e-12) * 0.9).astype('float32')
@@ -107,9 +148,16 @@ def medir(y, taxa):
     at = rn > 0.2
     return (float(np.mean(per[at] > 0.5)) if at.any() else 0.0, float(np.median(h[at])) if at.any() else 0.0)
 
+def grave(y, taxa):
+    """Fração de energia abaixo de 500 Hz no trecho forte do som."""
+    m = y[int(len(y) * .2):int(len(y) * .8)]
+    return _grave(m, taxa) if len(m) > 64 else 0.0
+
 def confere(y, g, taxa):
     vz, hf = medir(y, taxa); a, b, c, d = ESPERADO[g]
-    return (a <= vz <= b and c <= hf <= d), vz, hf
+    ok = a <= vz <= b and c <= hf <= d
+    if g in SOANTES: ok = ok and grave(y, taxa) >= GRAVE_MIN[g]
+    return ok, vz, hf
 
 def zumbido(x, taxa, alvo):
     """Voz grave (abaixo de 450 Hz) tirada da vogal da própria fala: é o "zumbido" que diferencia Z de S, J de X e V de F."""
@@ -130,7 +178,7 @@ def zumbido(x, taxa, alvo):
 def fonema(x, g, taxa, alvo_ms=650):
     """Da fala natural x → som sustentado da consoante g. Devolve (som, ok, vozeado, alta_freq) ou None.
     V, Z e J sintéticos costumam sair quase sem voz (o Z soa como S): nesse caso a voz grave da vogal vizinha é somada."""
-    seg = recortar(x, taxa, g)
+    seg = recortar_soante(x, taxa, g) if g in SOANTES else recortar(x, taxa, g)
     if seg is None or len(seg) < int(.035 * taxa): return None
     y = sustentar(seg, g, taxa, alvo_ms)
     ok, vz, hf = confere(y, g, taxa)
