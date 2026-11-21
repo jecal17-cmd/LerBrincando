@@ -65,15 +65,12 @@
     (c) => `https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/${c}.svg`,
     (c) => `https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/${c.toLowerCase()}.svg`
   ];
-  // Ilustrações próprias das palavras (ilustracoes/lista.js): têm prioridade sobre o OpenMoji; se falhar, segue a cadeia acima
-  const ILUSTR = window.ILUSTRACOES || {};
   function fig(emoji, cls) {
     const span = el('span', { class: cls || 'fig', 'aria-hidden': 'true' });
     N.separarEmojis(emoji).forEach((pt) => {
       const code = N.codigoOpenMoji(pt);
-      const propria = ILUSTR[code];
-      let k = propria ? -1 : 0;
-      const img = el('img', { src: propria ? `ilustracoes/${propria}.webp` : CDN_IMG[0](code), alt: '', draggable: 'false', loading: 'lazy', decoding: 'async' });
+      let k = 0;
+      const img = el('img', { src: CDN_IMG[0](code), alt: '', draggable: 'false', loading: 'lazy', decoding: 'async' });
       img.addEventListener('error', () => { k++; if (k < CDN_IMG.length) img.src = CDN_IMG[k](code); else img.replaceWith(el('span', { class: 'emoji-nativo' }, pt)); });
       span.append(img);
     });

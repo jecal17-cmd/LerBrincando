@@ -1,7 +1,7 @@
 /* Ler Brincando — data.js (GERADO por ferramentas/construir_dados.js — edite a fonte e rode o script)
    Banco de palavras, fases, histórias, elogios, falas e regras. Formato JSON para o gerar_audios.py ler. */
 window.DADOS = {
- "versao": "1.4.2",
+ "versao": "1.4.1",
  "mundos": [
   {
    "id": 1,
@@ -3140,7 +3140,6 @@ window.DADOS = {
   "🐧"
  ],
  "creditos": [
-  "Ilustrações dos bichos e de várias palavras: criadas para este jogo.",
   "Figuras: OpenMoji, o projeto de emojis de código aberto (openmoji.org), licença CC BY-SA 4.0.",
   "Vozes: vozes neurais em português do Brasil (Francisca e Thalita, da Microsoft).",
   "Letras: fontes Andika (SIL International) e Baloo 2, licença SIL Open Font 1.1.",
@@ -3159,7 +3158,6 @@ window.DADOS = {
   "Personagens, histórias e textos: originais, criados para este jogo."
  ],
  "changelog": [
-  "1.4.2 — Ilustrações novas, mais parecidas com o bicho de verdade: 86 figuras (todos os animais e mais algumas palavras) substituem os emojis, com o corpo inteiro e cores naturais, para a criança reconhecer de primeira.",
   "1.4.1 — Sílabas com o som da própria palavra: em PE-RA o R é fraco, em CA-SA o S soa Z, em GA-TO o final soa \"tu\". O Junta-Junta toca a palavra silabada gravada inteira. Novo som das consoantes contínuas (F, V, M, N, L, S, Z, J, X), recortado de fala natural: o J deixou de ser um chiado e o Z ganhou voz. Todas as vozes com licença (Azure), e as frases das histórias voltaram a ser faladas de forma natural.",
   "1.4.0 — Versão completa: os Mundos 1 e 2 continuam grátis; do 3 ao 8, compra pela Google Play (feita por um adulto) ou licença da escola. Novo medidor de fluência leitora (palavras corretas por minuto) na Área dos Pais. Turma da escola: com o código do professor, o progresso aparece no painel do professor. Estatísticas anônimas de uso, só com autorização do adulto.",
   "1.3.1 — Ícone novo: a corujinha Lili dourada com letras coloridas, no app, na tela de abertura e na versão web.",
@@ -3585,5 +3583,5 @@ window.DADOS = {
   "H": 77,
   "X_VARIOS": 77
  },
- "geradoEm": "2026-11-21T18:16:32.137Z"
+ "geradoEm": "2026-11-21T12:22:25.388Z"
 };

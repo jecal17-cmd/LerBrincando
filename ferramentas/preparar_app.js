@@ -6,7 +6,7 @@ const RAIZ = path.join(__dirname, '..');
 const WWW = path.join(RAIZ, 'www');
 
 const ARQUIVOS = ['index.html', 'styles.css', 'nucleo.js', 'data.js', 'motor.js', 'validadores.js', 'visual.js', 'game.js', 'minijogos.js', 'cenas.js', 'config.js', 'nuvem.js', 'premium.js', 'fluencia.js', 'manifest.webmanifest'];
-const PASTAS = ['icones', 'imagens', 'ilustracoes', 'fontes'];
+const PASTAS = ['icones', 'imagens', 'fontes'];
 
 fs.rmSync(WWW, { recursive: true, force: true });
 fs.mkdirSync(WWW, { recursive: true });
