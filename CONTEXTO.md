@@ -4,6 +4,7 @@ Atualizado em 20/11/2026.
 
 - **O que é:** jogo de alfabetização em português pelo método fônico, para crianças de 5 a 7 anos. Sem anúncios nem rastreadores. Mundos 1 e 2 grátis; versão completa pela Google Play ou pela licença da escola. Funciona no navegador, offline (PWA) e como app Android e iOS (Capacitor). O manual completo está no `LEIAME.md`; a estratégia de monetização, no `ESTRATEGIA.md` do projeto.
 - **Versão atual:** 1.4.1.
+  - **v1.4.0** integrada ao `main` em 20/11/2026 (PR #11). **v1.4.1** no PR #12 (ramo `silabas-e-vozes`), aguardando integração; compilações Android e iOS aprovadas.
   - **v1.4.1 (som):** palavra silabada (`ferramentas/silabado.py`, `ferramentas/pronuncia_palavras.json`, tipo de áudio `silabado` + recortes `silpal_<palavra>_<n>`; `S.sp`/`S.sb` no motor); Junta-Junta toca a palavra silabada; consoantes contínuas recortadas de fala natural (`ferramentas/consoantes.py`); frases das histórias faladas inteiras no Azure com tempos estimados. Revisão das pronúncias em `docs/pronuncia_silabada.md`.
   - **v1.4.0 (monetização):**
     - versão completa: `premium.js` + plugin `CobrancaPlugin.java` (Play Billing 8); produtos `completo_vitalicio` e `completo_anual`; ajustes em `config.js`; guia em `ANDROID.md` §8;
