@@ -3,7 +3,9 @@
 Atualizado em 20/11/2026.
 
 - **O que é:** jogo de alfabetização em português pelo método fônico, para crianças de 5 a 7 anos. Sem anúncios nem rastreadores. Mundos 1 e 2 grátis; versão completa pela Google Play ou pela licença da escola. Funciona no navegador, offline (PWA) e como app Android e iOS (Capacitor). O manual completo está no `LEIAME.md`; a estratégia de monetização, no `ESTRATEGIA.md` do projeto.
-- **Versão atual:** 1.4.0.
+- **Versão atual:** 1.4.1.
+  - **v1.4.0** integrada ao `main` em 20/11/2026 (PR #11). **v1.4.1** no PR #12 (ramo `silabas-e-vozes`), aguardando integração; compilações Android e iOS aprovadas.
+  - **v1.4.1 (som):** palavra silabada (`ferramentas/silabado.py`, `ferramentas/pronuncia_palavras.json`, tipo de áudio `silabado` + recortes `silpal_<palavra>_<n>`; `S.sp`/`S.sb` no motor); Junta-Junta toca a palavra silabada; consoantes contínuas recortadas de fala natural (`ferramentas/consoantes.py`); frases das histórias faladas inteiras no Azure com tempos estimados. Revisão das pronúncias em `docs/pronuncia_silabada.md`.
   - **v1.4.0 (monetização):**
     - versão completa: `premium.js` + plugin `CobrancaPlugin.java` (Play Billing 8); produtos `completo_vitalicio` e `completo_anual`; ajustes em `config.js`; guia em `ANDROID.md` §8;
     - medidor de fluência (`fluencia.js`, Área dos Pais → 📈);
@@ -38,7 +40,7 @@ Atualizado em 20/11/2026.
 - **APK:** aba **Actions → App Android → Run workflow** (não roda sozinho a cada push). O guia da Play Store está no `ANDROID.md`.
 - **Pendências:**
   - Criar o projeto Supabase e preencher `config.js` (sem isso, turma e estatísticas ficam desligadas).
-  - Rodar o fluxo **Banco de Áudio (voz licenciada)** com os Secrets do Azure; a versão assinada para a Play falha enquanto houver sons do edge-tts.
+  - Pedir a um(a) alfabetizador(a) para revisar `docs/pronuncia_silabada.md` e escutar as letras F, V, M, N, L, S, Z, J, X.
   - Criar o perfil de pagamentos e os produtos na Play Console (`ANDROID.md` §8) e testar a compra com conta de teste de licença.
   - iOS: conta Apple Developer e Secrets para o TestFlight; cobrança no iOS ainda não existe (StoreKit), por isso `paywall.ios` é `false`.
   - As etiquetas de instrução e a tela "Conheça o mapa" são só visuais: para a Lili falar esses textos, inclua-os no Banco de Áudio e rode `gerar_audios`.

@@ -27,9 +27,15 @@ Uso:
 """
 import argparse, asyncio, io, json, os, re, shutil, subprocess, sys, time, urllib.request, urllib.parse, wave
 
-VERSAO_GERADOR = 3
+VERSAO_GERADOR = 3   # (a palavra silabada e o novo recorte das consoantes não exigem refazer o banco)
 VOZ_NH = 'pt-BR-ThalitaMultilingualNeural'   # voz usada só nas sílabas com NH (motor azure)
 RAIZ = os.path.dirname(os.path.abspath(__file__))
+sys.path.insert(0, os.path.join(RAIZ, 'ferramentas'))
+import silabado as SIL                     # pronúncia de cada sílaba dentro da palavra (palavra silabada)
+try:
+    import consoantes as CONS              # som das consoantes contínuas (precisa de numpy e scipy)
+except ImportError:
+    CONS = None
 PASTA = os.path.join(RAIZ, 'audio')
 META_LUFS = -16.0
 MARGEM_INI_MS, MARGEM_FIM_MS = 70, 160      # silêncio acrescentado antes/depois (evita som "comido" no início)
@@ -165,7 +171,9 @@ def lista_audios(D):
         if k not in itens: itens[k] = dict(tipo=tipo, texto=texto, chave=k, **extra)
     def sil(lst):
         for s in lst: add('silaba', maiusc(s))
-    for w in D['palavras']: add('palavra', w['p']); sil(w['s'])
+    def silabado(p, ss):
+        if len(ss) >= 2: add('silabado', maiusc(p), silabas=[maiusc(x) for x in ss])
+    for w in D['palavras']: add('palavra', w['p']); sil(w['s']); silabado(w['p'], w['s'])
     for f in D['frequentes']: add('palavra', f.replace('-', '')); sil(f.split('-'))
     for h in D['historias']:
         add('frase', h['intro']); add('frase', h['titulo'])
@@ -179,19 +187,19 @@ def lista_audios(D):
                     for p in fr['rima']['op']: add('palavra', p)
                     add('frase', fr['rima']['antes']); add('palavra', fr['rima']['com'])
                 continue
-            for tk in tokenizar(fr['t']): add('palavra', maiusc(tk['palavra'])); sil(tk['silabas'])
+            for tk in tokenizar(fr['t']): add('palavra', maiusc(tk['palavra'])); sil(tk['silabas']); silabado(tk['palavra'], tk['silabas'])
             add('hist', f"{h['id']}_{i}", frase=fr['t'], karaoke=True)
             if fr.get('lac'):
                 for o in fr['lac']['op']:
                     add('silaba' if 's' in fr['lac'] else 'fonema', o)
     for i, fr in enumerate(D['frases']):
-        for tk in tokenizar(fr['t']): add('palavra', maiusc(tk['palavra'])); sil(tk['silabas'])
+        for tk in tokenizar(fr['t']): add('palavra', maiusc(tk['palavra'])); sil(tk['silabas']); silabado(tk['palavra'], tk['silabas'])
         add('frasejogo', str(i), frase=fr['t'], karaoke=True)
     for m in D['tirar']:
-        add('palavra', m['de'].replace('-', '')); add('palavra', m['fica'])
+        add('palavra', m['de'].replace('-', '')); add('palavra', m['fica']); silabado(m['de'].replace('-', ''), m['de'].split('-'))
         if m['modo'] == 'silaba': add('silaba', m['tira'])
     for m in D['trocar']:
-        add('palavra', m['de'].replace('-', '')); add('silaba', m['troca']); add('silaba', m['por'])
+        add('palavra', m['de'].replace('-', '')); silabado(m['de'].replace('-', ''), m['de'].split('-')); add('silaba', m['troca']); add('silaba', m['por'])
     for c in 'F V M N L S Z J X P B T D C G'.split():
         for v in 'AEIOU':
             if c in 'CG' and v in 'EI': continue
@@ -464,7 +472,9 @@ class MotorAzure:
         voz = self.voz
         if texto.startswith('voz:'):  # outra voz só para este som: "voz:pt-BR-ThalitaMultilingualNeural|nhá"
             voz, _, texto = texto[4:].partition('|')
-        if texto.startswith('ipa:'):  # pronúncia exata: "ipa:ˈɲa|nhá"
+        if texto.startswith('ssml:'):  # corpo SSML pronto (palavra silabada: fonemas + pausas)
+            corpo = texto[5:]
+        elif texto.startswith('ipa:'):  # pronúncia exata: "ipa:ˈɲa|nhá"
             import unicodedata
             ipa, _, graf = texto[4:].partition('|')
             ipa = unicodedata.normalize('NFD', ipa)  # o Azure só aceita o til combinante (ĩ → i + ◌̃)
@@ -560,6 +570,24 @@ def salvar(x, taxa, nome_base):
         os.remove(wav); return nome_base + '.mp3'
     sf.write(os.path.join(PASTA, nome_base + '.wav'), x, taxa, subtype='PCM_16'); return nome_base + '.wav'
 
+def tempos_estimados(x, taxa, duracoes):
+    """Tempos (ms) de cada palavra numa frase falada de uma vez: proporção pelas durações isoladas + ajuste ao vale de energia."""
+    import numpy as np
+    hop = int(.005 * taxa)
+    rms = np.array([np.sqrt(np.mean(x[i:i + hop] ** 2) + 1e-12) for i in range(0, max(1, len(x) - hop), hop)])
+    tot = len(x) / taxa; soma = sum(duracoes) or 1
+    lim = [0.0]; acc = 0.0
+    for d in duracoes[:-1]:
+        acc += d / soma * tot; lim.append(acc)
+    lim.append(tot)
+    prop = lim[:]
+    for j in range(1, len(lim) - 1):   # procura o ponto mais silencioso a até 30 ms da estimativa (erro medido: ~80 ms)
+        c = int(prop[j] / .005); a0 = max(1, c - 6); b0 = min(len(rms) - 1, c + 6)
+        if b0 > a0:
+            t = (a0 + int(np.argmin(rms[a0:b0]))) * .005
+            if lim[j - 1] + .03 < t < prop[j + 1] - .03: lim[j] = t   # só aceita se a ordem das palavras continuar válida
+    return [{'ini': int(lim[j] * 1000), 'fim': int(lim[j + 1] * 1000)} for j in range(len(duracoes))]
+
 def tempos_silabas(tk, ini, fim):
     tot = sum(len(s) for s in tk['silabas']) or 1; acc = ini; out = []
     for s in tk['silabas']:
@@ -572,7 +600,7 @@ def principal():
     ap.add_argument('--motor', default='edge', choices=['edge', 'azure', 'kokoro', 'piper'])
     ap.add_argument('--voz', default=None)
     ap.add_argument('--velocidade', default=None, help='edge: ex. -15%% (normal); a lenta fica 20 pontos abaixo')
-    ap.add_argument('--tipos', default=None, help='lista separada por vírgula: palavra,silaba,fonema,nome,frase,hist,frasejogo')
+    ap.add_argument('--tipos', default=None, help='lista separada por vírgula: palavra,silaba,fonema,nome,frase,hist,frasejogo,silabado')
     ap.add_argument('--listar', action='store_true'); ap.add_argument('--refazer', action='store_true')
     ap.add_argument('--wikimedia', action='store_true'); ap.add_argument('--qc', action='store_true')
     ap.add_argument('--amostra', action='store_true')
@@ -687,12 +715,35 @@ def principal():
             ipa = ipa_silaba(CONTINUAS[g])
             x, taxa, _ = motor.sintetizar([('x', 'ipa:' + ipa + '|' + pronunciavel(CONTINUAS[g]), vl)])['x']
             registrar(k, aparar_rel(x, taxa), taxa, 'azure-ipa', {'apoio': CONTINUAS[g]}, texto=ipa); continue
-        if a.motor == 'azure' and f and f['tipo'] == 'continua' and g not in ('NH', 'LH'):
-            # consoante prolongada FALADA pela voz ("mː"), devagar: som natural, sem recorte nem esticamento
-            # (o esticamento artificial deixava M, N, Z... metálicos)
-            c = {'M': 'm', 'N': 'n', 'L': 'l', 'F': 'f', 'V': 'v', 'S': 's', 'Z': 'z', 'X': 'ʃ', 'J': 'ʒ'}[g]
-            x, taxa, _ = motor.sintetizar([('x', 'ipa:' + c + 'ː|' + pronunciavel(CONTINUAS[g]), '-50%')])['x']
-            registrar(k, fade(aparar_rel(x, taxa), taxa), taxa, 'azure-ipa', {'apoio': CONTINUAS[g]}, texto=c + 'ː'); continue
+        if a.motor == 'azure' and CONS and f and f['tipo'] == 'continua' and g in CONS.IPA_VCV and g not in ('NH', 'LH'):
+            # v1.4.1: a consoante pedida SOZINHA ("ʒː") saía como chiado sem voz. Agora ela é recortada de fala natural
+            # ("aˈʒːa", depois a sílaba "já") e sustentada sem artefato; uma conferência automática checa voz e chiado.
+            fontes = []
+            r = motor.sintetizar([('vcv', 'ipa:' + CONS.IPA_VCV[g] + '|a' + CONTINUAS[g].lower(), '-30%')])
+            if 'vcv' in r: fontes.append(('vcv', r['vcv'][0], r['vcv'][1]))
+            ks = 'silaba_' + slug(CONTINUAS[g]) + '_lento'
+            if ks in man['itens'] and os.path.exists(os.path.join(PASTA, man['itens'][ks]['arquivo'])):
+                xs_, ts_ = decodificar(open(os.path.join(PASTA, man['itens'][ks]['arquivo']), 'rb').read()); fontes.append(('silaba', xs_, ts_))
+            melhor = None
+            for nome_f, xf, tf in fontes:
+                res = CONS.fonema(np.asarray(xf, 'float64'), g, tf)
+                if res is None: continue
+                y, ok, vz, hf = res
+                if melhor is None or (ok and not melhor[5]): melhor = (nome_f, y, tf, vz, hf, ok)
+                if ok: break
+            if melhor and melhor[5]:
+                nome_f, y, tf, vz, hf, ok = melhor
+                registrar(k, y, tf, 'azure-recorte', dict(apoio=CONTINUAS[g], fonte=nome_f, vozeado=round(vz, 2), chiado=round(hf, 2)), texto=CONS.IPA_VCV[g])
+                continue
+            # nenhuma fonte passou na conferência: guarda o candidato em <chave>_candidato para escuta e mantém o som atual
+            if melhor:
+                nome_f, y, tf, vz, hf, ok = melhor
+                registrar(k + '_candidato', y, tf, 'azure-recorte', dict(apoio=CONTINUAS[g], fonte=nome_f, vozeado=round(vz, 2), chiado=round(hf, 2), suspeito=True), texto=CONS.IPA_VCV[g])
+                revisar.append(f'{k}  (consoante /{g}/ fora do esperado: vozeado {vz:.2f}, chiado {hf:.2f}; o novo som ficou em {k}_candidato)')
+            else:
+                revisar.append(f'{k}  (consoante /{g}/: recorte falhou)')
+            if k in man['itens']: man['itens'][k].pop('legado', None)
+            continue
         if a.motor == 'azure' and (not f or f['tipo'] not in ('vogal', 'continua')):
             apoio = (f or {}).get('apoio') or (g + 'A' if len(g) == 1 else g)
             ipa = ipa_silaba(apoio)
@@ -747,6 +798,12 @@ def principal():
             x, taxa, pw = res[nome]
             if len(pw) == len(toks):
                 pal = [{'ini': int(p['ini']), 'fim': int(p['fim'])} for p in pw]; xo = x
+            elif a.motor == 'azure' and len(toks) > 1:
+                # O Azure (REST) não informa o tempo de cada palavra. Mantém a frase NATURAL e estima os tempos:
+                # a duração de cada palavra dita sozinha vira a proporção, e cada fronteira cai no vale de energia mais próximo.
+                wr = motor.sintetizar([(f'w{i}', tk['palavra'].lower(), vn if nome == k else vl) for i, tk in enumerate(toks)])
+                dur = [len(aparar_rel(wr[f'w{i}'][0], wr[f'w{i}'][1])) / wr[f'w{i}'][1] if f'w{i}' in wr else 0.3 for i in range(len(toks))]
+                xo = aparar_rel(x, taxa); pal = tempos_estimados(xo, taxa, dur)
             else:
                 partes, pal, t = [], [], 0
                 wr = motor.sintetizar([(f'w{i}', tk['palavra'].lower(), vn if nome == k else vl) for i, tk in enumerate(toks)])
@@ -762,6 +819,30 @@ def principal():
             sils = [tempos_silabas(tk, p['ini'], p['fim']) for tk, p in zip(toks, pal)]
             xo = normalizar(xo, taxa); pico, lufs = medir(xo, taxa)
             man['itens'][nome] = dict(arquivo=salvar(xo, taxa, nome), ms=int(len(xo) / taxa * 1000), origem=a.motor, pico=pico, lufs=lufs, palavras=pal, silabas=sils)
+
+    # ---- 5) palavra silabada: "pê … ra" com a pronúncia que cada sílaba tem NAQUELA palavra (R fraco, S com som de Z,
+    #         vogal aberta/fechada, átona final), recortada nas pausas em silpal_<palavra>_<n>
+    sb = [it for it in itens if it['tipo'] == 'silabado' and not existe(it['chave'])]
+    if sb and a.motor != 'azure':
+        print(f'Palavra silabada: {len(sb)} itens ignorados (precisa do motor azure, que aceita a pronúncia exata).'); sb = []
+    if sb:
+        TAB = SIL.carregar_tabela(); print(f'Gerando {len(sb)} palavras silabadas...')
+        for i in range(0, len(sb), 40):
+            lote = []; info = {}
+            for it in sb[i:i + 40]:
+                ipas = SIL.ipa_palavra(it['texto'], it['silabas'], TAB)
+                if not ipas: revisar.append(f"{it['chave']}  (sem pronúncia automática: escreva em ferramentas/pronuncia_palavras.json)"); continue
+                lote.append((it['chave'], 'ssml:' + SIL.ssml_silabado(ipas, it['silabas']), vn)); info[it['chave']] = (it, ipas)
+            res = motor.sintetizar(lote)
+            for k, (x, taxa, _) in res.items():
+                it, ipas = info[k]; n = len(it['silabas'])
+                partes = SIL.dividir(aparar_rel(x, taxa), taxa, n)
+                registrar(k, x, taxa, 'azure-silabado', dict(silabas=n, ipa=ipas, **({} if partes else {'suspeito': True})), texto=' · '.join(ipas))
+                if not partes:
+                    revisar.append(f"{k}  (não achou {n - 1} pausa(s) entre as sílabas; o jogo usa as sílabas isoladas)"); continue
+                base = k[len('silabado_'):]
+                for j, pj in enumerate(partes): registrar(f'silpal_{base}_{j}', pj, taxa, 'azure-silabado', dict(de=k), texto=ipas[j])
+            print(f'  {min(i + 40, len(sb))}/{len(sb)}  ({time.time() - t0:.0f}s)'); salvar_manifest()
 
     man['gerado'] = time.strftime('%Y-%m-%d %H:%M'); man['voz'] = motor.voz; man['motor'] = a.motor
     man['margemIniMs'] = MARGEM_INI_MS; man.pop('sincronizado', None)

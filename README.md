@@ -33,6 +33,7 @@ código de turma e painel do professor (`professor.html`).
 | Gerar o app iOS (Simulador; TestFlight com os Secrets da Apple) | GitHub → Actions → **App iOS** → Run workflow (guia em [IOS.md](IOS.md)) |
 | Regerar o Banco de Áudio com voz licenciada | GitHub → Actions → **Banco de Áudio (voz licenciada)** (guia em [ANDROID.md](ANDROID.md), seção 7) |
 | Conferir a licença das vozes | `node ferramentas/checar_licenca_audio.js` |
+| Lista de pronúncias da palavra silabada (para revisão) | `python ferramentas/relatorio_silabado.py` → `docs/pronuncia_silabada.md` |
 | Preços, mundos grátis e ligação com a nuvem | edite `config.js` (guia da nuvem em [docs/NUVEM.md](docs/NUVEM.md)) |
 | Teste no navegador das funções da v1.4 | `python ferramentas/teste_monetizacao.py` |
 

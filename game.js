@@ -143,12 +143,14 @@
       speechSynthesis.onvoiceschanged = escolher;
     },
     chave(seg, lento) {
-      const mapa = { palavra: 'palavra', silaba: 'silaba', fonema: 'fonema', nome: 'nome', frase: 'frase', hist: 'hist', frasejogo: 'frasejogo' };
+      const mapa = { palavra: 'palavra', silaba: 'silaba', fonema: 'fonema', nome: 'nome', frase: 'frase', hist: 'hist', frasejogo: 'frasejogo', silabado: 'silabado' };
       const base = (mapa[seg.k] || 'frase') + '_' + N.slug(seg.t);
       return lento ? base + '_lento' : base;
     },
     itemBanco(seg, lento) {
       if (!this.manifest || !this.manifest.itens) return null;
+      // sílaba dentro de uma palavra: usa o recorte da palavra silabada (o som que ela tem NAQUELA palavra)
+      if (seg.k === 'silaba' && seg.w && seg.i >= 0) { const sp = this.manifest.itens['silpal_' + N.slug(seg.w) + '_' + seg.i]; if (sp) return sp; }
       const it = lento ? (this.manifest.itens[this.chave(seg, true)] || this.manifest.itens[this.chave(seg)]) : this.manifest.itens[this.chave(seg)];
       return it || null;
     },
@@ -198,7 +200,13 @@
       try {
         let grupo = [];
         const despejar = async () => { if (grupo.length) { const t = grupo.join(' ').replace(/\s+([,.!?])/g, '$1'); grupo = []; await this.tts(t, opc.lento, meu); tocouAntes = true; } };
-        for (const seg of [].concat(segs)) {
+        // palavra silabada sem gravação no banco: toca sílaba por sílaba, com pausa (cada uma no som da palavra, se houver)
+        const lista = [];
+        [].concat(segs).forEach((seg) => {
+          if (seg && seg.k === 'silabado' && !this.itemBanco(seg)) (seg.s || []).forEach((s, i) => { if (i) lista.push({ k: 'pausa', ms: 500 }); lista.push({ k: 'silaba', t: s, w: seg.t, i }); });
+          else lista.push(seg);
+        });
+        for (const seg of lista) {
           if (meu !== this.token) return false;
           if (!seg) continue;
           if (seg.k === 'pausa') { if (grupo.length && seg.ms <= 450) { if (!/[,.!?:;]$/.test(grupo[grupo.length - 1])) grupo[grupo.length - 1] += ','; continue; } await despejar(); await dormir(seg.ms); tocouAntes = false; continue; }
@@ -474,5 +482,7 @@
   // ======================================================================
   // 5. CONTINUA NAS PARTES SEGUINTES (cenas e minijogos)
   // ======================================================================
+  // o motor (sem DOM) pergunta ao banco de áudio se a palavra silabada existe
+  Motor.temSilabado = (p) => !!Som.itemBanco({ k: 'silabado', t: p });
   window.LB = { Store, Som, Efeito, Musica, Micro, Motor, D, N, el, tela, fmt, fig, toast, modal, mascote, animarMascote, Confete, estado, aplicarModos, dormir, DEBUG, $, mostrarAmbas, reduzMovimento, Sintese };
 })();

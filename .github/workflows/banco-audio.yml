@@ -15,7 +15,7 @@ on:
         options: [azure, kokoro]
         default: azure
       tipos:
-        description: 'Tipos de som a regerar'
+        description: 'Tipos de som a regerar (palavra, nome, frase, hist, frasejogo, silaba, fonema, silabado)'
         default: 'palavra,nome,frase,hist,frasejogo'
 
 permissions:

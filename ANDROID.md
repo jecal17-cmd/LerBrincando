@@ -109,7 +109,9 @@ e rode `cd android && ./gradlew bundleRelease`.
 | `config.js` | Mundos grátis, produtos e preços, link da Play e ligação com a nuvem. |
 | `ferramentas/checar_licenca_audio.js` | Conta os sons sem licença para publicação (edge-tts). |
 
-## 7. Atenção: licença das vozes (obrigatório antes de vender)
+## 7. Licença das vozes
+
+> Desde a v1.4.1, todo o Banco de Áudio é do Azure (licenciado). As instruções abaixo valem para regerar sons no futuro.
 
 **Sílabas e fonemas** já foram gerados com o **Azure Speech** (licença para apps), com pronúncia fonética exata (IPA).
 **Palavras, frases e histórias** ainda vêm do **edge-tts** (recurso "Ler em voz alta" do Microsoft Edge), cujos termos

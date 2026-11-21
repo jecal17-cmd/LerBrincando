@@ -108,11 +108,11 @@
     }
     if (v.blocos) {
       const linha = el('div', { class: 'palavra' });
-      v.blocos.forEach((s) => { const c = el('button', { class: 'chip', type: 'button' }, fmt(s)); c.addEventListener('click', () => falar([S.s(s)])); linha.append(c); });
+      v.blocos.forEach((s, i) => { const c = el('button', { class: 'chip', type: 'button' }, fmt(s)); c.addEventListener('click', () => falar([S.sp(s, v.blocosDe, i)])); linha.append(c); });
       const juntar = el('button', { class: 'btn mini', type: 'button' }, '🔗 ', D.falas.juntar);
       juntar.addEventListener('click', async () => {
         linha.style.gap = '0'; linha.querySelectorAll('.chip').forEach((c) => { c.classList.add('on'); });
-        for (const s of v.blocos) await falar([S.s(s)]);
+        for (let i = 0; i < v.blocos.length; i++) await falar([S.sp(v.blocos[i], v.blocosDe, i)]);
         linha.querySelectorAll('.chip').forEach((c) => c.classList.remove('on'));
       });
       box.append(linha, juntar);
@@ -246,7 +246,7 @@
       if (tent === 1) { await falar([S.fala('escuteDevagar')]); await falar([S.p(item.palavra)], { lento: true }); }
       else if (tent === 2) {
         await falar([S.f(D.dicasTipo.palmas)]); pontos.innerHTML = '';
-        for (const s of item.silabas) { Efeito.tocar('palma'); pontos.append(el('i', { class: 'demo' })); await falar([S.s(s)]); }
+        for (let i = 0; i < item.silabas.length; i++) { Efeito.tocar('palma'); pontos.append(el('i', { class: 'demo' })); await falar([S.sp(item.silabas[i], item.palavra, i)]); }
         await dormir(400); pontos.innerHTML = ''; await falar([S.fala('agoraVoce')]);
       } else { assistido = true; pontos.innerHTML = ''; for (let k = 0; k < item.certo; k++) pontos.append(el('i', { class: 'demo' })); n = item.certo; await falar([S.fala('toqueAqui')]); }
       if (!assistido) { n = 0; pontos.innerHTML = ''; }
@@ -276,7 +276,7 @@
       if (ocupado.has(vagao)) { const antiga = ocupado.get(vagao); pecasBox.append(antiga); ocupado.delete(vagao); }
       for (const [v, p] of ocupado) if (p === peca) ocupado.delete(v);
       vagao.innerHTML = ''; vagao.append(peca); ocupado.set(vagao, peca); peca.classList.remove('sel'); selecionada = null;
-      Efeito.tocar('clique'); falar([S.s(peca._p.s)]);
+      Efeito.tocar('clique'); falar([S.sp(peca._p.s, peca._p.w, peca._p.i)]);
     };
     let resolverCheio = null;
     const verificarCheio = () => { if (ocupado.size === vagoes.length && resolverCheio) { const r = resolverCheio; resolverCheio = null; r(); } };
@@ -285,7 +285,7 @@
       peca.addEventListener('click', () => {
         if (peca._arrastou) { peca._arrastou = false; return; }
         if (peca.parentElement.classList.contains('vagao')) { const v = peca.parentElement; ocupado.delete(v); pecasBox.append(peca); return; }
-        pecas.forEach((p) => p.classList.remove('sel')); selecionada = peca; peca.classList.add('sel'); falar([S.s(peca._p.s)]);
+        pecas.forEach((p) => p.classList.remove('sel')); selecionada = peca; peca.classList.add('sel'); falar([S.sp(peca._p.s, peca._p.w, peca._p.i)]);
       });
       // arrastar (toque e mouse)
       peca.addEventListener('pointerdown', (e) => {
@@ -742,7 +742,7 @@
   /** Lê a palavra sílaba por sílaba: BO-la → bo-LA → BOLA */
   async function silabaPorSilaba(btn, silabas, palavra, ctx) {
     const sp = [...btn.querySelectorAll('.sil')];
-    for (let i = 0; i < sp.length; i++) { if (ctx.sinal.aborted) return; sp.forEach((x) => x.classList.remove('on')); sp[i].classList.add('on'); await falar([S.s(silabas[i])], { lento: true }); }
+    for (let i = 0; i < sp.length; i++) { if (ctx.sinal.aborted) return; sp.forEach((x) => x.classList.remove('on')); sp[i].classList.add('on'); await falar([S.sp(silabas[i], palavra, i)], { lento: true }); }
     sp.forEach((x) => x.classList.remove('on')); btn.classList.add('on'); await falar([S.p(palavra)]); btn.classList.remove('on');
   }
   MJ.historia = async (item, ctx) => {
