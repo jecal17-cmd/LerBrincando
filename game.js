@@ -67,9 +67,10 @@
   ];
   function fig(emoji, cls) {
     const span = el('span', { class: cls || 'fig', 'aria-hidden': 'true' });
-    N.separarEmojis(emoji).forEach((pt) => {
+    const partes = N.separarEmojis(emoji);
+    partes.forEach((pt) => {
       const code = N.codigoOpenMoji(pt);
-      const propria = window.Figuras && window.Figuras.palavra(code);
+      const propria = window.Figuras && window.Figuras.palavra(code, partes.length > 1);
       let k = propria ? -1 : 0;
       const img = el('img', { src: propria || CDN_IMG[0](code), class: propria ? 'fig-propria' : null, alt: '', draggable: 'false', loading: 'lazy', decoding: 'async' });
       img.addEventListener('error', () => { k++; if (k < CDN_IMG.length) img.src = CDN_IMG[k](code); else img.replaceWith(el('span', { class: 'emoji-nativo' }, pt)); });

@@ -1,7 +1,7 @@
 /* Fonte de dados do Ler Brincando (editável). Rode:  node ferramentas/construir_dados.js
    para gerar data.js (JSON) com os campos derivados e verificados. */
 module.exports = {
-  versao: '1.4.2',
+  versao: '1.4.3',
 
   // ------------------------------------------------------------------ MUNDOS
   mundos: [
@@ -664,6 +664,7 @@ module.exports = {
     'Personagens, histórias e textos: originais, criados para este jogo.'
   ],
   changelog: [
+    '1.4.3 — Mais 80 palavras com figuras novas no estilo da Lili (agora são 96), entre elas PATO e PATA, BICO, BOTA e SAPATO.',
     '1.4.2 — Figuras novas no estilo da Lili: as palavras do Vale das Vogais, os botões, as ilhas dos mundos, as medalhas, a Lojinha, os avatares e a própria Lili, que agora acena, comemora e pensa junto com a criança.',
     '1.4.1 — Sílabas com o som da própria palavra: em PE-RA o R é fraco, em CA-SA o S soa Z, em GA-TO o final soa "tu". O Junta-Junta toca a palavra silabada gravada inteira. Novo som das consoantes contínuas (F, V, M, N, L, S, Z, J, X), recortado de fala natural: o J deixou de ser um chiado e o Z ganhou voz. Todas as vozes com licença (Azure), e as frases das histórias voltaram a ser faladas de forma natural.',
     '1.4.0 — Versão completa: os Mundos 1 e 2 continuam grátis; do 3 ao 8, compra pela Google Play (feita por um adulto) ou licença da escola. Novo medidor de fluência leitora (palavras corretas por minuto) na Área dos Pais. Turma da escola: com o código do professor, o progresso aparece no painel do professor. Estatísticas anônimas de uso, só com autorização do adulto.',

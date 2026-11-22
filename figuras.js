@@ -5,8 +5,20 @@
   'use strict';
   const B = 'figuras/';
   // Palavras: código OpenMoji → arquivo (mesmo nome)
-  const PALAVRAS = ['1FA80', '1F426', '1F95A', '1F347', '1F475', '1F474', '1F931', '1F9E6', '1F9F2', '1F467', '1F466', '1F6A2', '2744', '1F9CD', '1F319', '1F991'];
-  // IOIÔ AVE OVO UVA VOVÓ VOVÔ MAMÃE MEIA ÍMÃ MENINA MENINO NAVIO NEVE FILA LUA LULA
+  const PALAVRAS = [
+    '1FA80', '1F426', '1F95A', '1F347', '1F475', '1F474', '1F931', '1F9E6', '1F9F2', '1F467', '1F466', '1F6A2',
+    '2744', '1F9CD', '1F319', '1F991', '1F31E', '1F337', '1F345', '1F34C', '1F34D', '1F36C', '1F372', '1F373',
+    '1F382', '1F3B2', '1F3B5', '1F3B9', '1F3CD', '1F3D8', '1F3EC', '1F402', '1F40B', '1F410', '1F417', '1F41F',
+    '1F42B', '1F438', '1F43A', '1F444', '1F462', '1F468', '1F469', '1F476', '1F487', '1F4E6', '1F4F7', '1F50C',
+    '1F50D', '1F512', '1F514', '1F56F', '1F5D1', '1F5F3', '1F5FA', '1F6CB', '1F6CF', '1F6F4', '1F6F6', '1F951',
+    '1F952', '1F954', '1F957', '1F95B', '1F986', '1F98C', '1F9A3', '1F9B6', '1F9DA', '1F9E2', '1F9E4', '1F9F0',
+    '1F9F1', '1F9F3', '1F9F6', '1F9FC', '1FA79', '1FA81', '1FA86', '1FA99', '1FA9F', '1FAB5', '1FAB6', '1FACF',
+    '1FAD2', '1FAD6', '1FAD9', '260E', '2615', '261D', '26BD', '27A1', '1F425', '1F43E', '1F45E', '1F6E9'
+  ];
+  // 1ª leva (16): IOIÔ AVE OVO UVA VOVÓ VOVÔ MAMÃE MEIA ÍMÃ MENINA MENINO NAVIO NEVE FILA LUA LULA; 2ª leva (78): ver figuras/palavras
+  // Figuras desenhadas para o sentido da palavra no jogo, diferente do emoji usado nas histórias
+  // (BICO = cabeça de pássaro com bico, nas histórias 🐥 é o pintinho; PATA = a pata, fêmea do pato, nas histórias 🐾 é pegada)
+  const SO_PALAVRA = ['1F425', '1F43E'];
   // Ícones da interface que aparecem como texto (botões, placas, avisos)
   const UI = {
     '🔊': 'ouvir', '🐢': 'devagar', '🔒': 'cadeado', '⭐': 'estrela', '🪙': 'moeda', '🎁': 'presente',
@@ -76,7 +88,8 @@
 
   window.Figuras = {
     ativo: true,
-    palavra: (code) => (PALAVRAS.includes(code) ? B + 'palavras/' + code + '.webp' : null),
+    // emCena = figura montada com vários emojis (histórias): aí as figuras que só valem para a palavra ficam de fora
+    palavra: (code, emCena) => (PALAVRAS.includes(code) && !(emCena && SO_PALAVRA.includes(code)) ? B + 'palavras/' + code + '.webp' : null),
     mundo: (id) => B + 'mundos/mundo' + id + '.webp',
     bau: B + 'mundos/bau.webp',
     medalha: (id) => B + 'medalhas/' + id + '.webp',
