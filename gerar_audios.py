@@ -273,29 +273,65 @@ def prolongar(seg, taxa, alvo_ms=800):
             out = np.concatenate([out[:-cf], a * (1 - r) + b * r, meio[cf:]])
         return fade(out[:alvo], taxa)
 
-def normalizar(x, taxa):
+def lufs_integrado(x, taxa):
+    """Loudness integrada (ITU-R BS.1770: filtro K + blocos de 400 ms com portões −70 e −10). Sem dependências além de scipy."""
     import numpy as np
-    try:
-        import pyloudnorm as pyln
-        if len(x) > taxa * 0.4:
-            m = pyln.Meter(taxa); l = m.integrated_loudness(x)
-            if np.isfinite(l): x = pyln.normalize.loudness(x, l, META_LUFS)
-    except Exception:
-        rms = np.sqrt(np.mean(x ** 2) + 1e-12); alvo = 10 ** ((META_LUFS - 3) / 20)  # aproximação por RMS
-        x = x * (alvo / rms)
+    from scipy.signal import lfilter
+    def biquad(tipo, f0, q, g=0.0):
+        A = 10 ** (g / 40); w = 2 * np.pi * f0 / taxa; al = np.sin(w) / (2 * q); c = np.cos(w)
+        if tipo == 'shelf':
+            b = [A * ((A + 1) + (A - 1) * c + 2 * np.sqrt(A) * al), -2 * A * ((A - 1) + (A + 1) * c), A * ((A + 1) + (A - 1) * c - 2 * np.sqrt(A) * al)]
+            a = [(A + 1) - (A - 1) * c + 2 * np.sqrt(A) * al, 2 * ((A - 1) - (A + 1) * c), (A + 1) - (A - 1) * c - 2 * np.sqrt(A) * al]
+        else:
+            b = [(1 + c) / 2, -(1 + c), (1 + c) / 2]; a = [1 + al, -2 * c, 1 - al]
+        return np.array(b) / a[0], np.array(a) / a[0]
+    y = np.asarray(x, 'float64')
+    for t, f0, q, g in (('shelf', 1500, 1 / np.sqrt(2), 4.0), ('hp', 38, 0.5, 0)): y = lfilter(*biquad(t, f0, q, g), y)
+    n, h = int(.4 * taxa), int(.1 * taxa)
+    if len(y) < n: return float('-inf')
+    z = np.array([np.mean(y[i:i + n] ** 2) for i in range(0, len(y) - n + 1, h)])
+    l = -0.691 + 10 * np.log10(z + 1e-20)
+    z = z[l > -70]
+    if not len(z): return float('-inf')
+    rel = -0.691 + 10 * np.log10(z.mean()) - 10
+    z = z[-0.691 + 10 * np.log10(z) > rel]
+    return float(-0.691 + 10 * np.log10(z.mean()))
+
+def limitar(x, taxa, teto=0.98):
+    """Limitador suave: abaixa só os picos (ataque 2 ms, soltura 60 ms), em vez de abaixar o som inteiro."""
+    import numpy as np
+    from scipy.ndimage import maximum_filter1d
+    from scipy.signal import lfilter
+    env = maximum_filter1d(np.abs(x), size=max(1, int(.004 * taxa)))
+    g = np.minimum(1.0, teto / (env + 1e-12))
+    k = np.exp(-1 / (.06 * taxa)); gs = np.empty_like(g); v = 1.0
+    for i, gi in enumerate(g):
+        v = gi if gi < v else k * v + (1 - k) * gi; gs[i] = v
+    return x * gs
+
+def normalizar(x, taxa):
+    """Volume em −16 LUFS. Vozes com picos fortes (Thalita) passam pelo limitador antes do ajuste final,
+    para não ficarem abaixo de −18 LUFS por causa de um pico isolado."""
+    import numpy as np
+    x = np.asarray(x, 'float64')
+    if len(x) > taxa * 0.4:
+        for _ in range(8):
+            l = lufs_integrado(x, taxa)
+            if not np.isfinite(l): break
+            x = x * 10 ** ((META_LUFS - l) / 20)
+            if np.max(np.abs(x)) <= 0.98: break
+            x = limitar(x, taxa)
+    else:
+        rms = np.sqrt(np.mean(x ** 2) + 1e-12); x = x * (10 ** ((META_LUFS - 3) / 20) / rms)  # som curto: aproximação por RMS
     pico = np.max(np.abs(x)) if len(x) else 0
     if pico > 0.98: x = x * (0.98 / pico)
-    return x
+    return x.astype('float32')
 
 def medir(x, taxa):
     import numpy as np
     pico = 20 * np.log10(np.max(np.abs(x)) + 1e-9) if len(x) else -120
-    lufs = None
-    try:
-        import pyloudnorm as pyln
-        if len(x) > taxa * 0.4: lufs = round(float(pyln.Meter(taxa).integrated_loudness(x)), 1)
-    except Exception:
-        rms = np.sqrt(np.mean(x ** 2) + 1e-12); lufs = round(float(20 * np.log10(rms) + 3), 1)
+    if len(x) > taxa * 0.4: lufs = round(lufs_integrado(x, taxa), 1)
+    else: lufs = round(float(20 * np.log10(np.sqrt(np.mean(np.asarray(x, 'float64') ** 2) + 1e-12)) + 3), 1)
     if lufs is not None and not np.isfinite(lufs): lufs = None   # som mudo: -inf quebraria o manifest (JSON inválido)
     return round(float(max(pico, -120)), 1), lufs
 
