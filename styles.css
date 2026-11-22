@@ -524,8 +524,9 @@ button.pilula { cursor: pointer; font: inherit; font-weight: 800; }
 
 /* ---------- figuras próprias (figuras.js / pasta figuras/) ---------- */
 .ico-fig { width: 1.25em; height: 1.25em; vertical-align: -0.28em; display: inline-block; object-fit: contain; filter: drop-shadow(0 2px 2px rgba(0, 0, 0, .12)); }
-.btn.redondo .ico-fig, .botao-ouvir .ico-fig, .tambor .ico-fig { width: 1.5em; height: 1.5em; }
-.tambor .ico-fig { width: 2.2em; height: 2.2em; }
+.btn.redondo .ico-fig, .botao-ouvir .ico-fig { width: 1.5em; height: 1.5em; }
+.tambor { display: inline-grid; place-items: center; padding: 0; line-height: 1; }
+.tambor .ico-fig { width: 1.05em; height: 1.05em; vertical-align: middle; }
 .fig .ico-fig, .figurinha .fig img { width: 1.6em; height: 1.6em; }
 .ico-fig.apagada { filter: grayscale(1) opacity(.35); }
 .fig img.fig-propria { filter: drop-shadow(0 4px 4px rgba(0, 0, 0, .15)); }
@@ -537,19 +538,6 @@ button.pilula { cursor: pointer; font: inherit; font-weight: 800; }
 .bau-grande img { width: 9rem; height: 9rem; object-fit: contain; }
 /* Lili em figura: corpo + enfeites por cima, posições em % da caixa */
 .lili-fig { position: relative; display: inline-block; aspect-ratio: 1 / 1; isolation: isolate; }
-.lili-fig img { position: absolute; object-fit: contain; pointer-events: none; }
+.lili-fig img { position: absolute; object-fit: contain; pointer-events: none; transform-origin: 50% 50%; }
 .lili-fig .lili-corpo { inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 6px 6px rgba(0, 0, 0, .15)); }
-.lili-fig .enf-capa { left: 6%; top: 34%; width: 88%; height: 66%; z-index: -1; position: absolute; }
-.lili-fig .enf-casca { left: 14%; top: 66%; width: 72%; height: 36%; }
-.lili-fig .enf-broto { left: 38%; top: -12%; width: 24%; height: 24%; }
-.lili-fig .enf-flor { left: 39%; top: -8%; width: 22%; height: 22%; }
-.lili-fig .enf-chapeuExplorador { left: 18%; top: -16%; width: 64%; height: 40%; }
-.lili-fig .enf-mochila { left: 72%; top: 46%; width: 30%; height: 34%; }
-.lili-fig .enf-lupa { left: 70%; top: 58%; width: 30%; height: 30%; }
-.lili-fig .enf-capelo { left: 20%; top: -18%; width: 60%; height: 40%; }
-.lili-fig .ac-laco { left: 33%; top: 0%; width: 34%; height: 24%; }
-.lili-fig .ac-oculos { left: 20%; top: 26%; width: 60%; height: 26%; }
-.lili-fig .ac-cachecol { left: 22%; top: 52%; width: 56%; height: 34%; }
-.lili-fig .ac-chapeu { left: 30%; top: -16%; width: 40%; height: 36%; }
-.lili-fig .ac-coroa { left: 30%; top: -14%; width: 40%; height: 28%; }
 .figurinha .fig .lili-fig.mini { width: 3.4rem; }

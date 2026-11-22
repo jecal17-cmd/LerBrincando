@@ -1,7 +1,7 @@
 /* Fonte de dados do Ler Brincando (editável). Rode:  node ferramentas/construir_dados.js
    para gerar data.js (JSON) com os campos derivados e verificados. */
 module.exports = {
-  versao: '1.4.4',
+  versao: '1.4.5',
 
   // ------------------------------------------------------------------ MUNDOS
   mundos: [
@@ -664,6 +664,7 @@ module.exports = {
     'Personagens, histórias e textos: originais, criados para este jogo.'
   ],
   changelog: [
+    '1.4.5 — Todas as 363 palavras com figuras no estilo da Lili. A Lili sai de dentro da casca do ovo, usa o cachecol no pescoço e os enfeites ficam no lugar certo em cada pose. O tambor do Bate-Palmas voltou para dentro do círculo.',
     '1.4.4 — Mais 144 palavras com figuras novas no estilo da Lili: agora são 240.',
     '1.4.3 — Mais 80 palavras com figuras novas no estilo da Lili (agora são 96), entre elas PATO e PATA, BICO, BOTA e SAPATO.',
     '1.4.2 — Figuras novas no estilo da Lili: as palavras do Vale das Vogais, os botões, as ilhas dos mundos, as medalhas, a Lojinha, os avatares e a própria Lili, que agora acena, comemora e pensa junto com a criança.',

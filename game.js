@@ -422,11 +422,19 @@
       const F = window.Figuras;
       const caixa = el('span', { class: `mascote lili-fig ${opc.mini ? 'mini' : ''} ${opc.anim ? 'anim-' + opc.anim : ''}`, role: 'img', 'aria-label': 'Lili, a corujinha' });
       const giro = corItem || opc.cor ? F.giroCor(cor) : 0;
-      if (enfeite === 'capa') caixa.append(F.img(F.enfeite('capa'), 'lili-enf enf-capa'));
-      const corpo = F.img(F.lili(F.poseLili(opc)), 'lili-corpo'); if (giro) corpo.style.filter = `hue-rotate(${giro}deg) saturate(1.1)`;
+      const pose = F.poseLili(opc);
+      const corpo = F.img(F.lili(pose), 'lili-corpo'); if (giro) corpo.style.filter = `hue-rotate(${giro}deg) saturate(1.1)`;
       caixa.append(corpo);
-      if (!opc.mini && enfeite !== 'capa') caixa.append(F.img(F.enfeite(enfeite), 'lili-enf enf-' + enfeite));
-      if (ac) caixa.append(F.img(F.loja(ac), 'lili-enf ac-' + ac));
+      // enfeite do nível e acessório encaixados nos olhos da pose (figuras.js → encaixar)
+      // peças 3D (casca do ovo, cachecol) vêm em duas camadas: a parte de trás atrás da Lili e a da frente na frente
+      const por = (nome) => {
+        if (F.DUAS_CAMADAS.includes(nome)) {
+          const tras = F.encaixar(F.img(F.enfeite(nome + '_tras'), 'lili-enf'), nome, pose); tras.style.zIndex = '-1';
+          caixa.append(tras, F.encaixar(F.img(F.enfeite(nome + '_frente'), 'lili-enf'), nome, pose));
+        } else caixa.append(F.encaixar(F.img(F.enfeite(nome), 'lili-enf'), nome, pose));
+      };
+      if (!opc.mini && enfeite) por(enfeite);
+      if (ac) por(ac);
       return caixa;
     }
     const feliz = opc.humor === 'feliz';

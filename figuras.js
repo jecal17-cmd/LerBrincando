@@ -25,9 +25,20 @@
     '1F983', '1F984', '1F988', '1F989', '1F98B', '1F98D', '1F98E', '1F990', '1F998', '1F99A', '1F99C', '1F99D',
     '1F9AB', '1F9AD', '1F9B5', '1F9B7', '1F9C2', '1F9C3', '1F9D9', '1F9DB', '1F9DC', '1F9DF', '1F9F4', '1F9FD',
     '1FA91', '1FA9C', '1FAA2', '1FAA3', '1FAA5', '1FAAE', '1FAB0', '1FAB2', '1FAB3', '1FAB4', '1FABC', '1FABF',
-    '1FAD1', '1FAD8', '2600', '2601', '2604', '26F5', '2702', '2708', '2709', '270B', '270F', '2B50'
+    '1FAD1', '1FAD8', '2600', '2601', '2604', '26F5', '2702', '2708', '2709', '270B', '270F', '2B50',
+    '1F30E', '1F310', '1F327', '1F32D', '1F330', '1F338', '1F339', '1F33B', '1F33D', '1F33E', '1F343', '1F349',
+    '1F34E', '1F351', '1F352', '1F35A', '1F35D', '1F369', '1F36B', '1F375', '1F37D', '1F37E', '1F380', '1F381',
+    '1F392', '1F3AA', '1F3BA', '1F3C5', '1F3C6', '1F3D6', '1F3DD', '1F3DE', '1F3E5', '1F3ED', '1F3F9', '1F406',
+    '1F411', '1F414', '1F41A', '1F41D', '1F41E', '1F424', '1F42C', '1F42D', '1F42F', '1F430', '1F436', '1F43F',
+    '1F441', '1F442', '1F452', '1F456', '1F478', '1F4AA', '1F4CF', '1F4D6', '1F4F1', '1F4FB', '1F50B', '1F511',
+    '1F577', '1F5BC', '1F612', '1F680', '1F686', '1F687', '1F691', '1F695', '1F697', '1F69A', '1F69C', '1F6B2',
+    '1F6DE', '1F6F7', '1F916', '1F921', '1F934', '1F944', '1F955', '1F95E', '1F96A', '1F980', '1F987', '1F98A',
+    '1F98F', '1F992', '1F993', '1F995', '1F997', '1F99B', '1F99F', '1F9A2', '1F9A5', '1F9A6', '1F9A9', '1F9AA',
+    '1F9B4', '1F9C0', '1F9C4', '1F9C5', '1F9CA', '1F9D4', '1F9DE', '1F9ED', '1F9F9', '1F9FA', '1FA90', '1FA93',
+    '1FA9E', '1FAA1', '1FAA8', '1FAB1', '1FABA', '1FADB', '1FAE7', '2328', '23F0', '2696', '26A1', '26EA',
+    '26F0', '26FA', '2764'
   ];
-  // 1ª leva (16): IOIÔ AVE OVO UVA VOVÓ VOVÔ MAMÃE MEIA ÍMÃ MENINA MENINO NAVIO NEVE FILA LUA LULA; 2ª leva (80) e 3ª leva (144): ver figuras/palavras
+  // 1ª leva (16): IOIÔ AVE OVO UVA VOVÓ VOVÔ MAMÃE MEIA ÍMÃ MENINA MENINO NAVIO NEVE FILA LUA LULA; 2ª (80), 3ª (144) e 4ª leva (123): as 363 palavras têm figura própria
   // Figuras desenhadas para o sentido da palavra no jogo, diferente do emoji usado nas histórias
   // (BICO = cabeça de pássaro com bico, nas histórias 🐥 é o pintinho; PATA = a pata, fêmea do pato, nas histórias 🐾 é pegada)
   const SO_PALAVRA = ['1F425', '1F43E'];
@@ -98,6 +109,51 @@
     h = (h * 60 + 360) % 360; return Math.round(h - 40);
   }
 
+  // Encaixe dos enfeites na Lili. Cada pose tem os olhos medidos na figura (centro ex/ey e distância d, em % da caixa);
+  // cada enfeite é posto em relação aos olhos, em múltiplos de d. CAIXA = área ocupada pelo desenho no arquivo (0–1).
+  const POSES = {
+    acena: [46.9, 39.8, 24.0], fala: [47.8, 40.2, 23.0], feliz: [49.5, 40.8, 23.1], comemora: [51.0, 40.5, 22.8],
+    ideia: [45.1, 40.8, 21.8], pensa: [50.9, 39.8, 24.1], aponta: [49.5, 39.5, 20.6], le: [49.9, 42.0, 22.8], dorme: [50.3, 47.6, 24.4]
+  };
+  const CAIXA = {
+    casca: [0.049, 0.083, 0.945, 0.911], broto: [0.049, 0.151, 0.945, 0.846], flor: [0.047, 0.081, 0.945, 0.919],
+    chapeuExplorador: [0.049, 0.18, 0.945, 0.818], mochila: [0.083, 0.049, 0.917, 0.945], lupa: [0.086, 0.052, 0.914, 0.943],
+    capelo: [0.049, 0.159, 0.945, 0.841], capa: [0.049, 0.086, 0.945, 0.911], laco: [0.052, 0.128, 0.943, 0.872],
+    oculos: [0.049, 0.31, 0.945, 0.69], cachecol: [0.102, 0.049, 0.898, 0.945], chapeu: [0.052, 0.112, 0.948, 0.883],
+    coroa: [0.052, 0.164, 0.948, 0.836]
+  };
+  // [dx, dy, largura] em d; 'base' = dy marca onde o desenho apoia (em cima da cabeça); atras = fica atrás do corpo; giro em graus
+  const REGRAS = {
+    oculos: { dx: 0, dy: 0, w: 2.05 },
+    laco: { dx: -0.5, dy: -0.72, w: 1.0, giro: -18 },
+    coroa: { dx: 0, dy: -0.52, w: 1.3, base: true },
+    chapeu: { dx: 0, dy: -0.5, w: 1.45, base: true },
+    chapeuExplorador: { dx: 0, dy: -0.3, w: 2.5, base: true },
+    capelo: { dx: 0, dy: -0.42, w: 2.1, base: true },
+    broto: { dx: 0, dy: -0.72, w: 0.55, base: true },
+    flor: { dx: 0.55, dy: -0.8, w: 0.6, giro: 12 },
+    cachecol: { dx: 0, dy: 0.58, w: 2.05, ancora: [0.5, 0.2] }, // ancora = centro do furo do cachecol vai no pescoço
+    mochila: { dx: 1.5, dy: 1.05, w: 1.35, atras: true },
+    lupa: { dx: 1.35, dy: 1.15, w: 1.15, giro: 10 },
+    capa: { dx: 0, dy: 1.3, w: 3.6, atras: true },
+    casca: { dx: 0, fundo: 126, w: 3.6, corte: true } // casca de ovo: só a metade de cima aparece (o resto passa da caixa e é cortado)
+  };
+  function encaixar(imgEl, nome, pose) {
+    const p = POSES[pose] || POSES.acena; const r = REGRAS[nome]; const c = CAIXA[nome]; if (!r || !c) return imgEl;
+    const [ex, ey, d] = p; const W = r.w * d; const s = W / (c[2] - c[0]);
+    const cx = ex + r.dx * d; const left = cx - s * (r.ancora ? r.ancora[0] : (c[0] + c[2]) / 2);
+    let top;
+    if (r.fundo !== undefined) top = r.fundo - s * c[3];
+    else if (r.ancora) top = (ey + r.dy * d) - s * r.ancora[1];
+    else if (r.base) top = (ey + r.dy * d) - s * c[3];
+    else top = (ey + r.dy * d) - s * (c[1] + c[3]) / 2;
+    Object.assign(imgEl.style, { left: left + '%', top: top + '%', width: s + '%', height: s + '%' });
+    if (r.giro) imgEl.style.transform = `rotate(${r.giro}deg)`;
+    if (r.atras) imgEl.style.zIndex = '-1';
+    if (r.corte && top + s > 100) imgEl.style.clipPath = `inset(0 0 ${((top + s - 100) / s) * 100}% 0)`;
+    return imgEl;
+  }
+
   window.Figuras = {
     ativo: true,
     // emCena = figura montada com vários emojis (histórias): aí as figuras que só valem para a palavra ficam de fora
@@ -109,12 +165,12 @@
     enfeite: (nome) => B + 'loja/' + nome + '.webp',
     lili: (pose) => B + 'lili/' + pose + '.webp',
     ui: (nome) => B + 'ui/' + nome + '.webp',
-    img, trocarTexto, observar, poseLili, giroCor,
+    img, trocarTexto, observar, poseLili, giroCor, encaixar, DUAS_CAMADAS: ['casca', 'cachecol'],
     lista() { // para o service worker guardar offline
       const l = PALAVRAS.map((c) => 'palavras/' + c);
       Object.values(UI).forEach((n) => l.push('ui/' + n)); Object.values(AVATARES).forEach((n) => l.push('avatares/' + n));
       ['ouvidoOuro', 'contador', 'persistente', 'escritor', 'leitor', 'estrelas', 'colecionador', 'voz', 'tracos', 'mundo1', 'mundo4', 'superLeitor'].forEach((n) => l.push('medalhas/' + n));
-      ['casca', 'broto', 'flor', 'chapeuExplorador', 'mochila', 'lupa', 'capelo', 'capa', 'laco', 'oculos', 'cachecol', 'chapeu', 'coroa', 'mapaPorDoSol', 'mapaOceano', 'mapaDoce'].forEach((n) => l.push('loja/' + n));
+      ['casca', 'casca_tras', 'casca_frente', 'cachecol_tras', 'cachecol_frente', 'broto', 'flor', 'chapeuExplorador', 'mochila', 'lupa', 'capelo', 'capa', 'laco', 'oculos', 'cachecol', 'chapeu', 'coroa', 'mapaPorDoSol', 'mapaOceano', 'mapaDoce'].forEach((n) => l.push('loja/' + n));
       [1, 2, 3, 4, 5, 6, 7, 8].forEach((n) => l.push('mundos/mundo' + n)); l.push('mundos/bau');
       ['acena', 'fala', 'feliz', 'comemora', 'ideia', 'pensa', 'aponta', 'le', 'dorme'].forEach((n) => l.push('lili/' + n));
       return l.map((x) => B + x + '.webp');
