@@ -132,7 +132,7 @@
     capelo: { dx: 0, dy: -0.42, w: 2.1, base: true },
     broto: { dx: 0, dy: -0.72, w: 0.55, base: true },
     flor: { dx: 0.55, dy: -0.8, w: 0.6, giro: 12 },
-    cachecol: { dx: 0, dy: 0.9, w: 1.6 },
+    cachecol: { dx: 0, dy: 0.58, w: 2.05, ancora: [0.5, 0.2] }, // ancora = centro do furo do cachecol vai no pescoço
     mochila: { dx: 1.5, dy: 1.05, w: 1.35, atras: true },
     lupa: { dx: 1.35, dy: 1.15, w: 1.15, giro: 10 },
     capa: { dx: 0, dy: 1.3, w: 3.6, atras: true },
@@ -141,9 +141,10 @@
   function encaixar(imgEl, nome, pose) {
     const p = POSES[pose] || POSES.acena; const r = REGRAS[nome]; const c = CAIXA[nome]; if (!r || !c) return imgEl;
     const [ex, ey, d] = p; const W = r.w * d; const s = W / (c[2] - c[0]);
-    const cx = ex + r.dx * d; const left = cx - s * (c[0] + c[2]) / 2;
+    const cx = ex + r.dx * d; const left = cx - s * (r.ancora ? r.ancora[0] : (c[0] + c[2]) / 2);
     let top;
     if (r.fundo !== undefined) top = r.fundo - s * c[3];
+    else if (r.ancora) top = (ey + r.dy * d) - s * r.ancora[1];
     else if (r.base) top = (ey + r.dy * d) - s * c[3];
     else top = (ey + r.dy * d) - s * (c[1] + c[3]) / 2;
     Object.assign(imgEl.style, { left: left + '%', top: top + '%', width: s + '%', height: s + '%' });
@@ -164,12 +165,12 @@
     enfeite: (nome) => B + 'loja/' + nome + '.webp',
     lili: (pose) => B + 'lili/' + pose + '.webp',
     ui: (nome) => B + 'ui/' + nome + '.webp',
-    img, trocarTexto, observar, poseLili, giroCor, encaixar,
+    img, trocarTexto, observar, poseLili, giroCor, encaixar, DUAS_CAMADAS: ['casca', 'cachecol'],
     lista() { // para o service worker guardar offline
       const l = PALAVRAS.map((c) => 'palavras/' + c);
       Object.values(UI).forEach((n) => l.push('ui/' + n)); Object.values(AVATARES).forEach((n) => l.push('avatares/' + n));
       ['ouvidoOuro', 'contador', 'persistente', 'escritor', 'leitor', 'estrelas', 'colecionador', 'voz', 'tracos', 'mundo1', 'mundo4', 'superLeitor'].forEach((n) => l.push('medalhas/' + n));
-      ['casca', 'casca_tras', 'casca_frente', 'broto', 'flor', 'chapeuExplorador', 'mochila', 'lupa', 'capelo', 'capa', 'laco', 'oculos', 'cachecol', 'chapeu', 'coroa', 'mapaPorDoSol', 'mapaOceano', 'mapaDoce'].forEach((n) => l.push('loja/' + n));
+      ['casca', 'casca_tras', 'casca_frente', 'cachecol_tras', 'cachecol_frente', 'broto', 'flor', 'chapeuExplorador', 'mochila', 'lupa', 'capelo', 'capa', 'laco', 'oculos', 'cachecol', 'chapeu', 'coroa', 'mapaPorDoSol', 'mapaOceano', 'mapaDoce'].forEach((n) => l.push('loja/' + n));
       [1, 2, 3, 4, 5, 6, 7, 8].forEach((n) => l.push('mundos/mundo' + n)); l.push('mundos/bau');
       ['acena', 'fala', 'feliz', 'comemora', 'ideia', 'pensa', 'aponta', 'le', 'dorme'].forEach((n) => l.push('lili/' + n));
       return l.map((x) => B + x + '.webp');

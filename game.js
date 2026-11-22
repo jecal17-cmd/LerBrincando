@@ -426,12 +426,15 @@
       const corpo = F.img(F.lili(pose), 'lili-corpo'); if (giro) corpo.style.filter = `hue-rotate(${giro}deg) saturate(1.1)`;
       caixa.append(corpo);
       // enfeite do nível e acessório encaixados nos olhos da pose (figuras.js → encaixar)
-      if (!opc.mini && enfeite === 'casca') {
-        // casca 3D: a parede de trás fica atrás da Lili e a da frente na frente, como se ela saísse do ovo
-        const tras = F.encaixar(F.img(F.enfeite('casca_tras'), 'lili-enf enf-casca-tras'), 'casca', pose); tras.style.zIndex = '-1';
-        caixa.append(tras, F.encaixar(F.img(F.enfeite('casca_frente'), 'lili-enf enf-casca'), 'casca', pose));
-      } else if (!opc.mini && enfeite) caixa.append(F.encaixar(F.img(F.enfeite(enfeite), 'lili-enf enf-' + enfeite), enfeite, pose));
-      if (ac) caixa.append(F.encaixar(F.img(F.loja(ac), 'lili-enf ac-' + ac), ac, pose));
+      // peças 3D (casca do ovo, cachecol) vêm em duas camadas: a parte de trás atrás da Lili e a da frente na frente
+      const por = (nome) => {
+        if (F.DUAS_CAMADAS.includes(nome)) {
+          const tras = F.encaixar(F.img(F.enfeite(nome + '_tras'), 'lili-enf'), nome, pose); tras.style.zIndex = '-1';
+          caixa.append(tras, F.encaixar(F.img(F.enfeite(nome + '_frente'), 'lili-enf'), nome, pose));
+        } else caixa.append(F.encaixar(F.img(F.enfeite(nome), 'lili-enf'), nome, pose));
+      };
+      if (!opc.mini && enfeite) por(enfeite);
+      if (ac) por(ac);
       return caixa;
     }
     const feliz = opc.humor === 'feliz';
