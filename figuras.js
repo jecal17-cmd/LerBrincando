@@ -13,9 +13,21 @@
     '1F50D', '1F512', '1F514', '1F56F', '1F5D1', '1F5F3', '1F5FA', '1F6CB', '1F6CF', '1F6F4', '1F6F6', '1F951',
     '1F952', '1F954', '1F957', '1F95B', '1F986', '1F98C', '1F9A3', '1F9B6', '1F9DA', '1F9E2', '1F9E4', '1F9F0',
     '1F9F1', '1F9F3', '1F9F6', '1F9FC', '1FA79', '1FA81', '1FA86', '1FA99', '1FA9F', '1FAB5', '1FAB6', '1FACF',
-    '1FAD2', '1FAD6', '1FAD9', '260E', '2615', '261D', '26BD', '27A1', '1F425', '1F43E', '1F45E', '1F6E9'
+    '1FAD2', '1FAD6', '1FAD9', '260E', '2615', '261D', '26BD', '27A1', '1F425', '1F43E', '1F45E', '1F6E9',
+    '1F309', '1F30A', '1F30B', '1F331', '1F333', '1F334', '1F336', '1F344', '1F348', '1F34A', '1F34B', '1F350',
+    '1F353', '1F35E', '1F366', '1F36A', '1F36D', '1F36E', '1F36F', '1F374', '1F37F', '1F388', '1F3AD', '1F3AE',
+    '1F3B6', '1F3B8', '1F3D4', '1F3E0', '1F3EB', '1F3F0', '1F3F8', '1F403', '1F404', '1F409', '1F40A', '1F40C',
+    '1F40D', '1F412', '1F413', '1F418', '1F419', '1F41C', '1F422', '1F428', '1F431', '1F434', '1F437', '1F43B',
+    '1F43C', '1F443', '1F445', '1F451', '1F453', '1F454', '1F455', '1F457', '1F45C', '1F45F', '1F47B', '1F47C',
+    '1F48C', '1F48D', '1F4A1', '1F4A7', '1F4BB', '1F4C4', '1F4CE', '1F4F0', '1F4FA', '1F518', '1F525', '1F526',
+    '1F528', '1F52A', '1F54A', '1F58A', '1F5E1', '1F68C', '1F6A9', '1F6AA', '1F6B0', '1F6D6', '1F6E1', '1F6FC',
+    '1F941', '1F945', '1F95C', '1F964', '1F965', '1F966', '1F967', '1F969', '1F96D', '1F977', '1F981', '1F982',
+    '1F983', '1F984', '1F988', '1F989', '1F98B', '1F98D', '1F98E', '1F990', '1F998', '1F99A', '1F99C', '1F99D',
+    '1F9AB', '1F9AD', '1F9B5', '1F9B7', '1F9C2', '1F9C3', '1F9D9', '1F9DB', '1F9DC', '1F9DF', '1F9F4', '1F9FD',
+    '1FA91', '1FA9C', '1FAA2', '1FAA3', '1FAA5', '1FAAE', '1FAB0', '1FAB2', '1FAB3', '1FAB4', '1FABC', '1FABF',
+    '1FAD1', '1FAD8', '2600', '2601', '2604', '26F5', '2702', '2708', '2709', '270B', '270F', '2B50'
   ];
-  // 1ª leva (16): IOIÔ AVE OVO UVA VOVÓ VOVÔ MAMÃE MEIA ÍMÃ MENINA MENINO NAVIO NEVE FILA LUA LULA; 2ª leva (78): ver figuras/palavras
+  // 1ª leva (16): IOIÔ AVE OVO UVA VOVÓ VOVÔ MAMÃE MEIA ÍMÃ MENINA MENINO NAVIO NEVE FILA LUA LULA; 2ª leva (80) e 3ª leva (144): ver figuras/palavras
   // Figuras desenhadas para o sentido da palavra no jogo, diferente do emoji usado nas histórias
   // (BICO = cabeça de pássaro com bico, nas histórias 🐥 é o pintinho; PATA = a pata, fêmea do pato, nas histórias 🐾 é pegada)
   const SO_PALAVRA = ['1F425', '1F43E'];
