@@ -191,7 +191,7 @@
     const h = el('div', { class: 'hud' },
       el('button', { class: 'pilula', type: 'button', 'aria-label': 'trocar de perfil: ' + p.nome, onclick: perfis }, el('span', { class: 'avatar' }, p.avatar), el('span', { class: 'nome-hud' }, p.nome)),
       el('button', { class: 'pilula', type: 'button', title: 'Nível de leitor', 'aria-label': 'nível ' + D.niveis[nv].nome + '. Toque para saber mais', onclick: () => guiaMapa() }, FIG ? FIG.img(FIG.enfeite(D.niveis[nv].enfeite)) : (D.niveis[nv].emoji || '🌱'), ' ', el('span', { class: 'nome-nivel' }, D.niveis[nv].nome)),
-      el('span', { class: 'pilula', 'aria-label': 'moedas' }, '🪙 ', String(p.moedas)),
+      el('span', { class: 'pilula pilula-moedas', 'aria-label': 'moedas' }, '🪙 ', el('span', { class: 'saldo' }, String(p.moedas))),
       el('span', { class: 'esp' }),
       bauDisp ? comNome(el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'baú diário', onclick: abrirBau }, '🎁'), 'Baú') : null,
       comNome(el('button', { class: 'btn redondo', type: 'button', 'aria-label': 'menu: loja, álbum, medalhas, pais', onclick: menu }, '☰'), 'Menu'),
@@ -433,6 +433,8 @@
     await modal((fechar) => [FIG ? el('div', { class: 'bau-grande' }, FIG.img(FIG.bau)) : el('div', { style: { fontSize: '5rem' } }, '🎁'), el('h2', null, `+${m} 🪙`), el('p', null, D.falas.bau), el('button', { class: 'btn pri', type: 'button', onclick: () => fechar() }, 'OK')]);
     mapa();
   }
+  // Atualiza o saldo de moedas mostrado no topo sem redesenhar a tela
+  function atualizarSaldo() { const p = Store.perfil; if (p) document.querySelectorAll('.pilula-moedas .saldo').forEach((e) => { e.textContent = String(p.moedas); }); }
   function loja() {
     const p = Store.perfil;
     const prev = el('div', null, mascote({}));
@@ -444,7 +446,7 @@
         const b = el('button', { class: 'figurinha', type: 'button', 'aria-label': it.nome }, el('div', { class: 'fig' }, FIG && FIG.loja(it.id) ? FIG.img(FIG.loja(it.id)) : FIG && it.tipo === 'cor' ? mascote({ cor: it.valor, acessorio: null, nivel: 0, pose: 'feliz', mini: true }) : it.emoji), it.nome, el('div', null, tem ? (equip ? '✅ usando' : 'usar') : `🪙 ${it.preco}`));
         b.onclick = () => {
           const campo = it.tipo === 'acessorio' ? 'acessorio' : it.tipo;
-          if (!tem) { if (p.moedas < it.preco) { toast('Faltam moedas! Jogue mais fases. 🪙'); return; } p.moedas -= it.preco; p.loja.itens.push(it.id); Efeito.tocar('moeda'); }
+          if (!tem) { if (p.moedas < it.preco) { toast('Faltam moedas! Jogue mais fases. 🪙'); return; } p.moedas -= it.preco; p.loja.itens.push(it.id); Efeito.tocar('moeda'); atualizarSaldo(); }
           p.loja.equip[campo] = p.loja.equip[campo] === it.id && tem ? null : it.id; Store.salvar(); desenhar();
         };
         grade.append(b);
@@ -466,10 +468,10 @@
   }
   function medalhas() {
     const p = Store.perfil;
-    const lista = el('div', { class: 'grade' });
+    const lista = el('div', { class: 'grade grade-medalhas' });
     D.medalhas.forEach((m) => {
       const v = p.stats[m.stat] || 0; const tem = !!p.medalhas[m.id];
-      lista.append(el('div', { class: 'figurinha' + (tem ? '' : ' vazia') }, el('div', { class: 'fig' }, FIG ? FIG.img(FIG.medalha(m.id), tem ? 'ico-fig' : 'ico-fig apagada') : tem ? m.emoji : '🔒'), m.nome, el('div', { style: { fontSize: '.8em', fontWeight: 400 } }, m.desc), el('progress', { max: m.meta, value: Math.min(v, m.meta), 'aria-label': 'progresso' })));
+      lista.append(el('div', { class: 'figurinha medalha' + (tem ? '' : ' vazia') }, el('div', { class: 'fig' }, FIG ? FIG.img(FIG.medalha(m.id), tem ? 'ico-fig' : 'ico-fig apagada') : tem ? m.emoji : '🔒'), el('div', { class: 'med-nome' }, m.nome), el('div', { class: 'med-desc' }, m.desc), el('progress', { max: m.meta, value: Math.min(v, m.meta), 'aria-label': 'progresso' })));
     });
     const certs = el('div', { class: 'acoes' });
     (p.certificados || []).forEach((c) => certs.append(el('button', { class: 'btn', type: 'button', onclick: () => certificado(c.mundo) }, `🎓 Mundo ${c.mundo}`)));
@@ -736,7 +738,7 @@
     Store.dados.perfis.forEach((p) => {
       const ren = el('button', { class: 'btn mini', type: 'button' }, '✏️'); ren.onclick = () => { const n = prompt('Novo nome:', p.nome); if (n) { p.nome = n.slice(0, 20); Store.salvar(); c.innerHTML = ''; abaDados(c); } };
       const del = el('button', { class: 'btn mini', type: 'button' }, '🗑️'); del.onclick = () => { if (confirm(`Apagar o perfil ${p.nome}? Isso não pode ser desfeito.`)) { Store.dados.perfis = Store.dados.perfis.filter((x) => x !== p); if (Store.dados.atual === p.id) Store.dados.atual = null; Store.salvar(); c.innerHTML = ''; abaDados(c); } };
-      ul.append(el('div', { class: 'figurinha' }, el('div', { class: 'fig' }, p.avatar), p.nome, el('div', null, ren, del)));
+      ul.append(el('div', { class: 'figurinha' }, el('div', { class: 'fig' }, p.avatar), el('div', { class: 'perfil-nome' }, p.nome), el('div', { class: 'acoes-mini' }, ren, del)));
     });
     const novo = el('button', { class: 'btn', type: 'button', disabled: Store.dados.perfis.length >= 4 }, '➕ Nova criança'); novo.onclick = criarPerfil;
     const exp = el('button', { class: 'btn', type: 'button' }, '⬇️ Exportar progresso (JSON)');

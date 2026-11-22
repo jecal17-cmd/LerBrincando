@@ -1,5 +1,5 @@
 /* Ler Brincando — Service Worker: funciona offline após o primeiro acesso (PWA) */
-const VERSAO = 'lb-v1.4.5';
+const VERSAO = 'lb-v1.4.6';
 const NUCLEO = ['./', 'index.html', 'styles.css', 'nucleo.js', 'data.js', 'motor.js', 'validadores.js', 'game.js', 'minijogos.js', 'cenas.js', 'visual.js', 'figuras.js',
   'config.js', 'nuvem.js', 'premium.js', 'fluencia.js',
   'manifest.webmanifest', 'icones/icone.svg', 'icones/icone-192.png', 'icones/icone-512.png',
