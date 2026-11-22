@@ -4,6 +4,9 @@ name: Candidatos de fonemas
 
 on:
   workflow_dispatch:
+  push:
+    branches: ['fonemas-*']
+    paths: ['ferramentas/candidatos_fonemas.py', '.github/workflows/candidatos-fonemas.yml']
 
 permissions:
   contents: write
