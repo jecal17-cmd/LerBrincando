@@ -64,6 +64,14 @@ jobs:
           TIPOS: ${{ inputs.tipos }}
         run: python gerar_audios.py --motor "$MOTOR" --tipos "$TIPOS" --regerar
 
+      - name: Guarda os sons gerados (mesmo se a conferência falhar)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: banco-audio
+          path: audio/
+          retention-days: 7
+
       - name: Confere manifest e licenças
         run: |
           node ferramentas/sincronizar_manifest.js

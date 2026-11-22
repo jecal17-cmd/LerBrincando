@@ -296,7 +296,8 @@ def medir(x, taxa):
         if len(x) > taxa * 0.4: lufs = round(float(pyln.Meter(taxa).integrated_loudness(x)), 1)
     except Exception:
         rms = np.sqrt(np.mean(x ** 2) + 1e-12); lufs = round(float(20 * np.log10(rms) + 3), 1)
-    return round(float(pico), 1), lufs
+    if lufs is not None and not np.isfinite(lufs): lufs = None   # som mudo: -inf quebraria o manifest (JSON inválido)
+    return round(float(max(pico, -120)), 1), lufs
 
 # ----------------------------------------------------------------------------- Wikimedia (camada 3, opcional)
 def wikimedia(fonema):
@@ -519,6 +520,12 @@ def carregar_pronuncias():
         d = json.load(open(p, encoding='utf-8')); return {k: v for k, v in d.items() if not k.startswith('_')}
     return {}
 
+def mudo_alternativas(t):
+    """Outras formas de pedir o mesmo som quando o motor devolve silêncio (vogal sozinha)."""
+    v = {'a': 'a', 'á': 'a', 'à': 'a', 'e': 'i', 'é': 'ɛ', 'ê': 'e', 'o': 'u', 'ó': 'ɔ', 'ô': 'o', 'i': 'i', 'u': 'u'}.get(t.strip().lower())
+    alt = ['ipa:ˈ' + v + v + '|' + t] if v else []
+    return alt + [t.strip() + '!', t.strip().upper() + '.']
+
 def texto_fala(item, D, PRON):
     if item['chave'] in PRON: return PRON[item['chave']]
     t = item['texto']; tp = item['tipo']
@@ -657,7 +664,7 @@ def principal():
         # grava SEMPRE os dois: manifest.json (Service Worker/testes) e manifest.js (o jogo, inclusive por duplo clique).
         # Assim, se a geração for interrompida, o jogo e o modo offline continuam vendo o mesmo banco.
         man['versaoGerador'] = VERSAO_GERADOR
-        json.dump(man, open(caminho_man, 'w', encoding='utf-8'), ensure_ascii=False)
+        json.dump(man, open(caminho_man, 'w', encoding='utf-8'), ensure_ascii=False, allow_nan=False)
         with open(os.path.join(PASTA, 'manifest.js'), 'w', encoding='utf-8') as f:
             f.write('window.AUDIO_MANIFEST = ' + json.dumps(man, ensure_ascii=False) + ';\n')
 
@@ -673,7 +680,16 @@ def principal():
     for i in range(0, len(pend), 60):
         res = motor.sintetizar(pend[i:i + 60])
         txt = {k: t for k, t, _ in pend[i:i + 60]}
-        for k, (x, taxa, _) in res.items(): registrar(k, x, taxa, a.motor, texto=txt[k])
+        for k, (x, taxa, _) in res.items():
+            if float(np.abs(x).max()) < 0.15:
+                # saiu mudo (a Thalita cala a vogal sozinha, ex.: a palavra "a" lenta): tenta outras grafias
+                for alt in mudo_alternativas(txt[k]):
+                    r2 = motor.sintetizar([('x', alt, vl if k.endswith('_lento') else vn)])
+                    if 'x' in r2 and float(np.abs(r2['x'][0]).max()) >= 0.15:
+                        x, taxa, _ = r2['x']; txt[k] = alt; break
+                else:
+                    revisar.append(f'{k}  (saiu mudo com o texto "{txt[k]}")')
+            registrar(k, x, taxa, a.motor, texto=txt[k])
         print(f'  {min(i + 60, len(pend))}/{len(pend)}  ({time.time() - t0:.0f}s)')
         salvar_manifest()
 
