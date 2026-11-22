@@ -1,0 +1,209 @@
+{
+ "voz": "pt-BR-FranciscaNeural",
+ "letras": {
+  "F": [
+   {
+    "tipo": "a_silaba_longa",
+    "arquivo": "f_a_silaba_longa.mp3"
+   },
+   {
+    "tipo": "b_so_consoante",
+    "arquivo": "f_b_so_consoante.mp3"
+   },
+   {
+    "tipo": "c_texto",
+    "arquivo": "f_c_texto.mp3"
+   },
+   {
+    "tipo": "e_atual",
+    "arquivo": "f_e_atual.mp3"
+   }
+  ],
+  "V": [
+   {
+    "tipo": "a_silaba_longa",
+    "arquivo": "v_a_silaba_longa.mp3"
+   },
+   {
+    "tipo": "b_so_consoante",
+    "arquivo": "v_b_so_consoante.mp3"
+   },
+   {
+    "tipo": "c_texto",
+    "arquivo": "v_c_texto.mp3"
+   },
+   {
+    "tipo": "e_atual",
+    "arquivo": "v_e_atual.mp3"
+   }
+  ],
+  "M": [
+   {
+    "tipo": "a_silaba_longa",
+    "arquivo": "m_a_silaba_longa.mp3"
+   },
+   {
+    "tipo": "b_so_consoante",
+    "arquivo": "m_b_so_consoante.mp3"
+   },
+   {
+    "tipo": "c_texto",
+    "arquivo": "m_c_texto.mp3"
+   },
+   {
+    "tipo": "e_atual",
+    "arquivo": "m_e_atual.mp3"
+   }
+  ],
+  "N": [
+   {
+    "tipo": "a_silaba_longa",
+    "arquivo": "n_a_silaba_longa.mp3"
+   },
+   {
+    "tipo": "b_so_consoante",
+    "arquivo": "n_b_so_consoante.mp3"
+   },
+   {
+    "tipo": "c_texto",
+    "arquivo": "n_c_texto.mp3"
+   },
+   {
+    "tipo": "e_atual",
+    "arquivo": "n_e_atual.mp3"
+   }
+  ],
+  "L": [
+   {
+    "tipo": "a_silaba_longa",
+    "arquivo": "l_a_silaba_longa.mp3"
+   },
+   {
+    "tipo": "b_so_consoante",
+    "arquivo": "l_b_so_consoante.mp3"
+   },
+   {
+    "tipo": "c_texto",
+    "arquivo": "l_c_texto.mp3"
+   },
+   {
+    "tipo": "d_humano",
+    "arquivo": "l_d_humano.mp3",
+    "credito": "File:Alveolar lateral approximant.ogg —  — CC BY-SA 3.0",
+    "url": "https://commons.wikimedia.org/wiki/File:Alveolar_lateral_approximant.ogg"
+   },
+   {
+    "tipo": "e_atual",
+    "arquivo": "l_e_atual.mp3"
+   }
+  ],
+  "S": [
+   {
+    "tipo": "a_silaba_longa",
+    "arquivo": "s_a_silaba_longa.mp3"
+   },
+   {
+    "tipo": "b_so_consoante",
+    "arquivo": "s_b_so_consoante.mp3"
+   },
+   {
+    "tipo": "c_texto",
+    "arquivo": "s_c_texto.mp3"
+   },
+   {
+    "tipo": "e_atual",
+    "arquivo": "s_e_atual.mp3"
+   }
+  ],
+  "Z": [
+   {
+    "tipo": "a_silaba_longa",
+    "arquivo": "z_a_silaba_longa.mp3"
+   },
+   {
+    "tipo": "b_so_consoante",
+    "arquivo": "z_b_so_consoante.mp3"
+   },
+   {
+    "tipo": "c_texto",
+    "arquivo": "z_c_texto.mp3"
+   },
+   {
+    "tipo": "e_atual",
+    "arquivo": "z_e_atual.mp3"
+   }
+  ],
+  "J": [
+   {
+    "tipo": "a_silaba_longa",
+    "arquivo": "j_a_silaba_longa.mp3"
+   },
+   {
+    "tipo": "b_so_consoante",
+    "arquivo": "j_b_so_consoante.mp3"
+   },
+   {
+    "tipo": "c_texto",
+    "arquivo": "j_c_texto.mp3"
+   },
+   {
+    "tipo": "e_atual",
+    "arquivo": "j_e_atual.mp3"
+   }
+  ],
+  "X": [
+   {
+    "tipo": "a_silaba_longa",
+    "arquivo": "x_a_silaba_longa.mp3"
+   },
+   {
+    "tipo": "b_so_consoante",
+    "arquivo": "x_b_so_consoante.mp3"
+   },
+   {
+    "tipo": "c_texto",
+    "arquivo": "x_c_texto.mp3"
+   },
+   {
+    "tipo": "e_atual",
+    "arquivo": "x_e_atual.mp3"
+   }
+  ],
+  "NH": [
+   {
+    "tipo": "a_silaba_longa",
+    "arquivo": "nh_a_silaba_longa.mp3"
+   },
+   {
+    "tipo": "b_so_consoante",
+    "arquivo": "nh_b_so_consoante.mp3"
+   },
+   {
+    "tipo": "c_texto",
+    "arquivo": "nh_c_texto.mp3"
+   },
+   {
+    "tipo": "e_atual",
+    "arquivo": "nh_e_atual.mp3"
+   }
+  ],
+  "LH": [
+   {
+    "tipo": "a_silaba_longa",
+    "arquivo": "lh_a_silaba_longa.mp3"
+   },
+   {
+    "tipo": "b_so_consoante",
+    "arquivo": "lh_b_so_consoante.mp3"
+   },
+   {
+    "tipo": "c_texto",
+    "arquivo": "lh_c_texto.mp3"
+   },
+   {
+    "tipo": "e_atual",
+    "arquivo": "lh_e_atual.mp3"
+   }
+  ]
+ }
+}
