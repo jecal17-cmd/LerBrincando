@@ -541,3 +541,29 @@ button.pilula { cursor: pointer; font: inherit; font-weight: 800; }
 .lili-fig img { position: absolute; object-fit: contain; pointer-events: none; transform-origin: 50% 50%; }
 .lili-fig .lili-corpo { inset: 0; width: 100%; height: 100%; filter: drop-shadow(0 6px 6px rgba(0, 0, 0, .15)); }
 .figurinha .fig .lili-fig.mini { width: 3.4rem; }
+
+/* v1.4.6 — medalhas dentro da caixa, Área dos Pais e Configurações sem sobreposição */
+.figurinha { min-width: 0; box-sizing: border-box; overflow-wrap: anywhere; }
+.grade-medalhas { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: .7rem; }
+.figurinha.medalha { display: flex; flex-direction: column; align-items: center; gap: .25rem; padding: .6em .5em .8em; overflow: hidden; }
+.figurinha.medalha .fig { font-size: 2.2rem; }
+.figurinha.medalha .med-nome { font-size: clamp(.95rem, 4vw, 1.15rem); line-height: 1.15; }
+.figurinha.medalha .med-desc { font-size: clamp(.75rem, 3.2vw, .9rem); font-weight: 400; line-height: 1.2; }
+.figurinha.medalha progress { display: block; width: 100%; max-width: 100%; height: 14px; margin-top: auto; box-sizing: border-box; }
+.painel { overflow-x: hidden; }
+.painel h3 { margin: 1.2em 0 .4em; }
+.painel h3:first-child { margin-top: .2em; }
+.abas { gap: .5rem; margin-bottom: 1rem; }
+.abas button { flex: 0 1 auto; max-width: 100%; white-space: nowrap; }
+label.linha > input, label.linha > select { min-width: 0; max-width: 100%; }
+label.linha > select { flex: 1 1 200px; }
+label.linha > input[type=range] { flex: 1 1 160px; width: auto; max-width: 100%; }
+select { max-width: 100%; text-overflow: ellipsis; }
+.painel .grade + .btn, .painel .grade + .acoes, .painel .btn + h3, .painel .grade + h3 { margin-top: 1rem; }
+.painel .acoes { margin-top: .6rem; }
+.perfil-nome { margin-top: .2rem; }
+.acoes-mini { display: flex; gap: .5rem; justify-content: center; flex-wrap: wrap; margin-top: .5rem; padding-bottom: .4rem; }
+.acoes-mini .btn.mini { min-width: 52px; min-height: 52px; padding: .2em .5em; }
+.painel input[type=file] { max-width: 100%; }
+.painel .btn { max-width: 100%; }
+.cab-painel .btn.mini { flex: 0 0 auto; }

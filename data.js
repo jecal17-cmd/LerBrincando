@@ -1,7 +1,7 @@
 /* Ler Brincando — data.js (GERADO por ferramentas/construir_dados.js — edite a fonte e rode o script)
    Banco de palavras, fases, histórias, elogios, falas e regras. Formato JSON para o gerar_audios.py ler. */
 window.DADOS = {
- "versao": "1.4.5",
+ "versao": "1.4.6",
  "mundos": [
   {
    "id": 1,
@@ -3158,6 +3158,7 @@ window.DADOS = {
   "Personagens, histórias e textos: originais, criados para este jogo."
  ],
  "changelog": [
+  "1.4.6 — Medalhas com textos e barra de progresso dentro da caixa. O saldo de moedas no topo diminui na hora quando você compra algo na Lojinha. Área dos Pais e Configurações com botões, listas e barras sem sobreposição.",
   "1.4.5 — Todas as 363 palavras com figuras no estilo da Lili. A Lili sai de dentro da casca do ovo, usa o cachecol no pescoço e os enfeites ficam no lugar certo em cada pose. O tambor do Bate-Palmas voltou para dentro do círculo.",
   "1.4.4 — Mais 144 palavras com figuras novas no estilo da Lili: agora são 240.",
   "1.4.3 — Mais 80 palavras com figuras novas no estilo da Lili (agora são 96), entre elas PATO e PATA, BICO, BOTA e SAPATO.",
@@ -3587,5 +3588,5 @@ window.DADOS = {
   "H": 77,
   "X_VARIOS": 77
  },
- "geradoEm": "2026-11-22T13:18:25.837Z"
+ "geradoEm": "2026-11-22T13:44:02.925Z"
 };
