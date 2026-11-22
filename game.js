@@ -426,7 +426,11 @@
       const corpo = F.img(F.lili(pose), 'lili-corpo'); if (giro) corpo.style.filter = `hue-rotate(${giro}deg) saturate(1.1)`;
       caixa.append(corpo);
       // enfeite do nível e acessório encaixados nos olhos da pose (figuras.js → encaixar)
-      if (!opc.mini && enfeite) caixa.append(F.encaixar(F.img(F.enfeite(enfeite), 'lili-enf enf-' + enfeite), enfeite, pose));
+      if (!opc.mini && enfeite === 'casca') {
+        // casca 3D: a parede de trás fica atrás da Lili e a da frente na frente, como se ela saísse do ovo
+        const tras = F.encaixar(F.img(F.enfeite('casca_tras'), 'lili-enf enf-casca-tras'), 'casca', pose); tras.style.zIndex = '-1';
+        caixa.append(tras, F.encaixar(F.img(F.enfeite('casca_frente'), 'lili-enf enf-casca'), 'casca', pose));
+      } else if (!opc.mini && enfeite) caixa.append(F.encaixar(F.img(F.enfeite(enfeite), 'lili-enf enf-' + enfeite), enfeite, pose));
       if (ac) caixa.append(F.encaixar(F.img(F.loja(ac), 'lili-enf ac-' + ac), ac, pose));
       return caixa;
     }
