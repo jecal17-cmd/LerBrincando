@@ -5,7 +5,8 @@ Aqui cada letra ganha versões feitas de formas diferentes, e o responsável esc
   a_silaba_longa   Francisca diz a sílaba com a consoante bem comprida ("mmmmá"), fala natural, sem processamento
   b_so_consoante   a mesma fala, cortada logo antes da vogal (só "mmmm"), com saída suave; nada é repetido nem esticado
   c_texto          Francisca lê o texto alongado ("mmmmmm", "ssssss")
-  d_humano         gravação humana do som do Alfabeto Fonético Internacional (Wikimedia Commons, licença no índice)
+  d_humano         gravação humana do som do Alfabeto Fonético Internacional (Wikimedia Commons, arquivo exato em
+                   gerar_audios.WIKI_ARQUIVO; licença no índice)
   e_atual          o som que o jogo usa hoje
 
 Uso (precisa de AZURE_SPEECH_KEY): python ferramentas/candidatos_fonemas.py"""
