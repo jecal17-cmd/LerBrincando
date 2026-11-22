@@ -51,6 +51,11 @@ jobs:
         run: |
           if [ "$TEM_CHAVE" = "true" ] && [ "$PERMITIR" != "sim" ]; then node ferramentas/checar_licenca_audio.js --estrito; else node ferramentas/checar_licenca_audio.js; fi
 
+      # Build da Play (com chave de upload): a chave fixa de teste NÃO pode ir junto.
+      - name: Remove a chave de teste
+        if: env.TEM_CHAVE == 'true'
+        run: sed -i "s/chaveTeste: '[^']*'/chaveTeste: ''/" config.js
+
       - name: Monta o app (www/ → android/)
         run: npm run app:sync
 

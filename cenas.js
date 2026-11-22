@@ -649,7 +649,7 @@
   function abaPremium(c) {
     const P = PREMIUM(); const o = P.origem();
     c.append(el('h3', null, '⭐ Versão completa'),
-      P.ativo() ? el('p', null, o === 'compra' ? '✅ Liberada pela compra na Google Play.' : o === 'escola' ? '✅ Liberada pela licença da escola (código de turma).' : '✅ Todos os mundos estão abertos.')
+      P.ativo() ? el('p', null, o === 'compra' ? '✅ Liberada pela compra na Google Play.' : o === 'escola' ? '✅ Liberada pela licença da escola (código de turma).' : o === 'teste' ? '🧪 Liberada pela chave de teste deste aparelho.' : '✅ Todos os mundos estão abertos.')
         : el('p', null, `A versão grátis traz os Mundos 1 e 2. A versão completa abre os Mundos 3 a ${D.mundos.length}.`),
       el('button', { class: 'btn pri', type: 'button', onclick: () => P.tela({ voltar: () => painelPais('premium'), origem: 'pais' }) }, P.ativo() ? 'Ver detalhes' : '⭐ Ver planos'));
   }

@@ -21,10 +21,14 @@
     produtosLoja: null,
     get estado() { return Store.dados.premium || (Store.dados.premium = { compra: null }); },
     cobraAqui() { const pw = C.paywall || {}; return pw[plataforma()] !== false && (C.mundosGratis || 0) < D.mundos.length; },
+    /** Chave fixa de teste (config.js → chaveTeste): libera a versão completa sem compra, só se estiver configurada */
+    testeAtivo() { return !!(C.chaveTeste && this.estado.teste === C.chaveTeste); },
+    ativarTeste(codigo) { const k = String(codigo || '').trim().toUpperCase(); if (!C.chaveTeste || k !== C.chaveTeste.toUpperCase()) return false; this.estado.teste = C.chaveTeste; Store.salvar(); return true; },
+    desativarTeste() { delete this.estado.teste; Store.salvar(); },
     compraAtiva() { const c = this.estado.compra; return !!(c && c.produto); },
     escolaAtiva() { const ate = window.Turma && window.Turma.licencaAte; return !!(ate && ate >= hojeISO()); },
-    ativo() { return !this.cobraAqui() || this.compraAtiva() || this.escolaAtiva(); },
-    origem() { return this.compraAtiva() ? 'compra' : this.escolaAtiva() ? 'escola' : !this.cobraAqui() ? 'livre' : null; },
+    ativo() { return !this.cobraAqui() || this.compraAtiva() || this.escolaAtiva() || this.testeAtivo(); },
+    origem() { return this.compraAtiva() ? 'compra' : this.escolaAtiva() ? 'escola' : this.testeAtivo() ? 'teste' : !this.cobraAqui() ? 'livre' : null; },
     mundoPago(mundo) { return mundo > (C.mundosGratis || 0); },
     faseBloqueada(idx) { const f = D.fases[idx]; return !!f && this.mundoPago(f.mundo) && !this.ativo(); },
 
@@ -92,7 +96,8 @@
         if (this.ativo()) {
           const o = this.origem();
           corpo.append(el('div', { class: 'cartao-resumo bom' }, el('span', { class: 'fig' }, '✅'), el('div', null, el('b', null, 'Versão completa liberada'),
-            el('p', null, o === 'compra' ? 'Obrigado pela compra! Todos os mundos estão abertos.' : o === 'escola' ? `Licença da escola${window.Turma && window.Turma.dados && window.Turma.dados.nome ? ' (turma ' + window.Turma.dados.nome + ')' : ''} válida até ${new Date(window.Turma.licencaAte + 'T12:00').toLocaleDateString('pt-BR')}.` : 'Nesta plataforma todos os mundos estão abertos.'))));
+            el('p', null, o === 'compra' ? 'Obrigado pela compra! Todos os mundos estão abertos.' : o === 'teste' ? 'Chave de teste ativa neste aparelho: todos os mundos estão abertos.' : o === 'escola' ? `Licença da escola${window.Turma && window.Turma.dados && window.Turma.dados.nome ? ' (turma ' + window.Turma.dados.nome + ')' : ''} válida até ${new Date(window.Turma.licencaAte + 'T12:00').toLocaleDateString('pt-BR')}.` : 'Nesta plataforma todos os mundos estão abertos.'))));
+          if (o === 'teste') corpo.append(el('button', { class: 'btn mini', type: 'button', onclick: () => { this.desativarTeste(); toast('Chave de teste desativada.'); desenhar(); } }, '🧪 Desativar chave de teste'));
           return;
         }
         corpo.append(el('p', null, `A versão grátis traz os Mundos 1 e 2 (sons, rimas e vogais). A versão completa abre mais ${pagos.length} mundos, das primeiras sílabas à leitura de histórias:`),
@@ -124,6 +129,12 @@
           el('button', { class: 'btn', type: 'button', onclick: () => window.Cenas.painelPais('escola') }, '🔑 Tenho um código de turma'),
           C.contatoEscolas ? el('small', null, 'Licenças para escolas: ', C.contatoEscolas) : null);
         corpo.append(escola);
+        if (C.chaveTeste) {
+          const cod = el('input', { type: 'text', placeholder: 'Chave de teste', 'aria-label': 'chave de teste', autocapitalize: 'characters', autocomplete: 'off' });
+          const ok = el('button', { class: 'btn mini', type: 'button' }, '🧪 Aplicar');
+          ok.onclick = () => { if (this.ativarTeste(cod.value)) { toast('🧪 Chave de teste aplicada: versão completa liberada.'); desenhar(); } else toast('Chave de teste incorreta.'); };
+          corpo.append(el('div', { class: 'cartao-sugestao' }, el('b', null, '🧪 Chave de teste'), el('label', { class: 'linha' }, cod, ok)));
+        }
       };
       tela(corpo); await desenhar();
     }
