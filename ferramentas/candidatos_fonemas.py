@@ -63,6 +63,7 @@ for g, ipa in IPA.items():
     if 'c' in r and float(np.abs(r['c'][0]).max()) >= .15:
         x, t, _ = r['c']; L.append({'tipo': 'c_texto', 'arquivo': salva(f'{k}_c_texto', G.aparar_rel(x, t), t)})
     try:
+        import time; time.sleep(4)
         info = G.wikimedia(g)
         if info:
             xw, tw = G.carregar_audio_url(info['url'])

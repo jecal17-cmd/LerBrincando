@@ -336,18 +336,28 @@ def medir(x, taxa):
     return round(float(max(pico, -120)), 1), lufs
 
 # ----------------------------------------------------------------------------- Wikimedia (camada 3, opcional)
+UA_WIKI = 'LerBrincando/1.4 (jogo educativo; https://github.com/jecal17-cmd/LerBrincando)'
+
+def _abrir_wiki(url):
+    """Wikimedia exige User-Agent com contato e limita pedidos (429): espera e tenta de novo."""
+    for t in range(6):
+        try:
+            return urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': UA_WIKI}), timeout=60).read()
+        except urllib.error.HTTPError as e:
+            if e.code != 429 or t == 5: raise
+            time.sleep(float(e.headers.get('Retry-After') or 0) or 15 * (t + 1))
+
 def wikimedia(fonema):
     termo = WIKI_BUSCA.get(fonema)
     if not termo: return None
     api = 'https://commons.wikimedia.org/w/api.php?'
     q = urllib.parse.urlencode({'action': 'query', 'list': 'search', 'srsearch': termo + ' ogg', 'srnamespace': 6, 'format': 'json', 'srlimit': 5})
-    req = urllib.request.Request(api + q, headers={'User-Agent': 'LerBrincando/1.0 (jogo educativo)'})
-    res = json.load(urllib.request.urlopen(req))
+    res = json.loads(_abrir_wiki(api + q))
     for r in res.get('query', {}).get('search', []):
         titulo = r['title']
         if not titulo.lower().endswith('.ogg'): continue
         q2 = urllib.parse.urlencode({'action': 'query', 'titles': titulo, 'prop': 'imageinfo', 'iiprop': 'url|extmetadata', 'format': 'json'})
-        info = json.load(urllib.request.urlopen(urllib.request.Request(api + q2, headers={'User-Agent': 'LerBrincando/1.0'})))
+        info = json.loads(_abrir_wiki(api + q2))
         pg = next(iter(info['query']['pages'].values()))
         ii = pg['imageinfo'][0]; meta = ii.get('extmetadata', {})
         return {'url': ii['url'], 'arquivo': titulo, 'licenca': meta.get('LicenseShortName', {}).get('value', '?'),
@@ -356,7 +366,7 @@ def wikimedia(fonema):
 
 def carregar_audio_url(url):
     import numpy as np, soundfile as sf
-    dados = urllib.request.urlopen(urllib.request.Request(url, headers={'User-Agent': 'LerBrincando/1.0'})).read()
+    dados = _abrir_wiki(url)
     x, taxa = sf.read(io.BytesIO(dados), dtype='float32')
     if x.ndim > 1: x = x.mean(axis=1)
     # usa só o PRIMEIRO trecho sonoro (as gravações IPA costumam ter o som isolado e depois exemplos)
