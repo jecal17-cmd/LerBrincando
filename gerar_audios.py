@@ -347,13 +347,22 @@ def _abrir_wiki(url):
             if e.code != 429 or t == 5: raise
             time.sleep(float(e.headers.get('Retry-After') or 0) or 15 * (t + 1))
 
+# arquivos exatos das gravações do IPA (a busca por nome trazia sons errados: cliques, aproximantes)
+WIKI_ARQUIVO = {'M': 'Bilabial nasal.ogg', 'N': 'Alveolar nasal.ogg', 'F': 'Voiceless labiodental fricative.ogg',
+                'V': 'Voiced labiodental fricative.ogg', 'S': 'Voiceless alveolar sibilant.ogg', 'Z': 'Voiced alveolar sibilant.ogg',
+                'X': 'Voiceless palato-alveolar sibilant.ogg', 'J': 'Voiced palato-alveolar sibilant.ogg',
+                'L': 'Alveolar lateral approximant.ogg', 'NH': 'Palatal nasal.ogg', 'LH': 'Palatal lateral approximant.ogg'}
+
 def wikimedia(fonema):
     termo = WIKI_BUSCA.get(fonema)
     if not termo: return None
     api = 'https://commons.wikimedia.org/w/api.php?'
-    q = urllib.parse.urlencode({'action': 'query', 'list': 'search', 'srsearch': termo + ' ogg', 'srnamespace': 6, 'format': 'json', 'srlimit': 5})
-    res = json.loads(_abrir_wiki(api + q))
-    for r in res.get('query', {}).get('search', []):
+    if fonema in WIKI_ARQUIVO:
+        resultados = [{'title': 'File:' + WIKI_ARQUIVO[fonema]}]
+    else:
+        q = urllib.parse.urlencode({'action': 'query', 'list': 'search', 'srsearch': termo + ' ogg', 'srnamespace': 6, 'format': 'json', 'srlimit': 5})
+        resultados = json.loads(_abrir_wiki(api + q)).get('query', {}).get('search', [])
+    for r in resultados:
         titulo = r['title']
         if not titulo.lower().endswith('.ogg'): continue
         q2 = urllib.parse.urlencode({'action': 'query', 'titles': titulo, 'prop': 'imageinfo', 'iiprop': 'url|extmetadata', 'format': 'json'})
