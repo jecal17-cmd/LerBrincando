@@ -422,11 +422,12 @@
       const F = window.Figuras;
       const caixa = el('span', { class: `mascote lili-fig ${opc.mini ? 'mini' : ''} ${opc.anim ? 'anim-' + opc.anim : ''}`, role: 'img', 'aria-label': 'Lili, a corujinha' });
       const giro = corItem || opc.cor ? F.giroCor(cor) : 0;
-      if (enfeite === 'capa') caixa.append(F.img(F.enfeite('capa'), 'lili-enf enf-capa'));
-      const corpo = F.img(F.lili(F.poseLili(opc)), 'lili-corpo'); if (giro) corpo.style.filter = `hue-rotate(${giro}deg) saturate(1.1)`;
+      const pose = F.poseLili(opc);
+      const corpo = F.img(F.lili(pose), 'lili-corpo'); if (giro) corpo.style.filter = `hue-rotate(${giro}deg) saturate(1.1)`;
       caixa.append(corpo);
-      if (!opc.mini && enfeite !== 'capa') caixa.append(F.img(F.enfeite(enfeite), 'lili-enf enf-' + enfeite));
-      if (ac) caixa.append(F.img(F.loja(ac), 'lili-enf ac-' + ac));
+      // enfeite do nível e acessório encaixados nos olhos da pose (figuras.js → encaixar)
+      if (!opc.mini && enfeite) caixa.append(F.encaixar(F.img(F.enfeite(enfeite), 'lili-enf enf-' + enfeite), enfeite, pose));
+      if (ac) caixa.append(F.encaixar(F.img(F.loja(ac), 'lili-enf ac-' + ac), ac, pose));
       return caixa;
     }
     const feliz = opc.humor === 'feliz';
