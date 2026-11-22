@@ -15,6 +15,12 @@
     "arquivo": "f_c_texto.mp3"
    },
    {
+    "tipo": "d_humano",
+    "arquivo": "f_d_humano.mp3",
+    "credito": "File:Voiceless labiodental approximant.ogg — BodhiHarp — CC0",
+    "url": "https://commons.wikimedia.org/wiki/File:Voiceless_labiodental_approximant.ogg"
+   },
+   {
     "tipo": "e_atual",
     "arquivo": "f_e_atual.mp3"
    }
@@ -31,6 +37,12 @@
    {
     "tipo": "c_texto",
     "arquivo": "v_c_texto.mp3"
+   },
+   {
+    "tipo": "d_humano",
+    "arquivo": "v_d_humano.mp3",
+    "credito": "File:Voiced labio-dental fricative.ogg — Nixinova — CC0",
+    "url": "https://commons.wikimedia.org/wiki/File:Voiced_labio-dental_fricative.ogg"
    },
    {
     "tipo": "e_atual",
@@ -51,6 +63,12 @@
     "arquivo": "m_c_texto.mp3"
    },
    {
+    "tipo": "d_humano",
+    "arquivo": "m_d_humano.mp3",
+    "credito": "File:Bilabial nasal click.ogg — Ärkhézja — CC BY-SA 4.0",
+    "url": "https://commons.wikimedia.org/wiki/File:Bilabial_nasal_click.ogg"
+   },
+   {
     "tipo": "e_atual",
     "arquivo": "m_e_atual.mp3"
    }
@@ -67,6 +85,12 @@
    {
     "tipo": "c_texto",
     "arquivo": "n_c_texto.mp3"
+   },
+   {
+    "tipo": "d_humano",
+    "arquivo": "n_d_humano.mp3",
+    "credito": "File:Intervocalic nasal alveolar clicks.ogg — Micah Walter — CC BY-SA 3.0",
+    "url": "https://commons.wikimedia.org/wiki/File:Intervocalic_nasal_alveolar_clicks.ogg"
    },
    {
     "tipo": "e_atual",
@@ -111,6 +135,12 @@
     "arquivo": "s_c_texto.mp3"
    },
    {
+    "tipo": "d_humano",
+    "arquivo": "s_d_humano.mp3",
+    "credito": "File:Voiceless alveolar sibilant.ogg — Peter Isotalo — CC BY-SA 3.0",
+    "url": "https://commons.wikimedia.org/wiki/File:Voiceless_alveolar_sibilant.ogg"
+   },
+   {
     "tipo": "e_atual",
     "arquivo": "s_e_atual.mp3"
    }
@@ -127,6 +157,12 @@
    {
     "tipo": "c_texto",
     "arquivo": "z_c_texto.mp3"
+   },
+   {
+    "tipo": "d_humano",
+    "arquivo": "z_d_humano.mp3",
+    "credito": "File:Voiced alveolar sibilant.ogg —  — CC BY-SA 3.0",
+    "url": "https://commons.wikimedia.org/wiki/File:Voiced_alveolar_sibilant.ogg"
    },
    {
     "tipo": "e_atual",
@@ -147,6 +183,12 @@
     "arquivo": "j_c_texto.mp3"
    },
    {
+    "tipo": "d_humano",
+    "arquivo": "j_d_humano.mp3",
+    "credito": "File:Voiced postalveolar lateral fricative.ogg — YodaMaster445 — CC BY-SA 4.0",
+    "url": "https://commons.wikimedia.org/wiki/File:Voiced_postalveolar_lateral_fricative.ogg"
+   },
+   {
     "tipo": "e_atual",
     "arquivo": "j_e_atual.mp3"
    }
@@ -163,6 +205,12 @@
    {
     "tipo": "c_texto",
     "arquivo": "x_c_texto.mp3"
+   },
+   {
+    "tipo": "d_humano",
+    "arquivo": "x_d_humano.mp3",
+    "credito": "File:Voiceless postalveolar non-sibilant fricative.ogg — Adamsa123 — CC BY-SA 4.0",
+    "url": "https://commons.wikimedia.org/wiki/File:Voiceless_postalveolar_non-sibilant_fricative.ogg"
    },
    {
     "tipo": "e_atual",
@@ -183,6 +231,12 @@
     "arquivo": "nh_c_texto.mp3"
    },
    {
+    "tipo": "d_humano",
+    "arquivo": "nh_d_humano.mp3",
+    "credito": "File:Nasal palatal approximant.ogg — Mlokko52Tyv — CC BY 4.0",
+    "url": "https://commons.wikimedia.org/wiki/File:Nasal_palatal_approximant.ogg"
+   },
+   {
     "tipo": "e_atual",
     "arquivo": "nh_e_atual.mp3"
    }
@@ -199,6 +253,12 @@
    {
     "tipo": "c_texto",
     "arquivo": "lh_c_texto.mp3"
+   },
+   {
+    "tipo": "d_humano",
+    "arquivo": "lh_d_humano.mp3",
+    "credito": "File:Palatal lateral approximant.ogg —  — CC BY-SA 3.0",
+    "url": "https://commons.wikimedia.org/wiki/File:Palatal_lateral_approximant.ogg"
    },
    {
     "tipo": "e_atual",
