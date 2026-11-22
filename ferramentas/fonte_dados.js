@@ -1,7 +1,7 @@
 /* Fonte de dados do Ler Brincando (editável). Rode:  node ferramentas/construir_dados.js
    para gerar data.js (JSON) com os campos derivados e verificados. */
 module.exports = {
-  versao: '1.4.3',
+  versao: '1.4.2',
 
   // ------------------------------------------------------------------ MUNDOS
   mundos: [
@@ -646,7 +646,7 @@ module.exports = {
   // ------------------------------------------------------------------ CRÉDITOS / LICENÇAS / CHANGELOG
   creditos: [
     'Figuras: OpenMoji, o projeto de emojis de código aberto (openmoji.org), licença CC BY-SA 4.0.',
-    'Vozes: vozes neurais em português do Brasil (Thalita, da Microsoft).',
+    'Vozes: vozes neurais em português do Brasil (Francisca e Thalita, da Microsoft).',
     'Letras: fontes Andika (SIL International) e Baloo 2, licença SIL Open Font 1.1.',
     'Efeitos sonoros, música e confete: feitos pelo próprio jogo.',
     'Personagens, histórias e textos: originais, criados para este jogo.'
@@ -654,7 +654,7 @@ module.exports = {
   // Notas completas de licença e de publicação: aparecem só na Área técnica
   creditosTecnicos: [
     'Imagens: OpenMoji — o projeto de emojis de código aberto (https://openmoji.org), licença CC BY-SA 4.0, incluídas no jogo (pasta imagens/). Emojis nativos do sistema são usados como alternativa.',
-    'Vozes do Banco de Áudio: vozes neurais Microsoft (pt-BR Thalita, em todo o banco) geradas com Azure Speech, ou Kokoro-82M (Apache-2.0) offline. Para publicar o app numa loja, gere com Azure Speech (--motor azure) ou Kokoro.',
+    'Vozes do Banco de Áudio: vozes neurais Microsoft (pt-BR Francisca; Thalita nas sílabas com NH) geradas com Azure Speech (sílabas e fonemas) e com a biblioteca livre edge-tts (palavras, frases e histórias), ou Kokoro-82M (Apache-2.0) offline. Para publicar o app numa loja, gere com Azure Speech (--motor azure) ou Kokoro.',
     'Imagens reserva: Twemoji (jdecked/twemoji), licença CC BY 4.0.',
     'Fontes: Andika (SIL International) e Baloo 2, SIL Open Font License 1.1, incluídas no jogo (pasta fontes/).',
     'Voz alternativa: Piper TTS (Rhasspy/Open Home Foundation, licença MIT) com o modelo pt_BR-faber-medium. Confira a licença do modelo baixado no arquivo .onnx.json/MODEL_CARD e registre aqui.',
@@ -664,7 +664,6 @@ module.exports = {
     'Personagens, histórias e textos: originais, criados para este jogo.'
   ],
   changelog: [
-    '1.4.3 — Voz nova: a Lili fala com a voz Thalita em todos os sons (palavras, sílabas, letras e histórias), e o som do M, do N e do L ficou um zumbido limpo, sem chiado.',
     '1.4.2 — Figuras novas no estilo da Lili: as palavras do Vale das Vogais, os botões, as ilhas dos mundos, as medalhas, a Lojinha, os avatares e a própria Lili, que agora acena, comemora e pensa junto com a criança.',
     '1.4.1 — Sílabas com o som da própria palavra: em PE-RA o R é fraco, em CA-SA o S soa Z, em GA-TO o final soa "tu". O Junta-Junta toca a palavra silabada gravada inteira. Novo som das consoantes contínuas (F, V, M, N, L, S, Z, J, X), recortado de fala natural: o J deixou de ser um chiado e o Z ganhou voz. Todas as vozes com licença (Azure), e as frases das histórias voltaram a ser faladas de forma natural.',
     '1.4.0 — Versão completa: os Mundos 1 e 2 continuam grátis; do 3 ao 8, compra pela Google Play (feita por um adulto) ou licença da escola. Novo medidor de fluência leitora (palavras corretas por minuto) na Área dos Pais. Turma da escola: com o código do professor, o progresso aparece no painel do professor. Estatísticas anônimas de uso, só com autorização do adulto.',

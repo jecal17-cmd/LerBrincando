@@ -307,16 +307,15 @@ Abra `ferramentas/pronuncias.json`, escreva a chave do som (ela aparece em `audi
 ### Motores e vozes
 | Motor | Comando | Observação |
 |---|---|---|
-| **azure** (para publicar) | `--motor azure` | Voz Thalita (pt-BR-ThalitaMultilingualNeural) em todo o banco, com licença. |
-| **edge** (padrão) | `python gerar_audios.py` | Mesma voz Thalita. Precisa de internet só durante a geração. |
-| edge, outra voz | `--voz pt-BR-FranciscaNeural` ou `--voz pt-BR-AntonioNeural` + `--refazer` | Teste antes com `--amostra`. |
+| **edge** (padrão) | `python gerar_audios.py` | Voz neural Francisca. Precisa de internet só durante a geração. |
+| edge, outra voz | `--voz pt-BR-ThalitaMultilingualNeural` ou `--voz pt-BR-AntonioNeural` + `--refazer` | Teste antes com `--amostra`. |
 | **kokoro** | `--motor kokoro` | 100% offline, Apache-2.0. |
 | piper | `--motor piper` | Mais robótico. |
 
 **Licença:** o edge-tts usa o serviço de leitura em voz alta do Edge. Para uso pessoal ou educativo, tudo bem. Para publicar ou vender, gere com Azure Speech ou Kokoro.
 
 ### Sem o banco (voz do navegador)
-O jogo escolhe a voz mais natural instalada (Edge "Thalita/Francisca Online (Natural)" → Google pt-BR → Luciana aprimorada) e fala em velocidade calma (0,95). Também aplica às sílabas a **mesma grafia pronunciável**, para não soletrar, e fala as frases inteiras.
+O jogo escolhe a voz mais natural instalada (Edge "Francisca/Thalita Online (Natural)" → Google pt-BR → Luciana aprimorada) e fala em velocidade calma (0,95). Também aplica às sílabas a **mesma grafia pronunciável**, para não soletrar, e fala as frases inteiras.
 
 ---
 
