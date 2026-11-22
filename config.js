@@ -24,5 +24,10 @@ window.LB_CONFIG = {
   // Página do app na Google Play (para quem joga no navegador)
   linkPlay: 'https://play.google.com/store/apps/details?id=com.lerbrincando.app',
   // Contato para escolas e redes (aparece na tela da versão completa)
-  contatoEscolas: ''
+  contatoEscolas: '',
+
+  // ---- Chave fixa de TESTE: digitada na tela "Versão completa", libera os mundos pagos neste aparelho sem compra.
+  // Fica salva no aparelho (não precisa desinstalar o app para testar de novo). SÓ PARA TESTES:
+  // o fluxo do App Android esvazia este campo quando há chave de upload (build da Play). Deixe '' para desligar.
+  chaveTeste: 'LB-TESTE-7K4Q-92XM'
 };
