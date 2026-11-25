@@ -479,12 +479,81 @@
   }
   function certificado(mundo) {
     const p = Store.perfil; const m = D.mundos[mundo - 1];
+    const cert = (p.certificados || []).find((c) => c.mundo === mundo);
+    const data = new Date(cert && cert.data ? cert.data : Date.now()).toLocaleDateString('pt-BR');
+    const esc = (s) => String(s).replace(/[<>&"]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;' }[c]));
+    // o que a criança fez no mundo: fases dominadas, estrelas e melhor acerto médio
+    const fasesM = D.fases.filter((f) => f.mundo === mundo);
+    const regs = fasesM.map((f) => p.fases[f.id]).filter(Boolean);
+    const feitas = regs.filter((r) => r.dominada).length;
+    const estrelas = regs.reduce((s, r) => s + (r.estrelas || 0), 0);
+    const acerto = regs.length ? Math.round(100 * regs.reduce((s, r) => s + (r.melhor || 0), 0) / regs.length) : 0;
+    const F = window.Figuras && window.Figuras.ativo ? window.Figuras : null;
+    const ico = (nome, emoji) => (F ? `<img src="${F.ui(nome)}" alt="">` : `<span>${emoji}</span>`);
+    const selo = F ? `<img class="selo" src="${F.mundo(mundo)}" alt="">` : `<div class="selo emo">${m.deco}</div>`;
+    const lili = mascote({ humor: 'feliz' }); lili.classList.add('lili-cert');
+    const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><base href="${esc(location.href)}">
+<meta name="viewport" content="width=1180"><title>Certificado — ${esc(p.nome)}</title>
+<link rel="stylesheet" href="fontes/fontes.css"><style>
+@page{size:A4 landscape;margin:0}
+*{box-sizing:border-box;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+html,body{margin:0;background:#e9edf3}
+body{font-family:Andika,system-ui,sans-serif;color:#24324a}
+.folha{width:297mm;height:210mm;margin:0 auto;background:#fff;padding:9mm;position:relative;overflow:hidden}
+.moldura{height:100%;border:2.2mm double #2f6fde;border-radius:6mm;position:relative;padding:9mm 16mm 7mm;
+ background:radial-gradient(circle at 0 0,${m.cor1}55 0,transparent 32%),radial-gradient(circle at 100% 100%,${m.cor2}aa 0,transparent 34%)}
+.topo{text-align:center}
+.marca{font-family:'Baloo 2',sans-serif;font-weight:700;letter-spacing:.35em;font-size:11pt;color:#6b7a93;text-transform:uppercase}
+h1{font-family:'Baloo 2',sans-serif;font-weight:800;color:#1d4fb0;font-size:34pt;line-height:1;margin:1mm 0 0}
+.centro{text-align:center;margin-top:9mm}
+.centro p{margin:0;font-size:14pt}
+.nome{font-family:'Baloo 2',sans-serif;font-weight:800;font-size:36pt;line-height:1.1;margin:2mm auto 3mm;padding:0 10mm 1mm;display:inline-block;border-bottom:.6mm solid #ffd54a}
+.feito{font-size:15pt}
+.mundo{display:inline-block;margin:3mm 0 2mm;padding:2mm 9mm;border-radius:20mm;background:${m.cor1};font-family:'Baloo 2',sans-serif;font-weight:800;font-size:22pt;color:#1d3a2a}
+.conteudo{font-size:13pt;color:#4a5872}
+.conquistas{display:flex;justify-content:center;gap:7mm;margin-top:8mm}
+.cq{display:flex;align-items:center;gap:3mm;padding:2.5mm 6mm;border:.5mm solid #d6def0;border-radius:5mm;background:#fff}
+.cq img,.cq span{width:11mm;height:11mm;font-size:24pt;line-height:11mm;object-fit:contain}
+.cq b{display:block;font-family:'Baloo 2',sans-serif;font-size:18pt;line-height:1;color:#1d4fb0}
+.cq small{font-size:10pt;color:#5b6880}
+.selo{position:absolute;left:11mm;top:9mm;width:36mm;height:36mm;object-fit:contain;filter:drop-shadow(0 1.5mm 1.5mm rgba(0,0,0,.15))}
+.selo.emo{font-size:15pt;width:auto;height:auto}
+.rodape{position:absolute;left:16mm;right:16mm;bottom:8mm;display:grid;grid-template-columns:1fr 1fr 1fr;align-items:end;justify-items:center}
+.rodape .lili{justify-self:end}
+.campo{text-align:center;font-size:12pt;width:70mm}
+.campo .linha{border-top:.4mm solid #24324a;padding-top:1.5mm;color:#4a5872}
+.campo .valor{font-size:14pt;margin-bottom:1.5mm}
+.lili-cert{width:30mm;height:30mm}
+/* Lili com acessórios (mesmas regras de styles.css; esta janela não carrega o CSS do app) */
+.lili-fig{position:relative;display:inline-block;aspect-ratio:1/1;isolation:isolate}
+.lili-fig img{position:absolute;object-fit:contain;pointer-events:none;transform-origin:50% 50%}
+.lili-fig .lili-corpo{inset:0;width:100%;height:100%}
+svg.mascote{display:block}
+@media screen{body{padding:6mm 0}.folha{box-shadow:0 2mm 8mm rgba(0,0,0,.18)}}
+@media print{html,body{background:#fff}body{padding:0}}
+</style></head><body><div class="folha"><div class="moldura">
+${selo}
+<div class="topo"><div class="marca">Ler Brincando</div><h1>Certificado de Leitura</h1></div>
+<div class="centro">
+<p>Certificamos que</p>
+<div class="nome">${esc(p.nome)}</div>
+<p class="feito">concluiu com muito esforço e dedicação o</p>
+<div class="mundo">Mundo ${m.id} · ${esc(m.nome)}</div>
+<p class="conteudo">Aprendeu: ${esc(m.conteudo)}</p>
+<div class="conquistas">
+<div class="cq">${ico('trofeu', '🏆')}<div><b>${feitas} de ${fasesM.length}</b><small>fases concluídas</small></div></div>
+<div class="cq">${ico('estrela', '⭐')}<div><b>${estrelas} de ${fasesM.length * 3}</b><small>estrelas conquistadas</small></div></div>
+<div class="cq">${ico('certo', '✅')}<div><b>${acerto}%</b><small>de acertos</small></div></div>
+</div></div>
+<div class="rodape">
+<div class="campo"><div class="valor">${data}</div><div class="linha">Data</div></div>
+<div class="campo"><div class="valor">&nbsp;</div><div class="linha">Assinatura do adulto</div></div>
+<div class="lili">${lili.outerHTML}</div>
+</div>
+</div></div>
+<script>function pronto(){var i=[].slice.call(document.images).filter(function(x){return !x.complete});if(!i.length)return setTimeout(function(){window.print()},300);var n=i.length;i.forEach(function(x){x.onload=x.onerror=function(){if(!--n)setTimeout(function(){window.print()},300)}})}window.onload=pronto<\/script>
+</body></html>`;
     const w = window.open('', '_blank');
-    const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>Certificado</title><style>body{font-family:Andika,system-ui,sans-serif;text-align:center;padding:40px;border:14px double #2f6fde;margin:20px;border-radius:24px}h1{color:#1d4fb0;font-size:44px;margin:.2em}h2{font-size:34px}p{font-size:22px}.e{font-size:60px}</style></head><body>
-      <div class="e">${m.deco}</div><h1>Certificado de Leitura</h1><p>Certificamos que</p><h2>${p.nome.replace(/[<>&]/g, '')}</h2>
-      <p>concluiu com muito esforço o mundo <b>${m.id}. ${m.nome}</b><br>(${m.conteudo}) no jogo <b>Ler Brincando</b>.</p>
-      <div style="width:160px;margin:0 auto">${mascote({ humor: 'feliz' }).outerHTML}</div><p>${new Date().toLocaleDateString('pt-BR')}</p><p>_____________________________<br>Assinatura do adulto</p>
-      <script>setTimeout(function(){window.print()},500)<\/script></body></html>`;
     if (w) { w.document.write(html); w.document.close(); } else toast('Permita janelas pop-up para imprimir.');
   }
 
