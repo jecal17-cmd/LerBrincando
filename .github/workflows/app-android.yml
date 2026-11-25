@@ -54,7 +54,8 @@ jobs:
       # Build da Play (com chave de upload): a chave fixa de teste NÃO pode ir junto.
       - name: Remove a chave de teste
         if: env.TEM_CHAVE == 'true'
-        run: sed -i "s/chaveTeste: '[^']*'/chaveTeste: ''/" config.js
+        run: |
+          sed -i "s/chaveTeste: '[^']*'/chaveTeste: ''/" config.js
 
       - name: Monta o app (www/ → android/)
         run: npm run app:sync
