@@ -41,3 +41,7 @@ Depois de mudar o conteúdo ou o código, rode o autoteste. Se algum validador r
 Ao publicar uma versão nova, aumente `VERSAO` em `sw.js` para os aparelhos baixarem os arquivos novos.
 
 O manual completo, com o plano pedagógico, as fases, o Banco de Áudio, os testes e as limitações, está em **[LEIAME.md](LEIAME.md)**.
+
+## Marca e divulgação
+
+Guia de identidade visual (Markdown e PDF) e plano de marketing em `marca/`. Peças de Instagram no repositório `feira-viva`, em `docs/marketing/instagram/ler-brincando/` e `bentevi-apps/`.
