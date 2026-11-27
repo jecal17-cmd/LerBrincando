@@ -1,7 +1,7 @@
 /* Ler Brincando — data.js (GERADO por ferramentas/construir_dados.js — edite a fonte e rode o script)
    Banco de palavras, fases, histórias, elogios, falas e regras. Formato JSON para o gerar_audios.py ler. */
 window.DADOS = {
- "versao": "1.4.8",
+ "versao": "1.4.9",
  "mundos": [
   {
    "id": 1,
@@ -3158,6 +3158,7 @@ window.DADOS = {
   "Personagens, histórias e textos: originais, criados para este jogo."
  ],
  "changelog": [
+  "1.4.9 — Sons das letras refeitos: S, F e X com sopro limpo; M, N, L e V com som humano em voz feminina; Z e J com vibração da voz (não viram mais S e X); P, B, T, D, C e G pela família de sílabas (PA-PE-PI-PO-PU, CA-CE-CI-CO-CU, GA-GE-GI-GO-GU).",
   "1.4.8 — Abertura nova da Bentevi Apps: o bem-te-vi chega voando, pousa no galho e canta o próprio nome. Um toque pula.",
   "1.4.7 — Chave fixa de teste para liberar a versão completa neste aparelho sem comprar (só para testes; fica salva e dispensa desinstalar o app).",
   "1.4.6 — Medalhas com textos e barra de progresso dentro da caixa. O saldo de moedas no topo diminui na hora quando você compra algo na Lojinha. Área dos Pais e Configurações com botões, listas e barras sem sobreposição.",
@@ -3590,5 +3591,5 @@ window.DADOS = {
   "H": 77,
   "X_VARIOS": 77
  },
- "geradoEm": "2026-11-25T10:15:52.525Z"
+ "geradoEm": "2026-11-27T18:45:54.111Z"
 };

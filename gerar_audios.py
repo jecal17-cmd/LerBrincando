@@ -627,6 +627,7 @@ def principal():
     if a.regerar:
         alvo = {it['chave'] for it in itens}
         for k in list(man['itens']):
+            if man['itens'][k].get('origem') == 'sintetico': continue   # v1.4.9: sons de ferramentas/sons_sinteticos.py
             if k in alvo or (k.endswith('_lento') and k[:-6] in alvo): man['itens'][k]['legado'] = True
         print(f'Regerando {len(alvo)} itens (os demais sons do banco são mantidos).')
     import numpy as np
@@ -637,7 +638,8 @@ def principal():
     velho = man.get('versaoGerador', 1) < VERSAO_GERADOR and man['itens']
     if velho:
         print('Banco de versão anterior detectado: atualizando sílabas, fonemas, margens e velocidade (pode levar alguns minutos).')
-        man['itens'] = {}
+        # mantém os sons das consoantes feitos por ferramentas/sons_sinteticos.py (escolhidos por escuta; v1.4.9)
+        man['itens'] = {k: v for k, v in man['itens'].items() if v.get('origem') == 'sintetico'}
     motor = criar_motor(a.motor, a.voz)
     if man.get('voz') and man.get('voz') != motor.voz and not a.refazer:
         print(f"Aviso: o banco existente usa a voz {man['voz']}. Use --refazer para trocar tudo pela voz {motor.voz}.")
