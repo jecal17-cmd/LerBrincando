@@ -69,7 +69,7 @@ def analisar(pasta, chave, item):
             prob.append('termina cortado (sem silêncio no fim)')
     if abs(ms - item.get('ms', ms)) > 250:
         prob.append(f"duração no manifest ({item.get('ms')} ms) diferente da real ({ms} ms)")
-    lim = LIM_MS.get(tipo)
+    lim = LIM_MS.get(tipo) if not item.get('familia') else (1500, 4500)   # família de sílabas (PA-PE-PI-PO-PU)
     if lim and not (lim[0] <= ms <= lim[1] * (1.6 if lento else 1) + 400):
         prob.append(f'duração fora do esperado para {tipo} ({ms} ms)')
     if tipo in ('silaba',) or (tipo == 'fonema' and item.get('origem', '').startswith('edge') and 'apoio' not in item):
