@@ -343,7 +343,7 @@ O jogo escolhe a voz mais natural instalada (Edge "Francisca/Thalita Online (Nat
 - **Node:** casos funcionais T09, T12, T14, T15, T16 e T18 aprovados, além do teste de adaptatividade (3 erros → de 4 para 3 opções).
 - **Chromium headless (celular 390×844, tablet 820×1180, desktop 1280×800):** um robô jogou pela interface, respondendo certo, as fases **1.1, 1.2, 1.5, 1.7, 1.9, 1.10, 2.1, 2.7, 2.10, 3.1, 3.5, 3.9, 3.12, 4.7, 4.11, 5.1–5.10, 6.10 e 7.9**. Isso cobre todos os tipos de minijogo (incluindo traçado, trem, fatiador, ditado, memória, bingo, microfone com confirmação do adulto, história com karaokê e guardião) e a avaliação inicial. Resultado: **0 erros de JavaScript**.
 - **Contraste (WCAG):** texto 14,3:1; texto secundário 7,3:1; branco sobre azul 4,7:1; branco sobre verde 5,0:1.
-- **Limites do ambiente de teste:** não havia voz real (a fala foi simulada), fonte de emoji nem acesso ao CDN do OpenMoji. Por isso, **a voz, as imagens e o arrastar com o dedo precisam ser conferidos em aparelhos reais** (tabela abaixo).
+- **Limites do ambiente de teste:** não havia voz real (a fala foi simulada) nem fonte de emoji (v1.2). Por isso, **a voz, as imagens e o arrastar com o dedo precisam ser conferidos em aparelhos reais** (tabela abaixo).
 
 ### 6.2 Matriz de compatibilidade (preencher nos aparelhos)
 
@@ -444,7 +444,7 @@ Gerado por `node ferramentas/testar.js`. **Resultado geral: APROVADO.**
 | V2 | Decodificabilidade das fases | **APROVADO** | 3010 usos de palavras escritas verificados em 4 gerações |
 | V3 | Decodificabilidade das histórias e frases | **APROVADO** | h1 oral; h2 100%; h3 100%; h4 100%; h5 96.2%; h6 98.5%; h7 100%; h8a 100%; h8b 100%; h8c 100%; h8d 100% |
 | V4 | Pares mínimos | **APROVADO** | 14 pares; P/B, T/D, F/V, C/G, S/Z, X/J |
-| V5 | Imagens | **APROVADO** | 363 palavras com emoji e código OpenMoji; 0 emojis repetidos |
+| V5 | Imagens | **APROVADO** | 363 palavras com figura própria; 0 emojis repetidos |
 | V6 | Banco de elogios | **APROVADO** | acerto: 20 · sequencia3: 15 · sequencia5: 15 · sequencia10: 15 · aposErro: 15 · somNovo: 15 · fasePerfeita: 15 · mundoConcluido: 15 |
 | V7 | Distratores | **APROVADO** | 2838 itens de escolha verificados |
 | V8 | Volume de conteúdo | **APROVADO** | 363 palavras · 93 fases · 11 histórias · 17/17 minijogos da lista (+ somFinal, juntar, tirar, trocar, historia, licao, abertoFechado, nomeSom, regra, somS, freq, escrita, guardiao) |
