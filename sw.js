@@ -1,5 +1,5 @@
 /* Ler Brincando — Service Worker: funciona offline após o primeiro acesso (PWA) */
-const VERSAO = 'lb-v1.4.9';
+const VERSAO = 'lb-v1.4.10';
 const NUCLEO = ['./', 'index.html', 'styles.css', 'vinheta.js', 'nucleo.js', 'data.js', 'motor.js', 'validadores.js', 'game.js', 'minijogos.js', 'cenas.js', 'visual.js', 'figuras.js',
   'config.js', 'nuvem.js', 'premium.js', 'fluencia.js',
   'manifest.webmanifest', 'icones/icone.svg', 'icones/icone-192.png', 'icones/icone-512.png',
@@ -9,13 +9,11 @@ self.addEventListener('install', (e) => {
   e.waitUntil((async () => {
     const c = await caches.open(VERSAO);
     await c.addAll(NUCLEO);
-    // Imagens locais (OpenMoji): a lista é gerada por ferramentas/recursos_locais.js
+    // Figuras próprias: a lista fica em figuras/lista.json
     try {
       const rf = await fetch('figuras/lista.json', { cache: 'no-cache' });
       if (rf.ok) { const lf = await rf.json(); await Promise.all(lf.map((f) => c.add('figuras/' + f).catch(() => {}))); }
-      const r = await fetch('imagens/lista.json', { cache: 'no-cache' });
-      if (r.ok) { const lista = await r.json(); await Promise.all(lista.map((f) => c.add('imagens/' + f).catch(() => {}))); }
-    } catch (err) { /* sem imagens locais: usa o CDN */ }
+    } catch (err) { /* sem a lista: as figuras entram no cache conforme aparecem */ }
     // Banco de Áudio: se existir, guarda o manifest e todos os arquivos
     try {
       const r = await fetch('audio/manifest.json', { cache: 'no-cache' });
@@ -31,7 +29,7 @@ self.addEventListener('install', (e) => {
 self.addEventListener('activate', (e) => {
   e.waitUntil((async () => { for (const k of await caches.keys()) if (k !== VERSAO) await caches.delete(k); await self.clients.claim(); })());
 });
-// Cache primeiro para o app e o áudio; "stale-while-revalidate" para CDN (OpenMoji, fontes)
+// Cache primeiro para o app e o áudio; "stale-while-revalidate" para o resto
 self.addEventListener('fetch', (e) => {
   const req = e.request; if (req.method !== 'GET') return;
   e.respondWith((async () => {

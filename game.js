@@ -59,21 +59,16 @@
   // Formata texto conforme a configuração (letra bastão ou minúscula)
   const fmt = (t) => (Store.cfg.caixa === 'baixa' ? N.maiusc(t).toLocaleLowerCase('pt-BR') : N.maiusc(t));
   const mostrarAmbas = () => (estado.mundoAtual >= 6);
-  // Imagem: OpenMoji local (imagens/, funciona offline) → OpenMoji no CDN → Twemoji (reserva) → emoji nativo do sistema
-  const CDN_IMG = [
-    (c) => `imagens/${c}.svg`,
-    (c) => `https://cdn.jsdelivr.net/npm/openmoji@16.0.0/color/svg/${c}.svg`,
-    (c) => `https://cdn.jsdelivr.net/gh/jdecked/twemoji@15.1.0/assets/svg/${c.toLowerCase()}.svg`
-  ];
-  function fig(emoji, cls) {
+  // Imagem: figura própria (figuras/, funciona offline) → emoji nativo do sistema, se não houver figura.
+  // emCena = figura que faz parte de uma cena de história (aí valem as figuras de cena; ver figuras.js)
+  function fig(emoji, cls, emCena) {
     const span = el('span', { class: cls || 'fig', 'aria-hidden': 'true' });
     const partes = N.separarEmojis(emoji);
     partes.forEach((pt) => {
-      const code = N.codigoOpenMoji(pt);
-      const propria = window.Figuras && window.Figuras.palavra(code, partes.length > 1);
-      let k = propria ? -1 : 0;
-      const img = el('img', { src: propria || CDN_IMG[0](code), class: propria ? 'fig-propria' : null, alt: '', draggable: 'false', loading: 'lazy', decoding: 'async' });
-      img.addEventListener('error', () => { k++; if (k < CDN_IMG.length) img.src = CDN_IMG[k](code); else img.replaceWith(el('span', { class: 'emoji-nativo' }, pt)); });
+      const propria = window.Figuras && window.Figuras.palavra(N.codigoEmoji(pt), emCena || partes.length > 1);
+      if (!propria) { span.append(el('span', { class: 'emoji-nativo' }, pt)); return; }
+      const img = el('img', { src: propria, class: 'fig-propria', alt: '', draggable: 'false', loading: 'lazy', decoding: 'async' });
+      img.addEventListener('error', () => img.replaceWith(el('span', { class: 'emoji-nativo' }, pt)));
       span.append(img);
     });
     return span;
