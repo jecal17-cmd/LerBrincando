@@ -122,10 +122,10 @@
     // ---------------- V5 Imagens
     {
       const prob = [];
-      D.palavras.forEach((w) => { if (!w.e || !/^[0-9A-F]{4,5}(-[0-9A-F]{4,5})*$/.test(w.om || '')) prob.push(w.p); });
+      D.palavras.forEach((w) => { if (!w.e || !/^[0-9A-F]{4,5}(-[0-9A-F]{4,5})*$/.test(w.cod || '') || (typeof window !== 'undefined' && window.Figuras && !window.Figuras.palavra(w.cod))) prob.push(w.p); });
       const emojis = {}; D.palavras.forEach((w) => { (emojis[w.e] = emojis[w.e] || []).push(w.p); });
       const dup = Object.entries(emojis).filter(([, v]) => v.length > 1).map(([e, v]) => e + ' ' + v.join('/'));
-      reg('V5', 'Imagens', prob.length === 0, prob.concat(dup.map((d) => 'emoji repetido: ' + d)), { resumo: `${D.palavras.length} palavras com emoji e código OpenMoji; ${dup.length} emojis repetidos` });
+      reg('V5', 'Imagens', prob.length === 0, prob.concat(dup.map((d) => 'emoji repetido: ' + d)), { resumo: `${D.palavras.length} palavras com figura própria; ${dup.length} emojis repetidos` });
     }
     // ---------------- V6 Banco de elogios
     {

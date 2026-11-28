@@ -829,10 +829,10 @@ ${selo}
       const t = el('table'); t.append(el('tr', null, el('th', null, 'ID'), el('th', null, 'Validador'), el('th', null, 'Status'), el('th', null, 'Detalhes')));
       r.relatorio.forEach((x) => t.append(el('tr', null, el('td', null, x.id), el('td', null, x.nome), el('td', { class: x.status }, x.status), el('td', null, x.resumo || '', x.detalhes.length ? el('details', null, el('summary', null, `${x.detalhes.length} item(ns)`), el('ul', null, ...x.detalhes.slice(0, 50).map((d) => el('li', null, d)))) : null))));
       out.append(t);
-      // teste de carregamento das imagens OpenMoji (amostra)
-      const amostra = D.palavras.slice(0, 40); let falhas = 0; let feitos = 0;
-      const pi = el('p', null, 'Testando imagens OpenMoji (amostra de 40)...'); out.append(pi);
-      amostra.forEach((w) => { const im = new Image(); im.onload = im.onerror = (e) => { feitos++; if (e.type === 'error') falhas++; if (feitos === amostra.length) pi.textContent = `Imagens OpenMoji (locais): ${amostra.length - falhas}/${amostra.length} carregaram (as que falharem usam o CDN ou o emoji nativo).`; }; im.src = `imagens/${w.om}.svg`; });
+      // teste de carregamento das figuras próprias (todas as palavras)
+      const amostra = D.palavras.map((w) => window.Figuras && window.Figuras.palavra(w.cod)).filter(Boolean); let falhas = 0; let feitos = 0;
+      const pi = el('p', null, `Testando figuras (${amostra.length} palavras)...`); out.append(pi);
+      amostra.forEach((src) => { const im = new Image(); im.onload = im.onerror = (e) => { feitos++; if (e.type === 'error') falhas++; if (feitos === amostra.length) pi.textContent = `Figuras próprias: ${amostra.length - falhas}/${amostra.length} carregaram (as que falharem viram emoji do sistema).`; }; im.src = src; });
     };
     // simulação de data (T15)
     const dias = el('span', null, String(Motor.offsetDias));

@@ -19,7 +19,7 @@ const palavras = linhas.map((l) => {
   let faseMin = -1; let ok = true;
   an.tags.forEach((t) => { if (ordem[t] === undefined) ok = false; else faseMin = Math.max(faseMin, ordem[t]); });
   return {
-    p, s: silabas, e, om: N.codigoOpenMoji(e),
+    p, s: silabas, e, cod: N.codigoEmoji(e),
     g: an.tags, padrao: N.categoriaPadrao(an),
     faseMin: ok ? faseMin : null,
     mundo: ok ? F.fases[faseMin].mundo : null,

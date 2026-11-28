@@ -1,7 +1,7 @@
 /* Fonte de dados do Ler Brincando (editável). Rode:  node ferramentas/construir_dados.js
    para gerar data.js (JSON) com os campos derivados e verificados. */
 module.exports = {
-  versao: '1.4.9',
+  versao: '1.4.10',
 
   // ------------------------------------------------------------------ MUNDOS
   mundos: [
@@ -645,7 +645,7 @@ module.exports = {
 
   // ------------------------------------------------------------------ CRÉDITOS / LICENÇAS / CHANGELOG
   creditos: [
-    'Figuras: OpenMoji, o projeto de emojis de código aberto (openmoji.org), licença CC BY-SA 4.0.',
+    'Figuras: desenhos próprios do Ler Brincando, no estilo da Lili.',
     'Vozes: vozes neurais em português do Brasil (Francisca e Thalita, da Microsoft).',
     'Letras: fontes Andika (SIL International) e Baloo 2, licença SIL Open Font 1.1.',
     'Efeitos sonoros, música e confete: feitos pelo próprio jogo.',
@@ -653,9 +653,8 @@ module.exports = {
   ],
   // Notas completas de licença e de publicação: aparecem só na Área técnica
   creditosTecnicos: [
-    'Imagens: OpenMoji — o projeto de emojis de código aberto (https://openmoji.org), licença CC BY-SA 4.0, incluídas no jogo (pasta imagens/). Emojis nativos do sistema são usados como alternativa.',
+    'Imagens: figuras próprias do Ler Brincando (pasta figuras/). Se faltar alguma, aparece o emoji do sistema do aparelho. O jogo não usa OpenMoji nem Twemoji.',
     'Vozes do Banco de Áudio: vozes neurais Microsoft (pt-BR Francisca; Thalita nas sílabas com NH) geradas com Azure Speech (sílabas e fonemas) e com a biblioteca livre edge-tts (palavras, frases e histórias), ou Kokoro-82M (Apache-2.0) offline. Para publicar o app numa loja, gere com Azure Speech (--motor azure) ou Kokoro.',
-    'Imagens reserva: Twemoji (jdecked/twemoji), licença CC BY 4.0.',
     'Fontes: Andika (SIL International) e Baloo 2, SIL Open Font License 1.1, incluídas no jogo (pasta fontes/).',
     'Voz alternativa: Piper TTS (Rhasspy/Open Home Foundation, licença MIT) com o modelo pt_BR-faber-medium. Confira a licença do modelo baixado no arquivo .onnx.json/MODEL_CARD e registre aqui.',
     'Fonemas alternativos (opcional): gravações do Alfabeto Fonético Internacional no Wikimedia Commons — a atribuição de cada arquivo usado aparece no painel do Banco de Áudio (licenças variam por arquivo).',
@@ -664,6 +663,7 @@ module.exports = {
     'Personagens, histórias e textos: originais, criados para este jogo.'
   ],
   changelog: [
+    '1.4.10 — O jogo não usa mais as imagens OpenMoji: todas as figuras são desenhos próprios no estilo da Lili, inclusive 37 figuras novas das histórias e frases (rostos, gestos, sinais, flores, livros, crianças dançando e pintinhos) e o fundo de cada cena. Na história Oi, Ioiô!, o pintinho não aparece mais com a figura do BICO.',
     '1.4.9 — Sons das letras refeitos: S, F e X com sopro limpo; M, N, L e V com som humano em voz feminina; Z e J com vibração da voz (não viram mais S e X); P, B, T, D, C e G pela família de sílabas (PA-PE-PI-PO-PU, CA-CE-CI-CO-CU, GA-GE-GI-GO-GU).',
     '1.4.8 — Abertura nova da Bentevi Apps: o bem-te-vi chega voando, pousa no galho e canta o próprio nome. Um toque pula.',
     '1.4.7 — Chave fixa de teste para liberar a versão completa neste aparelho sem comprar (só para testes; fica salva e dispensa desinstalar o app).',

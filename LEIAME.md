@@ -1,4 +1,11 @@
-# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.4.1
+# Ler Brincando — jogo de alfabetização (português do Brasil) · v1.4.10
+
+> **Novidade da v1.4.10** (sem OpenMoji)
+> - **Só figuras próprias:** o jogo não usa mais as imagens OpenMoji (nem o CDN, nem o Twemoji de reserva). A pasta `imagens/` saiu do projeto e a obrigação de atribuição CC BY-SA acabou.
+> - **Ordem das imagens:** figura própria (`figuras/`) → emoji do sistema do aparelho. As 363 palavras, os botões, as medalhas, a Lojinha, os avatares e os mundos já têm figura própria.
+> - **Figuras de cena:** rostos, sinais e gestos das histórias e frases ficam em `figuras/cenas/` (lista `CENAS` em `figuras.js`; `APELIDO` reaproveita figuras existentes, como 🔊). As 37 figuras de cena (rostos, gestos, sinais e objetos) foram geradas com os prompts de `docs/PROMPTS_CENAS.md`; o fundo de cada cena de história também usa figura própria. `node ferramentas/testar.js` lista as que faltarem no futuro.
+> - **Correção:** nas histórias, o 🐥 não mostra mais a figura do BICO (as figuras de `SO_PALAVRA` agora valem só fora das cenas, como já era a intenção).
+> - **Dados:** o campo `om` das palavras virou `cod` e `Nucleo.codigoOpenMoji` virou `Nucleo.codigoEmoji`. `node ferramentas/recursos_locais.js` refaz `figuras/lista.json`.
 
 > **Novidades da v1.4.1** (som das sílabas e das letras)
 > - **Sílaba com o som da própria palavra:** antes, a sílaba "RA" era sempre a mesma gravação (R forte e tônica), inclusive em PE-RA. Agora cada palavra tem uma **palavra silabada** ("pê … ra") gravada com a pronúncia exata de cada sílaba naquela palavra (R fraco, S com som de Z, E/O abertos ou fechados, átona final "tu"), recortada nas pausas. Usada no Junta-Junta, Bate-Palmas, Trem, Fábrica, Tira-sílaba, Troca-sílaba e na leitura sílaba a sílaba das histórias. Pronúncias em [docs/pronuncia_silabada.md](docs/pronuncia_silabada.md) (para revisão por alfabetizador/a); ajustes em `ferramentas/pronuncia_palavras.json`.
@@ -71,7 +78,8 @@ Jogo web completo para crianças de **5 a 7 anos** que já conhecem o nome e a f
 | `minijogos.js` | Renderizadores dos minijogos, andaime de 3 níveis, karaokê. |
 | `cenas.js` | Cenas: início, perfis, avaliação, mapa, executor de fases, resultado, loja, álbum, medalhas, certificado e Área dos Pais. |
 | `sw.js`, `manifest.webmanifest`, `icones/` | PWA: instala na tela inicial e funciona offline. |
-| `imagens/`, `fontes/` | Imagens OpenMoji e fontes usadas pelo jogo (geradas por `ferramentas/recursos_locais.js`). |
+| `figuras/`, `figuras.js` | Figuras próprias no estilo da Lili (palavras, cenas, botões, medalhas, Lojinha, avatares, mundos e poses da Lili). |
+| `fontes/` | Fontes usadas pelo jogo (copiadas por `ferramentas/recursos_locais.js`, que também refaz `figuras/lista.json`). |
 | `android/`, `capacitor.config.json`, `package.json` | App Android (Capacitor). Guia em `ANDROID.md`. |
 | `loja/` | Material da Google Play: textos, ícone 512, imagem de destaque e capturas de tela. |
 | `gerar_audios.py` | Gera o **Banco de Áudio** em `audio/` (vozes neurais: edge-tts por padrão; Kokoro ou Piper como alternativas). |
@@ -335,7 +343,7 @@ O jogo escolhe a voz mais natural instalada (Edge "Francisca/Thalita Online (Nat
 - **Node:** casos funcionais T09, T12, T14, T15, T16 e T18 aprovados, além do teste de adaptatividade (3 erros → de 4 para 3 opções).
 - **Chromium headless (celular 390×844, tablet 820×1180, desktop 1280×800):** um robô jogou pela interface, respondendo certo, as fases **1.1, 1.2, 1.5, 1.7, 1.9, 1.10, 2.1, 2.7, 2.10, 3.1, 3.5, 3.9, 3.12, 4.7, 4.11, 5.1–5.10, 6.10 e 7.9**. Isso cobre todos os tipos de minijogo (incluindo traçado, trem, fatiador, ditado, memória, bingo, microfone com confirmação do adulto, história com karaokê e guardião) e a avaliação inicial. Resultado: **0 erros de JavaScript**.
 - **Contraste (WCAG):** texto 14,3:1; texto secundário 7,3:1; branco sobre azul 4,7:1; branco sobre verde 5,0:1.
-- **Limites do ambiente de teste:** não havia voz real (a fala foi simulada), fonte de emoji nem acesso ao CDN do OpenMoji. Por isso, **a voz, as imagens e o arrastar com o dedo precisam ser conferidos em aparelhos reais** (tabela abaixo).
+- **Limites do ambiente de teste:** não havia voz real (a fala foi simulada) nem fonte de emoji (v1.2). Por isso, **a voz, as imagens e o arrastar com o dedo precisam ser conferidos em aparelhos reais** (tabela abaixo).
 
 ### 6.2 Matriz de compatibilidade (preencher nos aparelhos)
 
@@ -383,8 +391,8 @@ O jogo escolhe a voz mais natural instalada (Edge "Francisca/Thalita Online (Nat
 | Recorte automático de fonema pode errar a fronteira. | Escuta humana obrigatória (seção 13.2a) + `--wikimedia` para os que falharem. |
 | A voz do navegador varia por aparelho e pode ler sílabas soltas de forma estranha. | O banco resolve. No iOS, instale a voz "Luciana" (pt-BR) em Ajustes → Acessibilidade → Conteúdo Falado. |
 | Abrindo por duplo clique (`file://`): sem offline, sem microfone e sem `fetch` do manifest. | Use `manifest.js` (gerado pelo script) ou hospede em `https`/`localhost`. |
-| As imagens **OpenMoji** usadas estão em `imagens/`. Palavras novas com emojis novos precisam delas. | Rode `node ferramentas/recursos_locais.js` (instruções no topo do arquivo). Se faltar alguma, o jogo usa o CDN e, por último, o emoji nativo. |
-| Emojis recentes (🪼 🫏 🪿 🫛 🪮) podem não existir em sistemas antigos. | O OpenMoji 16 cobre todos. A troca para emoji nativo só ocorre se o SVG falhar. |
+| Palavra nova precisa de figura própria em `figuras/palavras/CÓDIGO.webp`; o `testar.js` reprova se faltar. Emojis das histórias sem figura de cena aparecem como emoji do aparelho. | Recorte com `ferramentas/recortar_figuras.py`, inclua o código em `PALAVRAS` ou `CENAS` de `figuras.js` e rode `node ferramentas/recursos_locais.js`. |
+| Emojis recentes (🪼 🫏 🪿 🫛 🪮) podem não existir em sistemas antigos. | Só afeta emojis sem figura própria; todas as palavras já têm figura. |
 | Reconhecimento de fala infantil é impreciso; Firefox não tem; Safari é parcial. | Desligado por padrão, com consentimento do adulto; nunca bloqueia (adulto confirma / pular). |
 | O evento `boundary` falha no Android/Safari. | Padrão = uma fala por palavra encadeada por `onend`. Com o banco, o karaokê usa os tempos do manifest. |
 | Variação regional (E/O átonos finais, L final, R final). | Regras explícitas (L no fim soa U, R no fim etc.). Palavras com "ES-" inicial não treinam o som do E. |
@@ -436,7 +444,7 @@ Gerado por `node ferramentas/testar.js`. **Resultado geral: APROVADO.**
 | V2 | Decodificabilidade das fases | **APROVADO** | 3010 usos de palavras escritas verificados em 4 gerações |
 | V3 | Decodificabilidade das histórias e frases | **APROVADO** | h1 oral; h2 100%; h3 100%; h4 100%; h5 96.2%; h6 98.5%; h7 100%; h8a 100%; h8b 100%; h8c 100%; h8d 100% |
 | V4 | Pares mínimos | **APROVADO** | 14 pares; P/B, T/D, F/V, C/G, S/Z, X/J |
-| V5 | Imagens | **APROVADO** | 363 palavras com emoji e código OpenMoji; 0 emojis repetidos |
+| V5 | Imagens | **APROVADO** | 363 palavras com figura própria; 0 emojis repetidos |
 | V6 | Banco de elogios | **APROVADO** | acerto: 20 · sequencia3: 15 · sequencia5: 15 · sequencia10: 15 · aposErro: 15 · somNovo: 15 · fasePerfeita: 15 · mundoConcluido: 15 |
 | V7 | Distratores | **APROVADO** | 2838 itens de escolha verificados |
 | V8 | Volume de conteúdo | **APROVADO** | 363 palavras · 93 fases · 11 histórias · 17/17 minijogos da lista (+ somFinal, juntar, tirar, trocar, historia, licao, abertoFechado, nomeSom, regra, somS, freq, escrita, guardiao) |
@@ -473,4 +481,4 @@ Abra `docs/fichas_pedagogicas.html` e imprima. O arquivo contém:
 - v1.4: com a nuvem configurada, só saem do aparelho (1) estatísticas anônimas, se o adulto autorizar, e (2) o resumo do progresso para o professor, se a criança entrar numa turma. Detalhes em `docs/privacidade.html` e `docs/NUVEM.md`.
 - v1.4: a versão completa é comprada pela Google Play, só depois do desafio para adultos.
 - O microfone vem desligado e exige consentimento do adulto. O aviso de privacidade fica na Área dos Pais.
-- Créditos (OpenMoji CC BY-SA 4.0, Andika e Baloo 2 OFL, vozes edge-tts/Kokoro/Piper, Wikimedia por arquivo) e registro de alterações ficam na tela **Sobre**.
+- Créditos (figuras próprias, Andika e Baloo 2 OFL, vozes edge-tts/Kokoro/Piper, Wikimedia por arquivo) e registro de alterações ficam na tela **Sobre**.

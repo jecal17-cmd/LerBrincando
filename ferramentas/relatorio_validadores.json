@@ -1,6 +1,6 @@
 {
  "geral": "APROVADO",
- "data": "2026-11-27T18:46:37.449Z",
+ "data": "2026-11-28T01:48:58.517Z",
  "relatorio": [
   {
    "id": "V1",
@@ -129,7 +129,7 @@
    "nome": "Imagens",
    "status": "APROVADO",
    "detalhes": [],
-   "resumo": "363 palavras com emoji e código OpenMoji; 0 emojis repetidos"
+   "resumo": "363 palavras com figura própria; 0 emojis repetidos"
   },
   {
    "id": "V6",

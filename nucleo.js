@@ -177,8 +177,8 @@
     return s || 'vazio';
   }
 
-  /** Código OpenMoji de um emoji (ex.: 🐱 → 1F431) */
-  function codigoOpenMoji(emoji) {
+  /** Código Unicode de um emoji, sem o seletor FE0F (ex.: 🐱 → 1F431). É o nome do arquivo da figura própria. */
+  function codigoEmoji(emoji) {
     return Array.from(emoji).map((c) => c.codePointAt(0).toString(16).toUpperCase().padStart(4, '0')).filter((h) => h !== 'FE0F').join('-');
   }
 
@@ -251,7 +251,7 @@
 
   const Nucleo = {
     VOGAIS, ehVogal, base, maiusc, semAcento, analisar, categoriaPadrao, tonica, chaveRima,
-    somInicial, grafemas, slug, pronunciavel, codigoOpenMoji, separarEmojis, tokenizarFrase, fraseLimpa, rngSemente, X_VARIOS
+    somInicial, grafemas, slug, pronunciavel, codigoEmoji, separarEmojis, tokenizarFrase, fraseLimpa, rngSemente, X_VARIOS
   };
   raiz.Nucleo = Nucleo;
   if (typeof module !== 'undefined' && module.exports) module.exports = Nucleo;

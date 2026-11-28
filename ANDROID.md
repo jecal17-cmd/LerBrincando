@@ -100,7 +100,7 @@ e rode `cd android && ./gradlew bundleRelease`.
 | Arquivo | Para que serve |
 |---|---|
 | `ferramentas/preparar_app.js` | Monta `www/` só com o necessário e confere que nada depende da internet. |
-| `ferramentas/recursos_locais.js` | Copia as imagens OpenMoji e as fontes usadas para `imagens/` e `fontes/`. |
+| `ferramentas/recursos_locais.js` | Refaz `figuras/lista.json` e copia as fontes usadas para `fontes/`. |
 | `ferramentas/gerar_icones_android.js` | Gera ícones, tela de abertura, ícone 512 e imagem de destaque a partir de `icones/icone.svg`. |
 | `ferramentas/capturas_loja.js` | Gera as capturas de tela da loja (celular 1080×1920 e tablet 1600×2560). |
 | `.github/workflows/app-android.yml` | Compila o APK de teste e, com a chave, o AAB da Play (conferindo a licença das vozes). |

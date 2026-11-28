@@ -1,10 +1,10 @@
 // Figuras próprias do jogo (estilo 3D brilhante, iguais ao ícone da Lili).
 // Pasta figuras/ — recortadas das folhas com ferramentas/recortar_figuras.py.
-// Onde não há figura própria, o jogo continua usando OpenMoji (imagens/).
+// Onde não há figura própria, o jogo mostra o emoji do próprio aparelho (não usa mais OpenMoji).
 (function () {
   'use strict';
   const B = 'figuras/';
-  // Palavras: código OpenMoji → arquivo (mesmo nome)
+  // Palavras: código do emoji (Unicode, sem FE0F) → arquivo figuras/palavras/CÓDIGO.webp
   const PALAVRAS = [
     '1FA80', '1F426', '1F95A', '1F347', '1F475', '1F474', '1F931', '1F9E6', '1F9F2', '1F467', '1F466', '1F6A2',
     '2744', '1F9CD', '1F319', '1F991', '1F31E', '1F337', '1F345', '1F34C', '1F34D', '1F36C', '1F372', '1F373',
@@ -42,6 +42,17 @@
   // Figuras desenhadas para o sentido da palavra no jogo, diferente do emoji usado nas histórias
   // (BICO = cabeça de pássaro com bico, nas histórias 🐥 é o pintinho; PATA = a pata, fêmea do pato, nas histórias 🐾 é pegada)
   const SO_PALAVRA = ['1F425', '1F43E'];
+  // Figuras só das histórias e frases (rostos, sinais, gestos...): figuras/cenas/CÓDIGO.webp.
+  // Acrescente aqui o código quando a figura for recortada (ferramentas/recortar_figuras.py ... figuras/cenas ...).
+  const CENAS = [
+    '1F600', '1F604', '1F642', '1F60A', '1F60D', '1F622', '1F61F', '1F623', '1F620', '1F634', '1F632', '1F62E',
+    '1F92B', '1F44B', '1F44F', '1F5E3', '2728', '2753', '2757', '1F534', '1F535', '1F389', '1F4A6', '1F33C',
+    '1F940', '1F305', '1F463', '1F4DA', '1F4D5', '1F524', '1F3F4', '1F6E2', '1F6C1', '1F483', '1F57A', '1F423',
+    '1F425'
+  ];
+  // folha A: rostos e gestos; folha B: sinais e objetos; folha C: banheira, crianças dançando, pintinho no ovo e pintinho (🐥 das histórias)
+  // Emojis das cenas que reaproveitam uma figura que já existe
+  const APELIDO = { '1F50A': 'ui/ouvir' };
   // Ícones da interface que aparecem como texto (botões, placas, avisos)
   const UI = {
     '🔊': 'ouvir', '🐢': 'devagar', '🔒': 'cadeado', '⭐': 'estrela', '🪙': 'moeda', '🎁': 'presente',
@@ -157,7 +168,13 @@
   window.Figuras = {
     ativo: true,
     // emCena = figura montada com vários emojis (histórias): aí as figuras que só valem para a palavra ficam de fora
-    palavra: (code, emCena) => (PALAVRAS.includes(code) && !(emCena && SO_PALAVRA.includes(code)) ? B + 'palavras/' + code + '.webp' : null),
+    palavra(code, emCena) {
+      if (CENAS.includes(code) && (emCena || !PALAVRAS.includes(code))) return B + 'cenas/' + code + '.webp';
+      if (PALAVRAS.includes(code) && !(emCena && SO_PALAVRA.includes(code))) return B + 'palavras/' + code + '.webp';
+      if (APELIDO[code]) return B + APELIDO[code] + '.webp';
+      return null;
+    },
+    PALAVRAS, CENAS,
     mundo: (id) => B + 'mundos/mundo' + id + '.webp',
     bau: B + 'mundos/bau.webp',
     medalha: (id) => B + 'medalhas/' + id + '.webp',
@@ -167,7 +184,7 @@
     ui: (nome) => B + 'ui/' + nome + '.webp',
     img, trocarTexto, observar, poseLili, giroCor, encaixar, DUAS_CAMADAS: ['casca', 'cachecol'],
     lista() { // para o service worker guardar offline
-      const l = PALAVRAS.map((c) => 'palavras/' + c);
+      const l = PALAVRAS.map((c) => 'palavras/' + c).concat(CENAS.map((c) => 'cenas/' + c));
       Object.values(UI).forEach((n) => l.push('ui/' + n)); Object.values(AVATARES).forEach((n) => l.push('avatares/' + n));
       ['ouvidoOuro', 'contador', 'persistente', 'escritor', 'leitor', 'estrelas', 'colecionador', 'voz', 'tracos', 'mundo1', 'mundo4', 'superLeitor'].forEach((n) => l.push('medalhas/' + n));
       ['casca', 'casca_tras', 'casca_frente', 'cachecol_tras', 'cachecol_frente', 'broto', 'flor', 'chapeuExplorador', 'mochila', 'lupa', 'capelo', 'capa', 'laco', 'oculos', 'cachecol', 'chapeu', 'coroa', 'mapaPorDoSol', 'mapaOceano', 'mapaDoce'].forEach((n) => l.push('loja/' + n));
