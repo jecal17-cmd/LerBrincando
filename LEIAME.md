@@ -3,7 +3,7 @@
 > **Novidade da v1.4.10** (sem OpenMoji)
 > - **Só figuras próprias:** o jogo não usa mais as imagens OpenMoji (nem o CDN, nem o Twemoji de reserva). A pasta `imagens/` saiu do projeto e a obrigação de atribuição CC BY-SA acabou.
 > - **Ordem das imagens:** figura própria (`figuras/`) → emoji do sistema do aparelho. As 363 palavras, os botões, as medalhas, a Lojinha, os avatares e os mundos já têm figura própria.
-> - **Figuras de cena:** rostos, sinais e gestos das histórias e frases ficam em `figuras/cenas/` (lista `CENAS` em `figuras.js`; `APELIDO` reaproveita figuras existentes, como 🔊). Enquanto não forem desenhadas, aparecem como emoji do aparelho. `node ferramentas/testar.js` lista as que faltam.
+> - **Figuras de cena:** rostos, sinais e gestos das histórias e frases ficam em `figuras/cenas/` (lista `CENAS` em `figuras.js`; `APELIDO` reaproveita figuras existentes, como 🔊). As 37 figuras de cena (rostos, gestos, sinais e objetos) foram geradas com os prompts de `docs/PROMPTS_CENAS.md`; o fundo de cada cena de história também usa figura própria. `node ferramentas/testar.js` lista as que faltarem no futuro.
 > - **Correção:** nas histórias, o 🐥 não mostra mais a figura do BICO (as figuras de `SO_PALAVRA` agora valem só fora das cenas, como já era a intenção).
 > - **Dados:** o campo `om` das palavras virou `cod` e `Nucleo.codigoOpenMoji` virou `Nucleo.codigoEmoji`. `node ferramentas/recursos_locais.js` refaz `figuras/lista.json`.
 

@@ -3147,7 +3147,7 @@ window.DADOS = {
   "Personagens, histórias e textos: originais, criados para este jogo."
  ],
  "creditosTecnicos": [
-  "Imagens: figuras próprias do Ler Brincando (pasta figuras/). Onde ainda não há figura própria, aparece o emoji do sistema do aparelho. O jogo não usa OpenMoji nem Twemoji.",
+  "Imagens: figuras próprias do Ler Brincando (pasta figuras/). Se faltar alguma, aparece o emoji do sistema do aparelho. O jogo não usa OpenMoji nem Twemoji.",
   "Vozes do Banco de Áudio: vozes neurais Microsoft (pt-BR Francisca; Thalita nas sílabas com NH) geradas com Azure Speech (sílabas e fonemas) e com a biblioteca livre edge-tts (palavras, frases e histórias), ou Kokoro-82M (Apache-2.0) offline. Para publicar o app numa loja, gere com Azure Speech (--motor azure) ou Kokoro.",
   "Fontes: Andika (SIL International) e Baloo 2, SIL Open Font License 1.1, incluídas no jogo (pasta fontes/).",
   "Voz alternativa: Piper TTS (Rhasspy/Open Home Foundation, licença MIT) com o modelo pt_BR-faber-medium. Confira a licença do modelo baixado no arquivo .onnx.json/MODEL_CARD e registre aqui.",
@@ -3157,7 +3157,7 @@ window.DADOS = {
   "Personagens, histórias e textos: originais, criados para este jogo."
  ],
  "changelog": [
-  "1.4.10 — O jogo não usa mais as imagens OpenMoji: todas as figuras são desenhos próprios. Nas histórias, o que ainda não tem figura própria aparece como emoji do aparelho. Na história Oi, Ioiô!, o pintinho não aparece mais com a figura do BICO.",
+  "1.4.10 — O jogo não usa mais as imagens OpenMoji: todas as figuras são desenhos próprios no estilo da Lili, inclusive 37 figuras novas das histórias e frases (rostos, gestos, sinais, flores, livros, crianças dançando e pintinhos) e o fundo de cada cena. Na história Oi, Ioiô!, o pintinho não aparece mais com a figura do BICO.",
   "1.4.9 — Sons das letras refeitos: S, F e X com sopro limpo; M, N, L e V com som humano em voz feminina; Z e J com vibração da voz (não viram mais S e X); P, B, T, D, C e G pela família de sílabas (PA-PE-PI-PO-PU, CA-CE-CI-CO-CU, GA-GE-GI-GO-GU).",
   "1.4.8 — Abertura nova da Bentevi Apps: o bem-te-vi chega voando, pousa no galho e canta o próprio nome. Um toque pula.",
   "1.4.7 — Chave fixa de teste para liberar a versão completa neste aparelho sem comprar (só para testes; fica salva e dispensa desinstalar o app).",
@@ -3591,5 +3591,5 @@ window.DADOS = {
   "H": 77,
   "X_VARIOS": 77
  },
- "geradoEm": "2026-11-28T00:49:15.311Z"
+ "geradoEm": "2026-11-28T01:48:57.982Z"
 };

@@ -44,7 +44,13 @@
   const SO_PALAVRA = ['1F425', '1F43E'];
   // Figuras só das histórias e frases (rostos, sinais, gestos...): figuras/cenas/CÓDIGO.webp.
   // Acrescente aqui o código quando a figura for recortada (ferramentas/recortar_figuras.py ... figuras/cenas ...).
-  const CENAS = [];
+  const CENAS = [
+    '1F600', '1F604', '1F642', '1F60A', '1F60D', '1F622', '1F61F', '1F623', '1F620', '1F634', '1F632', '1F62E',
+    '1F92B', '1F44B', '1F44F', '1F5E3', '2728', '2753', '2757', '1F534', '1F535', '1F389', '1F4A6', '1F33C',
+    '1F940', '1F305', '1F463', '1F4DA', '1F4D5', '1F524', '1F3F4', '1F6E2', '1F6C1', '1F483', '1F57A', '1F423',
+    '1F425'
+  ];
+  // folha A: rostos e gestos; folha B: sinais e objetos; folha C: banheira, crianças dançando, pintinho no ovo e pintinho (🐥 das histórias)
   // Emojis das cenas que reaproveitam uma figura que já existe
   const APELIDO = { '1F50A': 'ui/ouvir' };
   // Ícones da interface que aparecem como texto (botões, placas, avisos)

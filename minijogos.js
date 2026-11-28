@@ -748,7 +748,7 @@
   MJ.historia = async (item, ctx) => {
     const h = D.historias.find((x) => x.id === item.historia);
     const resultados = [];
-    const cena = el('div', { class: 'cena-hist', style: { background: h.cena.cor } }, el('div', { class: 'fundo', 'aria-hidden': 'true' }, h.cena.fundo), el('div', { class: 'atores' }));
+    const cena = el('div', { class: 'cena-hist', style: { background: h.cena.cor } }, el('div', { class: 'fundo', 'aria-hidden': 'true' }, fig(h.cena.fundo, 'fig', true)), el('div', { class: 'atores' }));
     const texto = el('div', { class: 'texto-hist', 'aria-live': 'polite' });
     const interacao = el('div', { class: 'opcoes' });
     const acoes = el('div', { class: 'acoes' });

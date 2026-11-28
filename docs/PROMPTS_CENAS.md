@@ -1,6 +1,6 @@
 # Prompts — figuras de cena (Nano Banana)
 
-Gerado em 27/11/2026 (v1.4.10). São as **37 figuras** que ainda aparecem como emoji do aparelho nas histórias e frases, depois que o OpenMoji saiu do jogo. As palavras, os botões, as medalhas, a Lojinha, os avatares e os mundos já têm figura própria.
+Gerado em 27/11/2026 (v1.4.10). São as **37 figuras** das histórias e frases que substituíram o OpenMoji. **Status:** geradas no Nano Banana e aplicadas em 27/11/2026 (`figuras/cenas/`, lista `CENAS` em `figuras.js`). Use estes prompts de novo para refazer alguma figura. As palavras, os botões, as medalhas, a Lojinha, os avatares e os mundos já têm figura própria.
 
 ## Como usar
 
